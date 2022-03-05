@@ -1,10 +1,10 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  destroy contract and sends all funds to addr
-    Stack no.FF
+/*  return mem[ost:ost+len]
+    Stack no.F3
     Last update: 04/03
     F6-F9 and FB-FC are invalid
 */
-public class selfdestruct {
+public class return_ {
     
 }

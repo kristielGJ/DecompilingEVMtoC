@@ -1,8 +1,8 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  (u)int256 addition modulo 2**256
-    Stack no. 00
-    Last update: 28/02
+/*  copy code from addr
+    Stack no.3C
+    Last update: 03/03
 */
 public class extcodecopy {
     

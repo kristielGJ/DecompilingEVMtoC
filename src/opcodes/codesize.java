@@ -1,8 +1,8 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  (u)int256 addition modulo 2**256
-    Stack no. 00
-    Last update: 28/02
+/*  length of executing contract's code, in bytes
+    Stack no. 38
+    Last update: 03/03
 */
 public class codesize {
     
