@@ -1,23 +1,27 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  shift left
-    Stack no.1B
+/*  keccak256(mem[ost:ost+len])
+    Stack no.20
     Last update: 03/03,05/03
-    Stack no 1E-1F are invalid!
+    21-2F are invalid!
 */
-import src.interfaces.*;
+//import src.interfaces.*;
+public class sha3_   
+{
+
+}
 /* 
     Test: Passed Dissasembly test! 05/03
-*/
-public class shl implements GetInstructionsFromOpcode 
+
+public class sha3_ implements GetInstructionsFromOpcode 
 {
     private String opcode;
     private String name;
    
-    public shl(String opcode)
+    public sha3_(String opcode)
     {
         this.opcode=opcode;
-        this.name = "SHL";
+        this.name = "SHA3";
     }
    
     public String getOpcode() 
@@ -37,3 +41,4 @@ public class shl implements GetInstructionsFromOpcode
     }
    
 }
+*/

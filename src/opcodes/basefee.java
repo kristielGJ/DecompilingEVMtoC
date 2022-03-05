@@ -1,23 +1,23 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  shift left
-    Stack no.1B
-    Last update: 03/03,05/03
-    Stack no 1E-1F are invalid!
+/*  base fee of current block
+    Stack no.48
+    Last update: 04/03,05/03
+    49-4F are invalid
 */
 import src.interfaces.*;
 /* 
     Test: Passed Dissasembly test! 05/03
 */
-public class shl implements GetInstructionsFromOpcode 
+public class basefee implements GetInstructionsFromOpcode 
 {
     private String opcode;
     private String name;
    
-    public shl(String opcode)
+    public basefee(String opcode)
     {
         this.opcode=opcode;
-        this.name = "SHL";
+        this.name = "BASEFEE";
     }
    
     public String getOpcode() 
@@ -35,5 +35,4 @@ public class shl implements GetInstructionsFromOpcode
     {
         return visitor.visit(this);
     }
-   
 }

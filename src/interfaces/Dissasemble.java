@@ -1,7 +1,86 @@
+//Author Gera Jahja
 package src.interfaces;
 import src.opcodes.*;
+
 
 public interface Dissasemble 
 {
     String visit(add Add);
+    String visit(stop Stop);
+    String visit(mul Mul);
+    String visit(sub Sub);
+    String visit(div Div);
+    String visit(sdiv Sdiv);
+    String visit(mod Mod);
+    String visit(smod Smod);
+    String visit(addmod Addmod);
+    String visit(mulmod Mulmod);
+    String visit(exp Exp);
+    String visit(signextend Signextend);
+    String visit(lt Lt);
+    String visit(gt GT);
+    String visit(slt Slt);
+    String visit(sgt Sgt);
+    String visit(eq Eq);
+    String visit(iszero Iszero);
+    String visit(and And);
+    String visit(or Or);
+    String visit(xor Xor);
+    String visit(not Not);
+    String visit(bytee Byte_);
+    String visit(shl Shl);
+    String visit(shr Shr);
+    String visit(sar Sar);
+    String visit(address Address);
+    String visit(balance Balance);
+    String visit(origin Origin);
+    String visit(caller Caller);
+    String visit(callvalue Callvalue);
+    String visit(calldataload Calldataload);
+    String visit(calldatasize Calldatasize);
+    String visit(calldatacopy Calldatacopy);
+    String visit(codesize Codesize);
+    String visit(codecopy Codecopy);
+    String visit(gasprice Gasprice);
+    String visit(extcodesize Extcodesize);
+    String visit(extcodecopy Extcodecopy);
+    String visit(returndatasize Returndatasize);
+    String visit(returndatacopy Returndatacopy);
+    String visit(extcodehash Extcodehash);
+    String visit(blockhash Blockhash);
+    String visit(coinbase Coinbase);
+    String visit(timestamp Timestamp);
+    String visit(number Number);
+    String visit(dificulty Dificulty);
+    String visit(gaslimit Gaslimit);
+    String visit(chainid Chainid);
+    String visit(selfbalance Selfbalance);
+    String visit(basefee Basefee);
+    String visit(pop Pop);
+    String visit(mload Mload);
+    String visit(mstore Mstore);
+    String visit(mstore8 Mstore8);
+    String visit(sload Sload);
+    String visit(sstore Sstore);
+    String visit(jump Jump);
+    String visit(jumpi Jumpi);
+    String visit(pc Pc);
+    String visit(msize Msize);
+    String visit(gas Gas);
+    String visit(jumpdest Jumpdest);
+    String visit(push Push);
+    String visit(dup Dup);
+    String visit(swap Swap);
+    String visit(log Log);
+    String visit(create Create);
+    String visit(call Call);
+    String visit(callcode Callcode);
+    String visit(return_ Return_);
+    String visit(delegatecall Delegatecall);
+    String visit(create2 Create2);
+    String visit(staticcall Staticcall);
+    String visit(revert Revert);
+    String visit(invalid invalid);
+    String visit(selfdestruct Selfdestruct);
+
 }

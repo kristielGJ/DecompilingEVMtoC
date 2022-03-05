@@ -2,9 +2,38 @@
 package src.opcodes;
 /*  number of current block
     Stack no.43
-    Last update: 04/03
+    Last update: 04/03,05/03
     49-4F are invalid
 */
-public class number {
-    
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class number implements GetInstructionsFromOpcode 
+{
+    private String opcode;
+    private String name;
+   
+    public number(String opcode)
+    {
+        this.opcode=opcode;
+        this.name = "NUMBER";
+    }
+   
+    public String getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor) 
+    {
+        return visitor.visit(this);
+    }
+   
 }
