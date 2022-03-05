@@ -6,6 +6,17 @@ import src.interfaces.*;
 import src.opcodes.*;
 class EvmDissasemble 
 {
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
     public static void main(String[] args) throws IOException, InterruptedException 
     {
         // Creating BufferedReader Object
@@ -51,121 +62,104 @@ class EvmDissasemble
             //FF0A0B1A1B1C1D3A3B3C3D3E3F5A5BF0F1F2F3F4F5FAFDFE
             //00010203040506070809101112131415161718193031323334353637383940414243444546474850515253545556575859 
         for (String opcode : evmByteCode) {
+            Dissasemble visitor = new visitOpCode();
+            boolean checkNumber = isNumeric(opcode);
            // System.out.println(opcode);
-            int opcodeNumber =Integer.parseInt(opcode);
-            if (opcodeNumber<20)
-            {   Dissasemble visitor = new visitOpCode();
-                instructions_no[opcodeNumber].accept(visitor);
+           if (checkNumber==true){
+                int opcodeNumber =Integer.parseInt(opcode);
+                if (opcodeNumber<20)
+                {   
+                    instructions_no[opcodeNumber].accept(visitor);
+                }
+                else if (opcodeNumber==49||opcodeNumber==20)
+                {   
+                    System.out.println("----  INVALID BYTE CODE! ---- ");
+                }
+                else if (opcodeNumber>19 && opcodeNumber<50)
+                {   
+                    instructions_no[opcodeNumber-10].accept(visitor);
+                }
+                else if (opcodeNumber>49)
+                {   
+                    instructions_no[opcodeNumber-11].accept(visitor);
+                }
             }
-            else if (opcodeNumber==49||opcodeNumber==20)
-            {   
-                System.out.println("----  INVALID BYTE CODE! ---- ");
-            }
-            else if (opcodeNumber>19 && opcodeNumber<50)
-            {   Dissasemble visitor = new visitOpCode();
-                instructions_no[opcodeNumber-10].accept(visitor);
-            }
-            else if (opcodeNumber>49)
-            {   Dissasemble visitor = new visitOpCode();
-                instructions_no[opcodeNumber-11].accept(visitor);
-            }
-            //letters not working!
-            if (opcode.contains("0A")) {//EXP
-                Dissasemble visitor = new visitOpCode();
-                instructions_no[1].accept(visitor);
-            }
-            else if (opcode.contains("0B")) {//SIGNEXTEND
-                Dissasemble visitor = new visitOpCode();
-                instructions[2].accept(visitor);
-            }
-            else if (opcode.contains("1A")) {//BYTE
-                Dissasemble visitor = new visitOpCode();
-                instructions[3].accept(visitor);
-            }
-            else if (opcode.contains("1B")) {//SHL
-                Dissasemble visitor = new visitOpCode();
-                instructions[4].accept(visitor);
-            }
-            else if (opcode.contains("1C")) {//SHR
-                Dissasemble visitor = new visitOpCode();
-                instructions[5].accept(visitor);
-            }
-            else if (opcode.contains("1D")) {//SAR
-                Dissasemble visitor = new visitOpCode();
-                instructions[6].accept(visitor);
-            }
-            else if (opcode.contains("3A")) {//GASPRICE
-                Dissasemble visitor = new visitOpCode();
-                instructions[7].accept(visitor);
-            }
-            else if (opcode.contains("3B")) {//EXTCODESIZE
-                Dissasemble visitor = new visitOpCode();
-                instructions[8].accept(visitor);
-            }
-            else if (opcode.contains("3C")) {//EXTCODECOPY
-                Dissasemble visitor = new visitOpCode();
-                instructions[9].accept(visitor);
-            }
-            else if (opcode.contains("3D")) {//RETURNDATASIZE
-                Dissasemble visitor = new visitOpCode();
-                instructions[10].accept(visitor);
-            }
-            else if (opcode.contains("3E")) {//RETURNDATACOPY
-                Dissasemble visitor = new visitOpCode();
-                instructions[11].accept(visitor);
-            }
-            else if (opcode.contains("3F")) {//EXTCODEHASH
-                Dissasemble visitor = new visitOpCode();
-                instructions[12].accept(visitor);
-            }
-            else if (opcode.contains("5A")) {//GAS
-                Dissasemble visitor = new visitOpCode();
-                instructions[13].accept(visitor);
-            }
-            else if (opcode.contains("5B")) {//JUMPDEST
-                Dissasemble visitor = new visitOpCode();
-                instructions[14].accept(visitor);
-            }
-            else if (opcode.contains("F0")) {//CREATE
-                Dissasemble visitor = new visitOpCode();
-                instructions[15].accept(visitor);
-            }
-            else if (opcode.contains("F1")) {//CALL
-                Dissasemble visitor = new visitOpCode();
-                instructions[16].accept(visitor);
-            }
-            else if (opcode.contains("F2")) {//CALLCODE
-                Dissasemble visitor = new visitOpCode();
-                instructions[17].accept(visitor);
-            }
-            else if (opcode.contains("F3")) {//RETURN
-                Dissasemble visitor = new visitOpCode();
-                instructions[18].accept(visitor);
-            } 
-            else if (opcode.contains("F4")) {//DELEGATECALL
-                Dissasemble visitor = new visitOpCode();
-                instructions[19].accept(visitor);
-            }
-            else if (opcode.contains("F5")) {//CREATE2
-                Dissasemble visitor = new visitOpCode();
-                instructions[20].accept(visitor);
-            }
-            else if (opcode.contains("FA")) {//STATICCALL
-                Dissasemble visitor = new visitOpCode();
-                instructions[21].accept(visitor);
-            }
-            else if (opcode.contains("FD")) {//REVERT
-                Dissasemble visitor = new visitOpCode();
-                instructions[22].accept(visitor);
-            }
-            else if (opcode.contains("FE")) {//INVALID
-                Dissasemble visitor = new visitOpCode();
-                instructions[23].accept(visitor);
-            }
-            else if (opcode.contains("FF")) {//SELFDESTRUCT
-                Dissasemble visitor = new visitOpCode();
-                instructions[00].accept(visitor);
-            }
+            //for non numerical hexadecimals, fix 1A , 1D, 3D, 3F
+            //FF0A0B1B1C3A3B3C3E5A5BF0F1F2F3F4F5FAFDFE input passed test 
+            else if (checkNumber==false){
+                if (opcode.contains("0A")) {//EXP passed test
+                    instructions[1].accept(visitor);
+                }
+                else if (opcode.contains("0B")) {//SIGNEXTEND passed test
+                    instructions[2].accept(visitor);
+                }
+                else if (opcode.contains("1A")) {//BYTE not working
+                    instructions[3].accept(visitor);
+                }
+                else if (opcode.contains("1B")) {//SHL passed test
+                    instructions[4].accept(visitor);
+                }
+                else if (opcode.contains("1C")) {//SHR passed test
+                    instructions[5].accept(visitor);
+                }
+                else if (opcode.contains("1D")) {//SAR not working
+                    instructions[6].accept(visitor);
+                }
+                else if (opcode.contains("3A")) {//GASPRICE  passed test
+                    instructions[7].accept(visitor);
+                }
+                else if (opcode.contains("3B")) {//EXTCODESIZE passed test
+                    instructions[8].accept(visitor);
+                }
+                else if (opcode.contains("3C")) {//EXTCODECOPY passed test
+                    instructions[9].accept(visitor);
+                }
+                else if (opcode.contains("3D")) {//RETURNDATASIZE not working
+                    instructions[10].accept(visitor);
+                }
+                else if (opcode.contains("3E")) {//RETURNDATACOPY  passed test
+                    instructions[11].accept(visitor);
+                }
+                else if (opcode.contains("3F")) {//EXTCODEHASH not working
+                    instructions[12].accept(visitor);
+                }
+                else if (opcode.contains("5A")) {//GAS passed test
+                    instructions[13].accept(visitor);
+                }
+                else if (opcode.contains("5B")) {//JUMPDEST passed test
+                    instructions[14].accept(visitor);
+                }
+                else if (opcode.contains("F0")) {//CREATE passed test
+                    instructions[15].accept(visitor);
+                }
+                else if (opcode.contains("F1")) {//CALL passed test
+                    instructions[16].accept(visitor);
+                }
+                else if (opcode.contains("F2")) {//CALLCODE  passed test
+                    instructions[17].accept(visitor);
+                }
+                else if (opcode.contains("F3")) {//RETURN  passed test
+                    instructions[18].accept(visitor);
+                } 
+                else if (opcode.contains("F4")) {//DELEGATECALL passed test
+                    instructions[19].accept(visitor);
+                }
+                else if (opcode.contains("F5")) {//CREATE2 passed test
+                    instructions[20].accept(visitor);
+                }
+                else if (opcode.contains("FA")) {//STATICCALL passed test
+                    instructions[21].accept(visitor);
+                }
+                else if (opcode.contains("FD")) {//REVERT passed test
+                    instructions[22].accept(visitor);
+                }
+                else if (opcode.contains("FE")) {//INVALID passed test
+                    instructions[23].accept(visitor);
+                }
+                else if (opcode.contains("FF")) {//SELFDESTRUCT passed test
+                    instructions[00].accept(visitor);
+                }
+        }
         }
             /*
             }
