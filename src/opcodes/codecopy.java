@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class codecopy implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public codecopy(String opcode)
+    public codecopy()
     {
-        this.opcode=opcode;
+        this.opcode=0x39;
         this.name = "CODECOPY";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

@@ -9,16 +9,16 @@ import src.interfaces.*;
  
 public class xor implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public xor(String opcode)
+    public xor( )
     {
-        this.opcode=opcode;
+        this.opcode=0x18;
         this.name = "XOR";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

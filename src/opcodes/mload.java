@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class mload implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public mload(String opcode)
+    public mload()
     {
-        this.opcode=opcode;
+        this.opcode=0x51;
         this.name = "MLOAD";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

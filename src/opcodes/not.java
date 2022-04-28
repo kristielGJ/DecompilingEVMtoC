@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class not implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public not(String opcode)
+    public not()
     {
-        this.opcode=opcode;
+        this.opcode=0x19;
         this.name = "NOT";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

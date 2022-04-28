@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class jumpdest implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public jumpdest(String opcode)
+    public jumpdest()
     {
-        this.opcode=opcode;
+        this.opcode=0x5B;
         this.name = "JUMPDEST";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

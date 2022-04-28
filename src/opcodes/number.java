@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class number implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public number(String opcode)
+    public number()
     {
-        this.opcode=opcode;
+        this.opcode=0x43;
         this.name = "NUMBER";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

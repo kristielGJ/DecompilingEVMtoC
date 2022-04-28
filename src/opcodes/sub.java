@@ -8,16 +8,16 @@ import src.interfaces.*;
 */
 public class sub implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public sub(String opcode)
+    public sub()
     {
-        this.opcode=opcode;
+        this.opcode=0x03;
         this.name = "SUB";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

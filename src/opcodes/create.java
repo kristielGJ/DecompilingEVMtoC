@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class create implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public create(String opcode)
+    public create()
     {
-        this.opcode=opcode;
+        this.opcode=0xF0;
         this.name = "CREATE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

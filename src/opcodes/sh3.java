@@ -1,25 +1,26 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  hash = addr.exists ? keccak256(addr.code) : 0
-    Stack no.3F
-    Last update: 04/03,05/03
+/*  keccak256(mem[ost:ost+len])
+    Stack no.20
+    Last update: 03/03,05/03
+    21-2F are invalid!
 */
 import src.interfaces.*;
-/* 
-    Test: Passed Dissasembly test! 05/03
-*/
-public class extcodehash implements GetInstructionsFromOpcode 
+
+// Test: Passed Dissasembly test! 05/03
+
+public class sh3 implements GetInstructionsFromOpcode 
 {
     private int opcode;
     private String name;
    
-    public extcodehash()
+    public sh3()
     {
-        this.opcode=0x3F;
-        this.name = "EXTCODEHASH";
+        this.opcode=0x20;
+        this.name = "SHA3";
     }
    
-    public int getOpcode() 
+     public int getOpcode() 
     {
         return opcode;
     }
@@ -36,4 +37,3 @@ public class extcodehash implements GetInstructionsFromOpcode
     }
    
 }
-

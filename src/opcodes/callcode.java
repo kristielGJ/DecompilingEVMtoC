@@ -12,16 +12,16 @@ import src.interfaces.*;
 */
 public class callcode implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public callcode(String opcode)
+    public callcode()
     {
-        this.opcode=opcode;
+        this.opcode=0xF2;
         this.name = "CALLCODE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

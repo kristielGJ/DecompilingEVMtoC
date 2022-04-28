@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class bytee implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public bytee(String opcode)
+    public bytee()
     {
-        this.opcode=opcode;
+        this.opcode=0x1A;
         this.name = "BYTE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

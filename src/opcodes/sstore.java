@@ -9,16 +9,16 @@ import src.interfaces.*;
 */
 public class sstore implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public sstore(String opcode)
+    public sstore()
     {
-        this.opcode=opcode;
+        this.opcode=0x55;
         this.name = "SSTORE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

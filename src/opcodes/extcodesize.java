@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class extcodesize implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public extcodesize(String opcode)
+    public extcodesize()
     {
-        this.opcode=opcode;
+        this.opcode=0x3B;
         this.name = "EXTCODESIZE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

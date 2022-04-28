@@ -1,7 +1,7 @@
 //Author Gera Jahja
 package src.opcodes;
 /*  int256 division
-    Stack no.00 
+    Stack no.05
     Last update: 28/02,05/03
 */
 import src.interfaces.*;
@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class sdiv implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public sdiv(String opcode)
+    public sdiv()
     {
-        this.opcode=opcode;
+        this.opcode=0x05;
         this.name = "SDIV";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

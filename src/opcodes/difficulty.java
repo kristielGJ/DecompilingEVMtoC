@@ -1,23 +1,23 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  push current chain id onto stack
-    Stack no.46
+/*  difficulty of current block
+    Stack no.44
     Last update: 04/03,05/03
     49-4F are invalid
-*/ 
+*/
 import src.interfaces.*;
 /* 
     Test: Passed Dissasembly test! 05/03
 */
-public class chainid implements GetInstructionsFromOpcode 
+public class difficulty implements GetInstructionsFromOpcode 
 {
     private int opcode;
     private String name;
    
-    public chainid()
+    public difficulty()
     {
-        this.opcode=0x46;
-        this.name = "CHAINID";
+        this.opcode=0x44;
+        this.name = "DIFFICULTY";
     }
    
     public int getOpcode() 

@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class selfdestruct implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public selfdestruct(String opcode)
+    public selfdestruct()
     {
-        this.opcode=opcode;
+        this.opcode=0xFF;
         this.name = "SELFDESTRUCT";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

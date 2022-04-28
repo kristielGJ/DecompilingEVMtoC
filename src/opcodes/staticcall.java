@@ -9,16 +9,16 @@ import src.interfaces.*;
 */
 public class staticcall implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public staticcall(String opcode)
+    public staticcall()
     {
-        this.opcode=opcode;
+        this.opcode=0xFA;
         this.name = "STATICCALL";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

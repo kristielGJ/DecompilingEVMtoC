@@ -11,20 +11,20 @@ import src.interfaces.*;
 */
 public class signextend implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public signextend(String opcode)
+    public signextend()
     {
-        this.opcode=opcode;
+        this.opcode=0x0B;
         this.name = "SIGNEXTEND";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }
-   
+
     public String getName()
     {
         return this.name;

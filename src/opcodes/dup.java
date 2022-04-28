@@ -1,6 +1,7 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  Last update: 04/03
+import src.interfaces.*;
+/*  Last update: 24/04
     80 =  DUP1 clone 1st value on stack
     81 =  DUP2 clone 1nd value on stack
     ...etc
@@ -21,6 +22,33 @@ package src.opcodes;
     8E	DUP15
     8F	DUP16
 */
-public class dup {
-    
+public class dup implements GetInstructionsFromOpcode {
+ 
+    private int opcode;
+    private String opcodeHex;
+    private String name;
+ 
+
+    public dup(int opcodenumber)
+    {
+        this.opcodeHex="8"+Integer.toHexString(opcodenumber-1);
+        this.opcode=Integer.parseInt(opcodeHex,16);
+        this.name = "DUP"+String.valueOf(opcodenumber);
+    }
+   
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor) 
+    {
+        return visitor.visit(this);
+    }
 }

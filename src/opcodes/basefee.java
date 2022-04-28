@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class basefee implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public basefee(String opcode)
+    public basefee()
     {
-        this.opcode=opcode;
+        this.opcode=0x48;
         this.name = "BASEFEE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

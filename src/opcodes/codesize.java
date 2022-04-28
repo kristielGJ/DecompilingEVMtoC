@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class codesize implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public codesize(String opcode)
+    public codesize()
     {
-        this.opcode=opcode;
+        this.opcode=0x38;
         this.name = "CODESIZE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class gas implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public gas(String opcode)
+    public gas()
     {
-        this.opcode=opcode;
+        this.opcode=0x5A;
         this.name = "GAS";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

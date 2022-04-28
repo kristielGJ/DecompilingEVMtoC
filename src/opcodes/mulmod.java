@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class mulmod implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public mulmod(String opcode)
+    public mulmod()
     {
-        this.opcode=opcode;
+        this.opcode=0x09;
         this.name = "MULMOD";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

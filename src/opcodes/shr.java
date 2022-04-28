@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class shr implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public shr(String opcode)
+    public shr()
     {
-        this.opcode=opcode;
+        this.opcode=0x1C;
         this.name = "SHR";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

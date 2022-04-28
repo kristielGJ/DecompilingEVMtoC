@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class returndatacopy implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public returndatacopy(String opcode)
+    public returndatacopy()
     {
-        this.opcode=opcode;
+        this.opcode=0x3E;
         this.name = "RETURNDATACCOPY";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

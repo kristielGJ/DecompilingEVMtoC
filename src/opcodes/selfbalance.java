@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class selfbalance implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public selfbalance(String opcode)
+    public selfbalance()
     {
-        this.opcode=opcode;
+        this.opcode=0x47;
         this.name = "SELFBALANCE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

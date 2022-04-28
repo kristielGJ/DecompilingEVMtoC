@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class mstore8 implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public mstore8(String opcode)
+    public mstore8()
     {
-        this.opcode=opcode;
+        this.opcode=0x53;
         this.name = "MSTORE8";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

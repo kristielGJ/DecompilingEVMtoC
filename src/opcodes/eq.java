@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class eq implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public eq(String opcode)
+    public eq()
     {
-        this.opcode=opcode;
+        this.opcode=0x14;
         this.name = "EQ";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

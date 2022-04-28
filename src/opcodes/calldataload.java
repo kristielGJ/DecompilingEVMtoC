@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class calldataload implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public calldataload(String opcode)
+    public calldataload()
     {
-        this.opcode=opcode;
+        this.opcode=0x35;
         this.name = "CALLDATALOAD";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

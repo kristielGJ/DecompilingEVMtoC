@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class returndatasize implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public returndatasize(String opcode)
+    public returndatasize()
     {
-        this.opcode=opcode;
+        this.opcode=0x3D;
         this.name = "RETURNDATASIZE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

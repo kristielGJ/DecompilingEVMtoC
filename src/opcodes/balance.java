@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class balance implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public balance(String opcode)
+    public balance( )
     {
-        this.opcode=opcode;
+        this.opcode=0x31;
         this.name = "BALANCE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

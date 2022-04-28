@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class coinbase implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public coinbase(String opcode)
+    public coinbase()
     {
-        this.opcode=opcode;
+        this.opcode=0x41;
         this.name = "COINBASE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

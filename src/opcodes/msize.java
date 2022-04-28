@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class msize implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public msize(String opcode)
+    public msize()
     {
-        this.opcode=opcode;
+        this.opcode=0x59;
         this.name = "MSIZE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

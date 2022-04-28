@@ -8,16 +8,16 @@ import src.interfaces.*;
 */
 public class stop implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public stop(String opcode)
+    public stop()
     {
-        this.opcode=opcode;
+        this.opcode=0x00;
         this.name = "STOP";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

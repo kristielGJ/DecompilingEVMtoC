@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class or implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public or(String opcode)
+    public or()
     {
-        this.opcode=opcode;
+        this.opcode=0x17;
         this.name = "OR";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

@@ -1,6 +1,7 @@
 //Author Gera Jahja
 package src.opcodes;
-/*  Last update: 04/03
+import src.interfaces.*;
+/*  Last update: 24/04
     90 =  SWAP1 ( a, b -> becomes -> b, a )
     91 =  SWAP2 ( a, _, b -> becomes -> b, _, a )
     ...etc
@@ -22,6 +23,32 @@ package src.opcodes;
     9E	SWAP15
     9F	SWAP16
 */
-public class swap {
-    
+public class swap implements GetInstructionsFromOpcode {
+
+    private int opcode;
+    private String opcodeHex;
+    private String name;
+   
+    public swap(int opcodenumber)
+    {
+        this.opcodeHex="9"+Integer.toHexString(opcodenumber-1);
+        this.opcode=Integer.parseInt(opcodeHex,16);
+        this.name = "SWAP"+String.valueOf(opcodenumber);
+    }
+   
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor) 
+    {
+        return visitor.visit(this);
+    }
 }

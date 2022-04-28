@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class extcodecopy implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public extcodecopy(String opcode)
+    public extcodecopy()
     {
-        this.opcode=opcode;
+        this.opcode=0x3C;
         this.name = "EXTCODECOPY";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class exp implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public exp(String opcode)
+    public exp ()
     {
-        this.opcode=opcode;
+        this.opcode=0x0A;
         this.name = "EXP";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class calldatasize implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public calldatasize(String opcode)
+    public calldatasize()
     {
-        this.opcode=opcode;
+        this.opcode=0x36;
         this.name = "CALLDATASIZE";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class shl implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public shl(String opcode)
+    public shl()
     {
-        this.opcode=opcode;
+        this.opcode=0x1B;
         this.name = "SHL";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

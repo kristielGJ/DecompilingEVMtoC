@@ -11,16 +11,16 @@ import src.interfaces.*;
  */
 public class revert implements GetInstructionsFromOpcode 
  {
-     private String opcode;
+     private int opcode;
      private String name;
     
-     public revert(String opcode)
+     public revert()
      {
-         this.opcode=opcode;
+         this.opcode=0xFD;
          this.name = "REVERT";
      }
     
-     public String getOpcode() 
+     public int getOpcode() 
      {
          return opcode;
      }

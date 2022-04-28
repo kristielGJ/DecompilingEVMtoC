@@ -5,6 +5,7 @@ import src.opcodes.*;
 
 public interface Dissasemble 
 {
+    String visit(sh3 Sh3);
     String visit(add Add);
     String visit(stop Stop);
     String visit(mul Mul);
@@ -27,7 +28,7 @@ public interface Dissasemble
     String visit(or Or);
     String visit(xor Xor);
     String visit(not Not);
-    String visit(bytee Byte_);
+    String visit(bytee Bytee);
     String visit(shl Shl);
     String visit(shr Shr);
     String visit(sar Sar);
@@ -51,7 +52,7 @@ public interface Dissasemble
     String visit(coinbase Coinbase);
     String visit(timestamp Timestamp);
     String visit(number Number);
-    String visit(dificulty Dificulty);
+    String visit(difficulty Difficulty);
     String visit(gaslimit Gaslimit);
     String visit(chainid Chainid);
     String visit(selfbalance Selfbalance);

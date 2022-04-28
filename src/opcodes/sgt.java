@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class sgt implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public sgt(String opcode)
+    public sgt()
     {
-        this.opcode=opcode;
+        this.opcode=0x13;
         this.name = "SGT";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

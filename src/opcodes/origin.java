@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class origin implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public origin(String opcode)
+    public origin()
     {
-        this.opcode=opcode;
+        this.opcode=0x32;
         this.name = "ORIGIN";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

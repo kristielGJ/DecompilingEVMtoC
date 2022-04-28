@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class iszero implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public iszero(String opcode)
+    public iszero()
     {
-        this.opcode=opcode;
+        this.opcode=0x15;
         this.name = "ISZERO";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

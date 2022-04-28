@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class div implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public div(String opcode)
+    public div()
     {
-        this.opcode=opcode;
+        this.opcode=0x04;
         this.name = "DIV";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

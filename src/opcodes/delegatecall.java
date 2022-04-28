@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class delegatecall implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public delegatecall(String opcode)
+    public delegatecall()
     {
-        this.opcode=opcode;
+        this.opcode=0xF4;
         this.name = "DELEGATECALL";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

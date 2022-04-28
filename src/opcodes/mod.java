@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class mod implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public mod(String opcode)
+    public mod()
     {
-        this.opcode=opcode;
+        this.opcode=0x06;
         this.name = "MOD";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

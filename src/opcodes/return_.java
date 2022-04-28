@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class return_ implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public return_(String opcode)
+    public return_()
     {
-        this.opcode=opcode;
+        this.opcode=0xF3;
         this.name = "RETURN";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

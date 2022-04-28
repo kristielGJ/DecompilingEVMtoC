@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class pc implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public pc(String opcode)
+    public pc()
     {
-        this.opcode=opcode;
+        this.opcode=0x58;
         this.name = "PC";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

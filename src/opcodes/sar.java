@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class sar implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public sar(String opcode)
+    public sar()
     {
-        this.opcode=opcode;
+        this.opcode=0x1D;
         this.name = "SAR";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

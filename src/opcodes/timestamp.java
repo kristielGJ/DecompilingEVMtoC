@@ -10,16 +10,16 @@ import src.interfaces.*;
 
 public class timestamp implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public timestamp(String opcode)
+    public timestamp()
     {
-        this.opcode=opcode;
+        this.opcode=0x42;
         this.name = "TIMESTAMP";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

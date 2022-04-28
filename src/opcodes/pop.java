@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class pop implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public pop(String opcode)
+    public pop()
     {
-        this.opcode=opcode;
+        this.opcode=0x50;
         this.name = "POP";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

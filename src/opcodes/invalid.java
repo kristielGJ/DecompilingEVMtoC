@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class invalid implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public invalid(String opcode)
+    public invalid()
     {
-        this.opcode=opcode;
+        this.opcode=0xFE;
         this.name = "INVALID";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

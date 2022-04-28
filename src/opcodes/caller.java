@@ -10,16 +10,16 @@ import src.interfaces.*;
 */
 public class caller implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public caller(String opcode)
+    public caller()
     {
-        this.opcode=opcode;
+        this.opcode=0x33;
         this.name = "CALLER";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

@@ -11,16 +11,16 @@ import src.interfaces.*;
 */
 public class jumpi implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public jumpi(String opcode)
+    public jumpi()
     {
-        this.opcode=opcode;
+        this.opcode=0x57;
         this.name = "JUMPI";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }

@@ -9,16 +9,16 @@ import src.interfaces.*;
 */
 public class mul implements GetInstructionsFromOpcode 
 {
-    private String opcode;
+    private int opcode;
     private String name;
    
-    public mul(String opcode)
+    public mul()
     {
-        this.opcode=opcode;
+        this.opcode=0x02;
         this.name = "MUL";
     }
    
-    public String getOpcode() 
+    public int getOpcode() 
     {
         return opcode;
     }
