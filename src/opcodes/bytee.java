@@ -19,7 +19,14 @@ public class bytee implements GetInstructionsFromOpcode
         this.opcode=0x1A;
         this.name = "BYTE";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

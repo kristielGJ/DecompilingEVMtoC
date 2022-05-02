@@ -12,7 +12,8 @@ public class balance implements GetInstructionsFromOpcode
 {
     private int opcode;
     private String name;
-   
+    private String cCode;
+    
     public balance( )
     {
         this.opcode=0x31;
@@ -27,6 +28,14 @@ public class balance implements GetInstructionsFromOpcode
     public String getName()
     {
         return this.name;
+    }
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
     }
    
     @Override

@@ -18,7 +18,14 @@ public class calldatacopy implements GetInstructionsFromOpcode
         this.opcode=0x37;
         this.name = "CALLDATACOPY";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

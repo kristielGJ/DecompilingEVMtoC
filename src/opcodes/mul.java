@@ -17,7 +17,14 @@ public class mul implements GetInstructionsFromOpcode
         this.opcode=0x02;
         this.name = "MUL";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

@@ -12,7 +12,8 @@ public class address implements GetInstructionsFromOpcode
 {
     private int opcode;
     private String name;
-   
+    private String cCode;
+
     public address()
     {
         this.opcode=0x30;
@@ -28,7 +29,14 @@ public class address implements GetInstructionsFromOpcode
     {
         return this.name;
     }
-   
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     @Override
     public String accept(Dissasemble visitor) 
     {

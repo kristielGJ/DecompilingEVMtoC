@@ -19,7 +19,14 @@ public class sh3 implements GetInstructionsFromOpcode
         this.opcode=0x20;
         this.name = "SHA3";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
      public int getOpcode() 
     {
         return opcode;

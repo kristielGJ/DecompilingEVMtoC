@@ -30,7 +30,14 @@ public class push implements GetInstructionsFromOpcode {
     {
         return opcode;
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public String getName()
     {
         return this.name;

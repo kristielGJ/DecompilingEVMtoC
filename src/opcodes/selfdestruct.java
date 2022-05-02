@@ -19,7 +19,14 @@ public class selfdestruct implements GetInstructionsFromOpcode
         this.opcode=0xFF;
         this.name = "SELFDESTRUCT";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;
@@ -30,9 +37,9 @@ public class selfdestruct implements GetInstructionsFromOpcode
         return this.name;
     }
    
+
     @Override
-    public String accept(Dissasemble visitor) 
-    {
+    public String accept(Dissasemble visitor) {
         return visitor.visit(this);
     }
    

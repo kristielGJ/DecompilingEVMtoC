@@ -18,7 +18,14 @@ public class extcodecopy implements GetInstructionsFromOpcode
         this.opcode=0x3C;
         this.name = "EXTCODECOPY";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

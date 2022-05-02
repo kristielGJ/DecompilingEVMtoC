@@ -17,7 +17,14 @@ public class sstore implements GetInstructionsFromOpcode
         this.opcode=0x55;
         this.name = "SSTORE";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

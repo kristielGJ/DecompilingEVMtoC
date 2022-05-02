@@ -19,7 +19,14 @@ public class jumpdest implements GetInstructionsFromOpcode
         this.opcode=0x5B;
         this.name = "JUMPDEST";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

@@ -19,7 +19,14 @@ public class delegatecall implements GetInstructionsFromOpcode
         this.opcode=0xF4;
         this.name = "DELEGATECALL";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

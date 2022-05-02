@@ -19,7 +19,14 @@ public class blockhash implements GetInstructionsFromOpcode
         this.opcode=0x40;
         this.name = "BLOCKHASH";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

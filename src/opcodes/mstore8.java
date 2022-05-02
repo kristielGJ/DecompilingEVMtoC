@@ -19,7 +19,14 @@ public class mstore8 implements GetInstructionsFromOpcode
         this.opcode=0x53;
         this.name = "MSTORE8";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

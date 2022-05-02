@@ -19,7 +19,14 @@ public class selfbalance implements GetInstructionsFromOpcode
         this.opcode=0x47;
         this.name = "SELFBALANCE";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

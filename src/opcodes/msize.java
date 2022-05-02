@@ -19,7 +19,14 @@ public class msize implements GetInstructionsFromOpcode
         this.opcode=0x59;
         this.name = "MSIZE";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

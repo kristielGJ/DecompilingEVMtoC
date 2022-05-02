@@ -19,7 +19,14 @@ public class invalid implements GetInstructionsFromOpcode
         this.opcode=0xFE;
         this.name = "INVALID";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

@@ -18,7 +18,14 @@ public class not implements GetInstructionsFromOpcode
         this.opcode=0x19;
         this.name = "NOT";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

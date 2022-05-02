@@ -19,7 +19,14 @@ public class jump implements GetInstructionsFromOpcode
         this.opcode=0x56;
         this.name = "JUMP";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

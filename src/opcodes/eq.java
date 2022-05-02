@@ -19,7 +19,14 @@ public class eq implements GetInstructionsFromOpcode
         this.opcode=0x14;
         this.name = "EQ";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

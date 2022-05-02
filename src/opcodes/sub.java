@@ -16,7 +16,14 @@ public class sub implements GetInstructionsFromOpcode
         this.opcode=0x03;
         this.name = "SUB";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

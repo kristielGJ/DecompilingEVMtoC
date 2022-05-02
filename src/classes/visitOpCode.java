@@ -2,11 +2,41 @@
 package src.classes;
 import src.interfaces.*;
 import src.opcodes.*;
+import src.cCodes.*;
 
 //Uses interfaces to visit the opcode java classes
 //Last update: 24/04
 class visitOpCode implements Dissasemble
 { 
+    //c code thats used for more than one opcode:
+    public String getCheck(stack st){
+        assertVal stackCheck = new assertVal(st.getAssertStackHeight());
+        assertVal gasCheck = new assertVal("gasUsed < gasLimit");
+        return "\t"+stackCheck.getAssertCall()+"\n\t"+"gasUsed ++;"+"\n\t"+gasCheck.getAssertCall();
+    }
+    public String arithmeticCodeGenerator(int lableno,int no,String operator){
+        //decompilation
+        stack stackval1 = new stack("",2,"-");
+        stack stackval2 = new stack("",1,"-");
+        //NUM SHOULD BE A PARMETER
+        variable var1 = new variable(no+1,"",stackval1.getStackOp());//no need for varName as these are tmp variables
+        variable var2 = new variable(no+2,"",stackval2.getStackOp());
+        variable var3 = new variable(no+3,"",var1.getVariableName()+operator+var2.getVariableName());
+
+        stack stackval = new stack(var3.getVariableName(),2,"-");
+
+        label label_ =new label(lableno);//ORDER SHOULD BE A PARAMETER
+
+        String variables =var1.getVariable()+var2.getVariable()+var3.getVariable();
+
+        String stackvals ="\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n";
+        
+        String asserts= getCheck(stackval);
+        return label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd();
+    }
+
+    //visitors
+   
     @Override
     public String  visit(push Push)
     {
@@ -37,9 +67,12 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(add Add) 
     {
+        //dissasembly
         System.out.println("0"+Integer.toHexString(Add.getOpcode()).toUpperCase() + "  "+ Add.getName());//output the instruction(Disassembly), used for decompilation
-        return Add.getName();
+        Add.setC(arithmeticCodeGenerator(1,0," + "));//C Code 
+        return Add.getC();
     }
+    
     @Override
     public String visit(stop Stop) 
     {
@@ -50,20 +83,23 @@ class visitOpCode implements Dissasemble
     public String visit(mul Mul) 
     {
         System.out.println("0"+Integer.toHexString(Mul.getOpcode()).toUpperCase() + "  "+ Mul.getName());//output the instruction(Disassembly), used for decompilation
-        return Mul.getName();
+        Mul.setC(arithmeticCodeGenerator(1,0," * "));//C Code 
+        return Mul.getC();
     }
 
     @Override
     public String visit(sub Sub) 
     {
         System.out.println("0"+Integer.toHexString(Sub.getOpcode()).toUpperCase() + "  "+ Sub.getName());//output the instruction(Disassembly), used for decompilation
-        return Sub.getName();
+        Sub.setC(arithmeticCodeGenerator(1,0," - "));//C Code 
+        return Sub.getC();
     }
     
     @Override
     public String visit(div Div){
         System.out.println("0"+Integer.toHexString(Div.getOpcode()).toUpperCase() + "  "+ Div.getName());//output the instruction(Disassembly), used for decompilation
-        return Div.getName();
+        Div.setC(arithmeticCodeGenerator(1,0," / "));//C Code 
+        return Div.getC();
     }
     @Override
     public String visit(sdiv Sdiv){
@@ -73,7 +109,8 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(mod Mod){
         System.out.println("0"+Integer.toHexString(Mod.getOpcode()).toUpperCase() + "  "+ Mod.getName());//output the instruction(Disassembly), used for decompilation
-        return Mod.getName();
+        Mod.setC(arithmeticCodeGenerator(1,0," % "));//C Code 
+        return Mod.getC();
     }
     @Override
     public String visit(smod Smod){
@@ -103,12 +140,14 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(lt Lt){
         System.out.println(Integer.toHexString(Lt.getOpcode()).toUpperCase() + "  "+ Lt.getName());//output the instruction(Disassembly), used for decompilation
-        return Lt.getName();
+        Lt.setC(arithmeticCodeGenerator(1,0," < "));//C Code 
+        return Lt.getC();
     }
     @Override
     public String visit(gt GT){
         System.out.println(Integer.toHexString(GT.getOpcode()).toUpperCase() + "  "+ GT.getName());//output the instruction(Disassembly), used for decompilation
-        return GT.getName();
+        GT.setC(arithmeticCodeGenerator(1,0," > "));//C Code 
+        return GT.getC();
     }
     @Override
     public String visit(slt Slt){
@@ -123,7 +162,8 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(eq Eq){
         System.out.println(Integer.toHexString(Eq.getOpcode()).toUpperCase()+ "  "+ Eq.getName());//output the instruction(Disassembly), used for decompilation
-        return Eq.getName();
+        Eq.setC(arithmeticCodeGenerator(1,0," == "));//C Code 
+        return Eq.getC();
     }
     @Override
     public String visit(iszero Iszero){

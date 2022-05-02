@@ -19,7 +19,14 @@ public class pc implements GetInstructionsFromOpcode
         this.opcode=0x58;
         this.name = "PC";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

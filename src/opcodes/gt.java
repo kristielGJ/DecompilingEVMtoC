@@ -18,7 +18,14 @@ public class gt implements GetInstructionsFromOpcode
         this.opcode=0x11;
         this.name = "GT";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

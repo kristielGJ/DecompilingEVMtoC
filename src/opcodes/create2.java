@@ -19,7 +19,14 @@ public class create2 implements GetInstructionsFromOpcode
         this.opcode=0xF5;
         this.name = "CREATE2";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

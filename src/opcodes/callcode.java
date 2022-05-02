@@ -20,7 +20,14 @@ public class callcode implements GetInstructionsFromOpcode
         this.opcode=0xF2;
         this.name = "CALLCODE";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

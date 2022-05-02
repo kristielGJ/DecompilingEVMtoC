@@ -18,7 +18,14 @@ public class caller implements GetInstructionsFromOpcode
         this.opcode=0x33;
         this.name = "CALLER";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

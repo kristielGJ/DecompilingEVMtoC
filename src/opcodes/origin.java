@@ -18,7 +18,14 @@ public class origin implements GetInstructionsFromOpcode
         this.opcode=0x32;
         this.name = "ORIGIN";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

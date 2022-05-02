@@ -19,7 +19,14 @@ public class mload implements GetInstructionsFromOpcode
         this.opcode=0x51;
         this.name = "MLOAD";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

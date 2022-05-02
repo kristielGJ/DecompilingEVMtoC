@@ -18,7 +18,14 @@ public class iszero implements GetInstructionsFromOpcode
         this.opcode=0x15;
         this.name = "ISZERO";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

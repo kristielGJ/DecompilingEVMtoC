@@ -5,6 +5,7 @@ package src.opcodes;
     Last update: 28/02,05/03
 */
 import src.interfaces.*;
+
 /* 
     Test: Passed Dissasembly test! 05/03
 */
@@ -12,7 +13,8 @@ public class addmod implements GetInstructionsFromOpcode
 {
     private int opcode;
     private String name;
-   
+    private String cCode;
+
     public addmod()
     {
         this.opcode=0x08;
@@ -27,6 +29,14 @@ public class addmod implements GetInstructionsFromOpcode
     public String getName()
     {
         return this.name;
+    }
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
     }
    
     @Override

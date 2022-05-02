@@ -25,7 +25,14 @@ public class log implements GetInstructionsFromOpcode {
         this.opcode=Integer.parseInt(opcodeHex,16);
         this.name = "LOG"+String.valueOf(opcodenumber);
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

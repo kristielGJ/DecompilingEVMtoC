@@ -19,7 +19,14 @@ public class signextend implements GetInstructionsFromOpcode
         this.opcode=0x0B;
         this.name = "SIGNEXTEND";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

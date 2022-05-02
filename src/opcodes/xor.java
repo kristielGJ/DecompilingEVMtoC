@@ -17,7 +17,14 @@ public class xor implements GetInstructionsFromOpcode
         this.opcode=0x18;
         this.name = "XOR";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

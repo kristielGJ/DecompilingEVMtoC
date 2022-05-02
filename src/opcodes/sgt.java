@@ -18,7 +18,14 @@ public class sgt implements GetInstructionsFromOpcode
         this.opcode=0x13;
         this.name = "SGT";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

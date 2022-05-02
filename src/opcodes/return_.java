@@ -19,7 +19,14 @@ public class return_ implements GetInstructionsFromOpcode
         this.opcode=0xF3;
         this.name = "RETURN";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

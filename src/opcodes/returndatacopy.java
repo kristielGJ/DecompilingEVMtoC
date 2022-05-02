@@ -18,7 +18,14 @@ public class returndatacopy implements GetInstructionsFromOpcode
         this.opcode=0x3E;
         this.name = "RETURNDATACCOPY";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

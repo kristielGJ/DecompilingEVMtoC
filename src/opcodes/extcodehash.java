@@ -18,7 +18,14 @@ public class extcodehash implements GetInstructionsFromOpcode
         this.opcode=0x3F;
         this.name = "EXTCODEHASH";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

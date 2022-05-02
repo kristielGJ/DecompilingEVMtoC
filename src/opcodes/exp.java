@@ -18,7 +18,14 @@ public class exp implements GetInstructionsFromOpcode
         this.opcode=0x0A;
         this.name = "EXP";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

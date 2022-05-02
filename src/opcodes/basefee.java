@@ -19,7 +19,14 @@ public class basefee implements GetInstructionsFromOpcode
         this.opcode=0x48;
         this.name = "BASEFEE";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

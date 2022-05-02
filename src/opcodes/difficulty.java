@@ -19,7 +19,14 @@ public class difficulty implements GetInstructionsFromOpcode
         this.opcode=0x44;
         this.name = "DIFFICULTY";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;

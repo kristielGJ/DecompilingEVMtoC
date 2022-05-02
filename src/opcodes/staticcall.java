@@ -17,7 +17,14 @@ public class staticcall implements GetInstructionsFromOpcode
         this.opcode=0xFA;
         this.name = "STATICCALL";
     }
-   
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
     public int getOpcode() 
     {
         return opcode;
