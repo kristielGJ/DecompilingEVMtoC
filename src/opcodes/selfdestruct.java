@@ -39,8 +39,9 @@ public class selfdestruct implements GetInstructionsFromOpcode
    
 
     @Override
-    public String accept(Dissasemble visitor) {
-        return visitor.visit(this);
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
     }
    
 }

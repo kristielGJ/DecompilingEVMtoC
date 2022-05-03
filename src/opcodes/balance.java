@@ -39,9 +39,9 @@ public class balance implements GetInstructionsFromOpcode
     }
    
     @Override
-    public String accept(Dissasemble visitor) 
+    public String accept(Dissasemble visitor,int orderNo) 
     {
-        return visitor.visit(this);
+        return visitor.visit(this,orderNo);
     }
 }
 

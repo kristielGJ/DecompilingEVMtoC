@@ -18,12 +18,14 @@ public class push implements GetInstructionsFromOpcode {
     private int opcode;
     private String opcodeHex;
     private String name;
+    private String memoryadd;
    
     public push(String memoryadd,String opcodenumber,int byteNo)
     {
         this.opcodeHex=opcodenumber;
         this.opcode=Integer.parseInt(opcodeHex,16);
         this.name = "PUSH"+String.valueOf(byteNo)+" 0x"+memoryadd;
+        this.memoryadd = " 0x"+memoryadd;
     }
    
     public int getOpcode() 
@@ -42,10 +44,14 @@ public class push implements GetInstructionsFromOpcode {
     {
         return this.name;
     }
+    public String getMemoryAdd()
+    {
+        return this.memoryadd;
+    }
    
     @Override
-    public String accept(Dissasemble visitor) 
+    public String accept(Dissasemble visitor,int orderNo) 
     {
-        return visitor.visit(this);
+        return visitor.visit(this,orderNo);
     }
 }

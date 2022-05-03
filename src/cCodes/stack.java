@@ -18,9 +18,9 @@ public class stack {
         this.initialiseTop="int top;";
 
         //stack manipulation in main c function
-        this.stackPopTop="--top;";
+        this.stackPopTop="--top;\n";
         this.stackElement="stack[top]";
-        this.stackPushTop="++top;";
+        this.stackPushTop="++top;\n";
         this.assertStackHeight="top != STACKHEIGHT";
         this.assertStackNotEmpty="top >=0";
         this.stackOp="stack[top "+operator+" "+val+"]";

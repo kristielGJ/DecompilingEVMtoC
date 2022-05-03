@@ -13,6 +13,7 @@ public class variable {
     String intvariable;
     String variableType;
     String variableType2;
+    String noTypeVariable;
 
     //create a tmp (or customised name "variableDef") variable definition
     public variable(int tmpNo,String varName,String value) {
@@ -23,6 +24,7 @@ public class variable {
         this.variableDef="var "+variableNameDef+";\n";
         this.variableDefValue="var "+variableNameDef+variableValue+";\n";
         this.intvariable="\tint "+variableName+variableValue+";\n";
+        this.noTypeVariable="\t"+varName+variableValue+";\n";
     }
 
     //create a var type definition
@@ -34,6 +36,9 @@ public class variable {
 
     public String getVariableName() {
         return variableName;
+    } 
+    public String getNoTypeVariable() {
+        return noTypeVariable;
     }
 
     public String getVariableValue() {

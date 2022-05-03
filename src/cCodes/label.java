@@ -5,7 +5,7 @@ public class label {
     String labelEnd;
 
     public label(int order) {
-        this.labelName=" label_"+order+" :\n {\n";
+        this.labelName="\n label_"+order+" :\n {\n";
         this.labelEnd="\n }";
         //add gass model,etc
 
