@@ -16,11 +16,11 @@ public class variable {
     String noTypeVariable;
 
     //create a tmp (or customised name "variableDef") variable definition
-    public variable(int tmpNo,String varName,String value) {
+    public variable(int tmpNo,String varName,String value,String unsigned) {
         this.variableName="tmp"+tmpNo;
         this.variableNameDef=varName;
         this.variableValue=" = "+value;
-        this.variable="\tvar "+variableName+variableValue+";\n";
+        this.variable="\t"+unsigned+"var "+variableName+variableValue+";\n";
         this.variableDef="var "+variableNameDef+";\n";
         this.variableDefValue="var "+variableNameDef+variableValue+";\n";
         this.intvariable="\tint "+variableName+variableValue+";\n";

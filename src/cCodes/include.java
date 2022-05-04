@@ -5,7 +5,7 @@ public class include {
     String includeExit;
 
     public include() {
-        this.includeExit ="#include <stdlib.h>\n#include <stdio.h>\n";
+        this.includeExit ="#include <stdlib.h>\n#include <stdio.h>\n#include <math.h>\n";
         this.includeAssert = "#include <assert.h>\n"+includeExit;
     }
 

@@ -11,7 +11,7 @@ public class EvmDisassemble {
     public static List<String> LogVariationsList = Arrays.asList(LogVariations);
 
     /*check is a string is a number , from :https://www.baeldung.com/java-check-string-number */
-    public static boolean isNumeric(String strNum) {//check is a string is a number https://www.baeldung.com/java-check-string-number
+    public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
         }

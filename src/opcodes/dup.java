@@ -27,10 +27,12 @@ public class dup implements GetInstructionsFromOpcode {
     private int opcode;
     private String opcodeHex;
     private String name;
+    private int opcodeno;
  
 
     public dup(int opcodenumber)
     {
+        this.opcodeno=opcodenumber;
         this.opcodeHex="8"+Integer.toHexString(opcodenumber-1);
         this.opcode=Integer.parseInt(opcodeHex,16);
         this.name = "DUP"+String.valueOf(opcodenumber);
@@ -46,6 +48,10 @@ public class dup implements GetInstructionsFromOpcode {
     public int getOpcode() 
     {
         return opcode;
+    }
+    public int getOpcodeNo() 
+    {
+        return opcodeno;
     }
    
     public String getName()

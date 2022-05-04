@@ -28,9 +28,10 @@ public class swap implements GetInstructionsFromOpcode {
     private int opcode;
     private String opcodeHex;
     private String name;
-   
+    int opcodeNo;
     public swap(int opcodenumber)
     {
+        this.opcodeNo=opcodenumber;
         this.opcodeHex="9"+Integer.toHexString(opcodenumber-1);
         this.opcode=Integer.parseInt(opcodeHex,16);
         this.name = "SWAP"+String.valueOf(opcodenumber);
@@ -46,6 +47,10 @@ public class swap implements GetInstructionsFromOpcode {
     public int getOpcode() 
     {
         return opcode;
+    
+    }public int getOpcodeNo() 
+    {
+        return opcodeNo;
     }
    
     public String getName()

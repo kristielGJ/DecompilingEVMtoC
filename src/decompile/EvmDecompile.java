@@ -28,20 +28,21 @@ class EvmDecompile {
         include includeAssert = new include();
         function mainFunction = new function();
         variable defineVar = new variable("int", "var");
+        variable defineUVar = new variable("unsigned int", "uvar");
         define gas_stack_definitions = new define(1024, 1000);//get gas limit as user input?
         returnVal return_0 = new returnVal(0);
         
         // Model ethereum stack
-        variable stack = new variable(0,"stack[STACKHEIGHT]", ""); 
-        variable topOfStack= new variable(0,"top","");
+        variable stack = new variable(0,"stack[STACKHEIGHT]", "",""); 
+        variable topOfStack= new variable(0,"top","","");
 
         // Model gas
-        variable gasUsed= new variable(0,"gasUsed","");
-        variable gasLimit= new variable(0,"gasLimit","GASLIMIT");
+        variable gasUsed= new variable(0,"gasUsed","","");
+        variable gasLimit= new variable(0,"gasLimit","GASLIMIT","");
 
         if (s_or_e =="start"){
             TimeUnit.SECONDS.sleep(1);
-            decompiledC.add(includeAssert.getIncludeAssert()+"\n"+defineVar.getVariableType()+"\n"+gas_stack_definitions.getDefineGasLimit()+gas_stack_definitions.getDefineStackHeight()+"\n"+stack.getVariableDef()+topOfStack.getVariableDef()+"\n"+gasUsed.getVariableDef()+gasLimit.getVariableDefValue()+"\n"+mainFunction.getMain()+"\n /*** Start of decompiled code ***/ \n");
+            decompiledC.add(includeAssert.getIncludeAssert()+"\n"+defineVar.getVariableType()+"\n"+defineUVar.getVariableType()+"\n"+gas_stack_definitions.getDefineGasLimit()+gas_stack_definitions.getDefineStackHeight()+"\n"+stack.getVariableDef()+topOfStack.getVariableDef()+"\n"+gasUsed.getVariableDef()+gasLimit.getVariableDefValue()+"\n"+mainFunction.getMain()+"\n /*** Start of decompiled code ***/ \n");
         }
         else if (s_or_e =="end"){
             TimeUnit.SECONDS.sleep(1);

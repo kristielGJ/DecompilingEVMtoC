@@ -11,6 +11,7 @@ public class stack {
     String assertStackNotEmpty;
     String stackOp;
     String incVal;
+    String operationPop;
 
     public stack(String valstr,int val, String operator) {
         //before int main
@@ -26,62 +27,46 @@ public class stack {
         this.stackOp="stack[top "+operator+" "+val+"]";
         this.stackVariable="stack[top] = "+valstr+";";
         this.incVal=valstr+"++;";
-        
+        this.operationPop="top-=2;\n";
     }
-   
+    public String getOperationPop() {
+        return operationPop;
+    }
     public String getHeight() {
         return height;
     }
-    public void setHeight(String height) {
-        this.height = height;
-    }
+    
     public String getStackPopTop() {
         return stackPopTop;
     }
-    public void setStackPopTop(String stackPopTop) {
-        this.stackPopTop = stackPopTop;
-    }
+    
     public String getStackElement() {
         return stackElement;
     }
-    public void setStackElement(String stackElement) {
-        this.stackElement = stackElement;
-    }
+    
     public String getStackPushTop() {
         return stackPushTop;
     }
-    public void setStackPushTop(String stackPushTop) {
-        this.stackPushTop = stackPushTop;
-    }
+    
     public String getInitialiseTop() {
         return initialiseTop;
     }
-    public void setInitialiseTop(String initialiseTop) {
-        this.initialiseTop = initialiseTop;
-    }
+    
     public String getStackVariable() {
         return stackVariable;
     }
-    public void setStackVariable(String stackVariable) {
-        this.stackVariable = stackVariable;
-    }
+    
     public String getAssertStackHeight() {
         return assertStackHeight;
     }
-    public void setAssertStackHeight(String assertStackHeight) {
-        this.assertStackHeight = assertStackHeight;
-    }
+    
     public String getAssertStackNotEmpty() {
         return assertStackNotEmpty;
     }
-    public void setAssertStackNotEmpty(String assertStackNotEmpty) {
-        this.assertStackNotEmpty = assertStackNotEmpty;
-    }
+    
     public String getStackOp() {
         return stackOp;
     }
-    public void setStackOp(String stackOp) {
-        this.stackOp = stackOp;
-    }
+    
     
 }
