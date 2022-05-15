@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  hash = addr.exists ? keccak256(addr.code) : 0
     Stack no.3F
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
 */
 import src.interfaces.*;
 /* 

@@ -3,7 +3,7 @@ package src.opcodes;
 import src.interfaces.*;
 /*  timestamp of current block
     Stack no.42
-    Last update: 04/0305/03
+    Last update: 04/03,05/03,01/05
     Test: Passed Dissasembly test! 05/03
     49-4F are invalid
 */

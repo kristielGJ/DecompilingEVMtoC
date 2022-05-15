@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  mem[retOst:retOst+retLen] := returndata
     Stack no.F1
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
     F6-F9 and FB-FC are invalid
 */
 import src.interfaces.*;

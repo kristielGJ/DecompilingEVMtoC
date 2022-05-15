@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  (u)int256 equality
     Stack no.14
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
 */
     
 import src.interfaces.*;

@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  int256 division
     Stack no.05
-    Last update: 28/02,05/03
+    Last update: 28/02,05/03,01/05
 */
 import src.interfaces.*;
 /* 

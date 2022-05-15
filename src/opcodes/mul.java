@@ -4,7 +4,7 @@ import src.interfaces.*;
 
 /*  (u)int256 multiplication modulo 2**256
     Stack no. 02
-    Last update: 28/02, 05/03
+    Last update: 28/02, 05/03,01/05
     Test: Passed Dissasembly test! 05/03
 */
 public class mul implements GetInstructionsFromOpcode 

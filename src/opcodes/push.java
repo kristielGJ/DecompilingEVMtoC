@@ -2,7 +2,7 @@
 package src.opcodes;
 import src.interfaces.*;
 /*  hexadecimal conversion code https://stackoverflow.com/questions/12005424/java-converting-int-to-hex-and-back-again
-    Last update: 24/04
+    Last update: 24/04,01/05
     60 = PUSH1 (push 1-byte value onto stack)
     61 = PUSH2 (push 2-byte value onto stack)
     ...etc

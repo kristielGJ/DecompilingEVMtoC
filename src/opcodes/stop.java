@@ -3,7 +3,7 @@ package src.opcodes;
 import src.interfaces.*;
 /*  This command halts the execution
     Stack no.00 
-    Last update: 28/02, 05/03
+    Last update: 28/02, 05/03,01/05
     Test: Passed Dissasembly test! 05/03
 */
 public class stop implements GetInstructionsFromOpcode 

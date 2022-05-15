@@ -3,7 +3,7 @@ package src.opcodes;
 import src.interfaces.*;
 /*  mem[retOst:retOst+retLen] := returndata
     Stack no.FA
-    Last update: 04/03, 05/03
+    Last update: 04/03, 05/03,01/05
     Test: Passed Dissasembly test! 05/03
     F6-F9 and FB-FC are invalid
 */

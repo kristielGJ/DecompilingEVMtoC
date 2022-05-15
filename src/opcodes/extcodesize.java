@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  size of code at addr, in bytes
     Stack no.3B
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
 */
 import src.interfaces.*;
 /* 

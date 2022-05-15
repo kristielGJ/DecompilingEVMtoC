@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  $pc := dst mark that pc is only assigned if dst is a valid jumpdest
     Stack no.56
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
     5C-5F are invalid
 */
 import src.interfaces.*;
@@ -20,10 +20,12 @@ public class jump implements GetInstructionsFromOpcode
         this.name = "JUMP";
     }
     private String cCode;
+
     public String getC()
     {
         return this.cCode;
     }
+
     public void setC(String cCode) {
         this.cCode = cCode;
     }

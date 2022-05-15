@@ -3,7 +3,7 @@ package src.opcodes;
 import src.interfaces.*;
 /*  bitwise XOR
     Stack no. 18
-    Last update: 03/03, 05/03
+    Last update: 03/03, 05/03,01/05
     Test: Passed Dissasembly test! 05/03
 */
  

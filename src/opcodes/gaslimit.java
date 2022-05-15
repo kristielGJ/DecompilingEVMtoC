@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  gas limit of current block
     Stack no.45
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
     49-4F are invalid
 */
 import src.interfaces.*;

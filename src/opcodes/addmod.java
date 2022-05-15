@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  (u)int256 addition modulo N
     Stack no.08
-    Last update: 28/02,05/03
+    Last update: 28/02,05/03,01/05
 */
 import src.interfaces.*;
 

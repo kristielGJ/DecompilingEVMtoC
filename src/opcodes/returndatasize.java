@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  size of returned data from last external call, in bytes
     Stack no.3D
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
 */
 import src.interfaces.*;
 /* 

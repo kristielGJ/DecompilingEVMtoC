@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  shift left
     Stack no.1B
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
     Stack no 1E-1F are invalid!
 */
 import src.interfaces.*;

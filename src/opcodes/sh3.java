@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  keccak256(mem[ost:ost+len])
     Stack no.20
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
     21-2F are invalid!
 */
 import src.interfaces.*;

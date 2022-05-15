@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  uint256 greater-than
     Stack no.10
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
 */
 import src.interfaces.*;
 /* 

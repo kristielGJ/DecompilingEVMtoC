@@ -1,7 +1,7 @@
 //Author Gera Jahja
 package src.opcodes;
 import src.interfaces.*;
-/*  Last update: 24/04
+/*  Last update: 24/04,01/05
     90 =  SWAP1 ( a, b -> becomes -> b, a )
     91 =  SWAP2 ( a, _, b -> becomes -> b, _, a )
     ...etc

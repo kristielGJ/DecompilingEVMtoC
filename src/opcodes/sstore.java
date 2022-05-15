@@ -3,7 +3,7 @@ package src.opcodes;
 import src.interfaces.*;
 /*  write word from storage
     Stack no.55
-    Last update: 04/03, 05/03
+    Last update: 04/03, 05/03,01/05
     Test: Passed Dissasembly test! 05/03
     5C-5F are invalid
 */

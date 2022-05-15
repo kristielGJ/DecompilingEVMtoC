@@ -1,7 +1,7 @@
 //Author Gera Jahja
 package src.opcodes;
 import src.interfaces.*;
-/*  Last update: 24/04
+/*  Last update: 24/04,01/05
     80 =  DUP1 clone 1st value on stack
     81 =  DUP2 clone 1nd value on stack
     ...etc

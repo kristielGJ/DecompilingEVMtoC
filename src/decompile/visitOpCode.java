@@ -2,14 +2,19 @@
 package src.decompile;
 import src.interfaces.*;
 import src.opcodes.*;
+import src.opcodes.pc;
+
+import java.util.*;
 import src.cCodes.*;
 
 //Uses interfaces to visit the opcode java classes
-//Last update: 04/05
+//last update 15/05
 class visitOpCode implements Dissasemble
 { 
+   // public Stack<String> java_stack = new Stack<>();  
     public int variableNumber;
-    //C code that is  used for more than one opcode:
+    //C code that is  used for more than one opcode
+
     public String getCheck(stack st,String assertFor,int gasno){
         assertVal stackCheck =new assertVal("");
         if (assertFor=="not empty"){
@@ -17,10 +22,15 @@ class visitOpCode implements Dissasemble
         }else if (assertFor=="stack height"){
             stackCheck = new assertVal(st.getAssertStackHeight());
         }
-        assertVal gasCheck = new assertVal("gasUsed < gasLimit");
-        return "\t"+stackCheck.getAssertCall()+"\n\t"+"gasUsed +="+gasno+";\n\t"+gasCheck.getAssertCall();
+        String gasCheck = getGasNoCheck(gasno);
+        return "\t"+stackCheck.getAssertCall()+"\n\t"+gasCheck;
     }
 
+    //ensure the gas used is never  more than the gas used
+    public String getGasNoCheck(int gasno){
+        assertVal gasCheck = new assertVal("gasUsed < gasLimit");
+        return "gasUsed +="+gasno+";\n\t"+gasCheck.getAssertCall();
+    }
 
     public String arithmeticCodeGenerator(int lableno,int no,String operator,int gasno,boolean unsigned){
         //decompilation
@@ -65,6 +75,10 @@ class visitOpCode implements Dissasemble
         String stackvals ="\t"+stackval.getStackPushTop();
         String asserts= getCheck(stackval,"stack height",3);
         String PushValues= label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd();
+        
+        //add to internal stack for memory acess
+        //java_stack.push(orderNo);
+       // System.out.println("\nElements in Stack: " + java_stack +"\n");  
 
         Push.setC(PushValues);
         return Push.getC();
@@ -75,8 +89,27 @@ class visitOpCode implements Dissasemble
     public String visit(log Log,int orderNo)
     {
         System.out.println(Integer.toHexString(Log.getOpcode()).toUpperCase() + "  "+ Log.getName());//output the instruction(Disassembly), used for decompilation
-        return Log.getName();//log0 , gas= 375 ; log1 gas= 750,log2 gas =1125, log 3 gas =1500, log 4 gas= 1875
-    }
+        
+        assertVal logCheck =new assertVal("0");
+        label label_ =new label(orderNo);
+        String gasNoCheck ="";
+
+           
+        if (Log.getOpcodeNo()==0){
+            gasNoCheck = getGasNoCheck(375);//log0 , gas= 375
+        }else if (Log.getOpcodeNo()==1){
+            gasNoCheck = getGasNoCheck(750);// log1 gas= 750
+        }else if (Log.getOpcodeNo()==2){
+            gasNoCheck = getGasNoCheck(1125);//log2 gas =1125
+        }else if (Log.getOpcodeNo()==3){
+            gasNoCheck = getGasNoCheck(1500);//log 3 gas =1500
+        }else if (Log.getOpcodeNo()==4){
+            gasNoCheck = getGasNoCheck(1875);//log 4 gas= 1875
+        }else {
+            gasNoCheck = getGasNoCheck(0);
+        }
+        Log.setC(label_.getLabelName()+"\n\t"+logCheck.getAssertCall()+"\n\t"+gasNoCheck+"\n\t"+label_.getLabelEnd());
+        return Log.getC(); }
 
     //Duplicate nth stack item. 0 < n <= 16
     @Override
@@ -593,11 +626,15 @@ class visitOpCode implements Dissasemble
         return Sstore.getName();
     }
 
-    //
+    //Alter the program counter, and jump to address ontop of stack
     @Override
     public String visit(jump Jump,int orderNo){
         System.out.println(Integer.toHexString(Jump.getOpcode()).toUpperCase() + "  "+ Jump.getName());//output the instruction(Disassembly), used for decompilation
-        return Jump.getName();
+        function f = new function("label_"+ (orderNo-1)); 
+        label label_ = new label(orderNo);
+        String getGas = getGasNoCheck(8);
+        Jump.setC(label_.getLabelName()+"\t"+getGas+"\n\t"+f.getFunctionCall()+label_.getLabelEnd());
+        return Jump.getC();
     }
 
     //
@@ -730,5 +767,6 @@ class visitOpCode implements Dissasemble
     public void setVariableNumber(int variableNumber) {
         this.variableNumber = variableNumber;
     }
+
 }
 

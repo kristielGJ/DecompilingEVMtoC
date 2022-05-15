@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  uint256 exponentiation modulo 2**256
     Stack no.0A
-    Last update: 28/02,05/03
+    Last update: 28/02,05/03,01/05
 */
 import src.interfaces.*;
 /* 

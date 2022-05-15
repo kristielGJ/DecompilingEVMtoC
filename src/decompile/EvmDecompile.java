@@ -1,36 +1,33 @@
-//Author Gera Jahja, last update 24/04
+//Author Gera Jahja, last update 15/05
 package src.decompile;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import src.interfaces.*;
 import src.opcodes.*;
+import src.opcodes.pc;
 import src.cCodes.*;
-// Testing Examples:
 
-// 605f7000606061008090A1A2A3A4A0 for push, dup, swap and log
-
-// Should print opcodes:
-//000102030405060708090A0B101112131415161718191A1B1C1D20303132333435363738393A3B3C3D3E3F404142434445464748505152535455565758595A5B60006100006200000063000000006400000000006500000000000066000000000000006700000000000000006800000000000000000069000000000000000000006A00000000000000000000006B0000000000000000000000006C000000000000000000000000006D00000000000000000000000000006E0000000000000000000000000000006F000000000000000000000000000000007000000000000000000000000000000000007100000000000000000000000000000000000072000000000000000000000000000000000000007300000000000000000000000000000000000000007400000000000000000000000000000000000000000075000000000000000000000000000000000000000000007600000000000000000000000000000000000000000000007700000000000000000000000000000000000000000000000078000000000000000000000000000000000000000000000000007900000000000000000000000000000000000000000000000000007A0000000000000000000000000000000000000000000000000000007B000000000000000000000000000000000000000000000000000000007C00000000000000000000000000000000000000000000000000000000007D0000000000000000000000000000000000000000000000000000000000007E000000000000000000000000000000000000000000000000000000000000007F0000000000000000000000000000000000000000000000000000000000000000808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9FA0A1A2A3A4F0F1F2F3F4F5FAFDFEFF
-
-// Should all be invalid:
-// 0C0D0E0F1E1F2122232425262728292A2B2C2D2E2F494A4B4C4D4E4F5C5D5E5FA5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBFC0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDFE0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF6F7F8F9FBFC
-
+//To run the program, please run the main program found in this class.
 
 class EvmDecompile {
 
-    private static void Decompile(List<String> decompiledC, String s_or_e) throws InterruptedException {
+    private static void Decompile(List<String> decompiledC, String s_or_e) throws InterruptedException, IOException {
         //initialise C codes  preparing for decompilation
         include includeAssert = new include();
         function mainFunction = new function();
-        variable defineVar = new variable("int", "var");
-        variable defineUVar = new variable("unsigned int", "uvar");
-        define gas_stack_definitions = new define(1024, 1000);//get gas limit as user input?
-        returnVal return_0 = new returnVal(0);
+        boolean runProgram=true;
+        boolean gasLim=true;
+        int GasLimVal =0;
+        BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
+        variable defineVar = new variable("int64_t", "var");//there are no 256 bit numbers in c 
+        variable defineUVar = new variable("uint64_t", "uvar");//unsigned 64bit integer ... for compilation
+       
+       returnVal return_0 = new returnVal(0);
         
         // Model ethereum stack
         variable stack = new variable(0,"stack[STACKHEIGHT]", "",""); 
@@ -41,7 +38,52 @@ class EvmDecompile {
         variable gasLimit= new variable(0,"gasLimit","GASLIMIT","");
 
         if (s_or_e =="start"){
+            while (runProgram) {
+                // Asking for input from user
+                System.out.println("\n __________________________");
+                System.out.println("|     C Code Decompiler    |");
+                System.out.println("| Options:                 |");
+                System.out.println("|        1. Executable C   |");
+                System.out.println("|        2. Analysable C   |");
+                System.out.println("|__________________________|\n");
+
+                System.out.println("Choose an option from the menu above: ");
+                String evmContract = bfn.readLine();//1023 chars only?
+                
+                if (evmContract.contains("1")&&evmContract.length()==1){
+                    defineVar = new variable("int64_t", "var");//there are no 256 bit numbers in c 
+                    defineUVar = new variable("uint64_t", "uvar");//unsigned 64bit integer ... for compilation
+                    runProgram=false;
+                }else if (evmContract.contains("2")&&evmContract.length()==1){
+                    runProgram=false;
+                    defineVar = new variable("int128_t", "var");//analysable in cprover
+                    defineUVar = new variable("int128_t", "uvar");//cannot be run without c prover        
+                }else{
+                    System.out.println("Please enter 1 or 2");
+                }
+            }
+            while (gasLim) {
+                // Asking for input from user
+                System.out.println("\n _____________________________________________");
+                System.out.println("|    Please enter your preffered gas limit :  |");
+                System.out.println("|_____________________________________________|\n");
+    
+                String gass = bfn.readLine();//1023 chars only?
+                
+                if (EvmDisassemble.isNumeric(gass)){
+                    GasLimVal = Integer. parseInt(gass);
+                    gasLim=false;
+                }
+               else{
+                System.out.println("Please enter a whole number");
+                }
+            }
+            define gas_stack_definitions = new define(1024, GasLimVal);//get gas limit as user input?
+
             TimeUnit.SECONDS.sleep(1);
+            System.out.println("\n __________________");
+            System.out.println("|     Dissasebly:  |");
+            System.out.println("|__________________|\n");
             decompiledC.add(includeAssert.getIncludeAssert()+"\n"+defineVar.getVariableType()+"\n"+defineUVar.getVariableType()+"\n"+gas_stack_definitions.getDefineGasLimit()+gas_stack_definitions.getDefineStackHeight()+"\n"+stack.getVariableDef()+topOfStack.getVariableDef()+"\n"+gasUsed.getVariableDef()+gasLimit.getVariableDefValue()+"\n"+mainFunction.getMain()+"\n /*** Start of decompiled code ***/ \n");
         }
         else if (s_or_e =="end"){
@@ -51,8 +93,9 @@ class EvmDecompile {
 
         }else if (s_or_e=="display"){
             //Print to Generated C code:
-
-            System.out.println("Decompilation to C code: \n");
+            System.out.println("\n _______________________________");
+            System.out.println("|     Decompilation to C code:  |");
+            System.out.println("|_______________________________|\n");
             TimeUnit.SECONDS.sleep(1);
   
             for (String label : decompiledC) {
@@ -69,10 +112,17 @@ class EvmDecompile {
         boolean exit = false;
         BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
             while (exit==false){
-                System.out.println("Save to .c file? (y/n) ");
+                System.out.println("\n _____________________________________________");
+                System.out.println("|     Save to file                            |");
+                System.out.println("| Options:                                    |");
+                System.out.println("|        1. Save decompulayion to a .c file   |");
+                System.out.println("|        2. Decompile a new contract          |");
+                System.out.println("|_____________________________________________|\n");
+                System.out.println("Please choose an option from above: ");
+             
                 saveFile = (bfn.readLine()).toUpperCase();
 
-                if ((saveFile.contains("Y"))&&(saveFile.length()==1)){
+                if ((saveFile.contains("1"))&&(saveFile.length()==1)){
                     System.out.println("Enter file name: ");
                     String fileName = bfn.readLine();
                     try {  
@@ -95,16 +145,20 @@ class EvmDecompile {
                         e.printStackTrace();  
                       }  
                     exit = true;
-                }else if ((saveFile.contains("N"))&&(saveFile.length()==1)){
+                }else if ((saveFile.contains("2"))&&(saveFile.length()==1)){
 
                     exit = true;
                 }
                 else{
-                    System.out.println("Please Type y/n");
+                    System.out.println("Please Type a number from the menu");
                 }
             }
     }
     public static void main(String[] args) throws IOException, InterruptedException {
+        // possible log hexadecimals:
+        String[] LogVariations = { "AO", "A1", "A2", "A3", "A4" };
+        List<String> LogVariationsList = Arrays.asList(LogVariations);
+        boolean runProgram = true;
         // Creating BufferedReader Object
         BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
         // all invalid hexadecimals as a string (for convinience)
@@ -126,96 +180,128 @@ class EvmDecompile {
                 new pop(), new mload(), new mstore(), new mstore8(), new sload(), new sstore(),
                 new jump(), new jumpi(), new pc(), new msize() };
 
-        while (true) {
-            try{
-                // Asking for input from user
-                System.out.println("Enter your Ethereum contract bytecode (e.g 60806040...) : ");
+        while (runProgram) {
+            // Asking for input from user
+            System.out.println("\n ___________________________________________________________________");
+            System.out.println("|     EVM BYTE CODE -> C DECOMILER                                  |");
+            System.out.println("|                                                                   |");                System.out.println("|        Type 'EXIT' to quit  the program                           |");
+            System.out.println("|        Type 'FILE' to read a txt file containing your byte code   |");
+            System.out.println("|        or enter your Ethereum contract bytecode (e.g 60806040...) |");
+            System.out.println("|___________________________________________________________________|\n");
                 
-                String evmContract = bfn.readLine();//1023 chars only?
-                evmContract = evmContract.toUpperCase();
-
-                // outputs for readibility
-                System.out.println("Processing...");
-                TimeUnit.SECONDS.sleep(1);
-
-                // outputs the input from the user
-                System.out.println("EVM BYTECODE: " + evmContract + "\n");
-                TimeUnit.SECONDS.sleep(1);
-                System.out.println("Dissasebly: \n");
-                
-                // split into an array of two character op codes (for PUSH make sure to send
-                // over the next element also)
-                String[] evmByteCode = evmContract.split("(?<=\\G.{2})");
-                List<String> evmByteCodeList = Arrays.asList(evmByteCode);
-                ArrayList<String> evmByteCodeArrayList = new ArrayList<String>(evmByteCodeList);
-
-                //list that is used for correctly split bytecode  (i.e valid push comands)
-                List<String> evmByteCodeCorrect = new ArrayList<>();
-                //list for Code that is returned by the visitor functions 
-                List<String> DecompiledC = new ArrayList<>();
-
-                // ensure the elements of the array are split to the right size and stored in evmByteCodeCorrect
-                //( push requires more than 2 chars)
-
-                for (int j = 0; j < evmByteCodeArrayList.size(); j++) {
-
-                    String opcode = evmByteCodeArrayList.get(j);
-                    // push starts with 6 and 
-                    //evmByteCodeArrayList.remove(j);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
-                            
-                    try{
-                        if (opcode.startsWith("6") || opcode.startsWith("7")) {
-                            int memsize=EvmDisassemble.getNumber(opcode);
-                            String memoryadd = "";
-                            //evmByteCodeArrayList.remove(j + 1);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
-                            for (int i = 1; i < memsize+1; i++) {
-                                    memoryadd = memoryadd+evmByteCodeArrayList.get(j + 1);
-                                    evmByteCodeArrayList.remove(j + 1);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
+            String evmContract = bfn.readLine();//1023 chars only?
+            evmContract = evmContract.toUpperCase();
+            
+            if (evmContract.contains("EXIT")&&evmContract.length()==4){
+                runProgram=false;
+            }else{
+                try{
+                    boolean getfile = true;
+                    while(getfile){
+                    if (evmContract.contains("FILE")&&evmContract.length()==4){
+                        try {
+                            System.out.println("Enter name of .txt file: \n");
+                            String filename = bfn.readLine();//1023 chars only?
+                            File myObj = new File(filename+".txt");
+                            Scanner myReader = new Scanner(myObj);
+                            while (myReader.hasNextLine()) {
+                              String data = myReader.nextLine();
+                              System.out.println(data);
+                              evmContract=data;
                             }
-                            // (push commands are not two chars, e.g 6008, 60 being PUSH1 and 0x08 being thememory adress)
-                            evmByteCodeCorrect.add(opcode + memoryadd);
-                        } else {
-                            evmByteCodeCorrect.add(opcode);
+                            myReader.close();
+                            getfile=false;
+                        } catch (FileNotFoundException e) {
+                            System.out.println("There is a problem with your file");
                         }
-                    }catch (Exception e){
-                        System.out.println("----Not enough code for Push opcode , Invalid Contract---- "); // if user types 60 this is invalid, must be 6000, or 610000, etc
+                        }
                     }
-                }
-                
-                HashMap<String,Integer> cCodeLabelOrder = new HashMap<String, Integer>();
-                int order =0;
-                //create c main function and initialise gas model, stack , etc...
-                Decompile(DecompiledC,"start");
-                //displays dissasembly and also computes future c code , ready for display
-                Dissasemble visitor = new visitOpCode();
-                
-                // Whole contract dissasembled:
-                for (String opcode : evmByteCodeCorrect) {
-                    int number = EvmDisassemble.getNumber(opcode);
-                    String[] arr = opcode.split("");
-                    String opcodeStr = arr[0] + arr[1];
-                    cCodeLabelOrder.put(opcode, order);
-                    order++;
-                    if (opcode.startsWith("6")) { DecompiledC.add(new push(opcode.substring(2), opcodeStr, number).accept(visitor,cCodeLabelOrder.get(opcode)));}// push starts with 6 and 7
-                    else if (opcode.startsWith("7")) { DecompiledC.add(new push(opcode.substring(2), opcodeStr, number).accept(visitor,cCodeLabelOrder.get(opcode)));}// push starts with 7
-                    else if (opcode.startsWith("8")) {DecompiledC.add(new dup(number).accept(visitor,cCodeLabelOrder.get(opcode)));}// dup starts 8
-                    else if (opcode.startsWith("9")) {DecompiledC.add(new swap(number).accept(visitor,cCodeLabelOrder.get(opcode)));}// swap starts with 9
-                     else{
-                        DecompiledC.add(EvmDisassemble.callVisitorFunctions(opcode, invalidHexList, instructions_no,number,visitor,cCodeLabelOrder.get(opcode))); // displays opcodes 
+                    // outputs for readibility
+                    System.out.println("Processing...");
+                    TimeUnit.SECONDS.sleep(1);
+
+                    // outputs the input from the user
+                    System.out.println("EVM BYTECODE: " + evmContract + "\n");
+                    TimeUnit.SECONDS.sleep(1);
+                    
+                    // split into an array of two character op codes (for PUSH make sure to send
+                    // over the next element also)
+                    String[] evmByteCode = evmContract.split("(?<=\\G.{2})");
+                    List<String> evmByteCodeList = Arrays.asList(evmByteCode);
+                    ArrayList<String> evmByteCodeArrayList = new ArrayList<String>(evmByteCodeList);
+
+                    //list that is used for correctly split bytecode  (i.e valid push comands)
+                    List<String> evmByteCodeCorrect = new ArrayList<>();
+                    //list for Code that is returned by the visitor functions 
+                    List<String> DecompiledC = new ArrayList<>();
+
+                    // ensure the elements of the array are split to the right size and stored in evmByteCodeCorrect
+                    //( push requires more than 2 chars)
+
+                    for (int j = 0; j < evmByteCodeArrayList.size(); j++) {
+
+                        String opcode = evmByteCodeArrayList.get(j);
+                        // push starts with 6 and 
+                        //evmByteCodeArrayList.remove(j);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
+                                
+                        try{
+                            if (opcode.startsWith("6") || opcode.startsWith("7")) {
+                                int memsize=EvmDisassemble.getNumber(opcode);
+                                String memoryadd = "";
+                                //evmByteCodeArrayList.remove(j + 1);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
+                                for (int i = 1; i < memsize+1; i++) {
+                                        memoryadd = memoryadd+evmByteCodeArrayList.get(j + 1);
+                                        evmByteCodeArrayList.remove(j + 1);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
+                                }
+                                // (push commands are not two chars, e.g 6008, 60 being PUSH1 and 0x08 being thememory adress)
+                                evmByteCodeCorrect.add(opcode + memoryadd);
+                            } else {
+                                evmByteCodeCorrect.add(opcode);
+                            }
+                        }catch (Exception e){
+                            System.out.println("----Not enough code for Push opcode , Invalid Contract---- "); // if user types 60 this is invalid, must be 6000, or 610000, etc
+                        }
                     }
+                    
+                    HashMap<String,Integer> cCodeLabelOrder = new HashMap<String, Integer>();
+                    int order =0;
+                    //create c main function and initialise gas model, stack , etc...
+                    Decompile(DecompiledC,"start");
+
+                    //displays dissasembly and also computes future c code , ready for display
+                    Dissasemble visitor = new visitOpCode();
+                    
+                    // Whole contract dissasembled:
+                    for (String opcode : evmByteCodeCorrect) {
+                        int number = EvmDisassemble.getNumber(opcode);
+                        String[] arr = opcode.split("");
+                        String opcodeStr = arr[0] + arr[1];
+                        cCodeLabelOrder.put(opcode, order);
+                        order++;
+                        if (opcode.startsWith("6")) { DecompiledC.add(new push(opcode.substring(2), opcodeStr, number).accept(visitor,cCodeLabelOrder.get(opcode)));}// push starts with 6 and 7
+                        else if (opcode.startsWith("7")) { DecompiledC.add(new push(opcode.substring(2), opcodeStr, number).accept(visitor,cCodeLabelOrder.get(opcode)));}// push starts with 7
+                        else if (opcode.startsWith("8")) {DecompiledC.add(new dup(number).accept(visitor,cCodeLabelOrder.get(opcode)));}// dup starts 8
+                        else if (opcode.startsWith("9")) {DecompiledC.add(new swap(number).accept(visitor,cCodeLabelOrder.get(opcode)));}// swap starts with 9
+                        else if ((opcode.startsWith("A") && LogVariationsList.contains(opcode))|| (opcode.startsWith("A") && opcode.endsWith("0"))) {
+                            DecompiledC.add(new log(number).accept(visitor,cCodeLabelOrder.get(opcode)));
+                        }
+                        else{
+                            DecompiledC.add(EvmDisassemble.callVisitorFunctions(opcode, invalidHexList, instructions_no,number,visitor,cCodeLabelOrder.get(opcode))); // displays opcodes 
+                        }
+                    }
+                    //finalise c code
+                    Decompile(DecompiledC,"end");
+                    //display C 
+                    Decompile(DecompiledC,"display");
+                    //choice to save generated C code to a file to run through CPROVER tools
+                    saveFile(DecompiledC);
+
+                    // Function detection: Basic Blocks from contract: (i.e split on occurunces of jump, jumpi etc), prep for decompilation
+
+                }catch (Exception e){
+                    System.out.println("----Invalid Contract, Enter valid EVM byte code please---- "); //e.g if there is an irregular number of opcodes
                 }
-                //finalise c code
-                Decompile(DecompiledC,"end");
-                //display C 
-                Decompile(DecompiledC,"display");
-                //choice to save generated C code to a file to run through CPROVER tools
-                saveFile(DecompiledC);
-
-                // Function detection: Basic Blocks from contract: (i.e split on occurunces of jump, jumpi etc), prep for decompilation
-
-        }catch (Exception e){
-            System.out.println("----Invalid Contract, Enter valid EVM byte code please---- "); //e.g if there is an irregular number of opcodes
-        }
+            }
         }
 
     }

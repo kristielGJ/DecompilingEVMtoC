@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  read word from storage
     Stack no.54
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
     5C-5F are invalid
 */
 import src.interfaces.*;

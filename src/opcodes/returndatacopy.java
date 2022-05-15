@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  copy returned data from last external call
     Stack no.3E
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
 */
 import src.interfaces.*;
 /* 

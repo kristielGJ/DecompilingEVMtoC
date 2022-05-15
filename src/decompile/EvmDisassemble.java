@@ -1,5 +1,6 @@
-package src.decompile;
+//Author Gera Jahja, last update 15/05
 
+package src.decompile;
 import java.util.Arrays;
 import java.util.List;
 import src.interfaces.*;

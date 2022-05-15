@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  a valid jump destination for example a jump destination not inside the push data
     Stack no.5B
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
     5C-5F are invalid
 */
 import src.interfaces.*;

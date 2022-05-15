@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  length of executing contract's code, in bytes
     Stack no. 38
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
 */    
 import src.interfaces.*;
 /* 

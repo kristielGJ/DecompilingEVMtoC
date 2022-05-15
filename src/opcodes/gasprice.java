@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  gas price of tx, in wei per unit gas **
     Stack no.3A
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
 */
 import src.interfaces.*;
 /* 

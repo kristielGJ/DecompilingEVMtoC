@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  bitwise OR
     Stack no. 17
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
 */
 import src.interfaces.*;
 /* 

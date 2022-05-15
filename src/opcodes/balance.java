@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  balance, in wei
     Stack no. 31
-    Last update: 03/03,05/03
+    Last update: 03/03,05/03,01/05
 */
 import src.interfaces.*;
 /* 

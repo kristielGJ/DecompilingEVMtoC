@@ -1,3 +1,4 @@
+//Author Gera Jahja, last update 15/05
 package src.cCodes;
 
 public class function {
@@ -13,6 +14,10 @@ public class function {
     }
     public String getMain() {
         return main;
+    } 
+    
+    public String getFunctionCall() {
+        return functioncall;
     }
  
     public String getEnd() {

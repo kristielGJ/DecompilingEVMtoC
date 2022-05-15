@@ -1,7 +1,7 @@
 //Author Gera Jahja
 package src.opcodes;
 import src.interfaces.*;
-/*  Last update: 24/04
+/*  Last update: 24/04,01/05
     A0 =  LOG0 (LOG0(memory[ost:ost+len]))
     A1 =  LOG1 (LOG1(memory[ost:ost+len], topic0))
     ...etc
@@ -18,14 +18,16 @@ public class log implements GetInstructionsFromOpcode {
     private int opcode;
     private String opcodeHex;
     private String name;
-   
+    private int opnumber;
     public log(int opcodenumber)
     {
+        this.opnumber=opcodenumber;
         this.opcodeHex="a"+Integer.toHexString(opcodenumber);
         this.opcode=Integer.parseInt(opcodeHex,16);
         this.name = "LOG"+String.valueOf(opcodenumber);
     }
     private String cCode;
+
     public String getC()
     {
         return this.cCode;
@@ -36,6 +38,10 @@ public class log implements GetInstructionsFromOpcode {
     public int getOpcode() 
     {
         return opcode;
+    } 
+    public int getOpcodeNo() 
+    {
+        return opnumber;
     }
    
     public String getName()

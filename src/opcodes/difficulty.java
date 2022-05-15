@@ -2,7 +2,7 @@
 package src.opcodes;
 /*  difficulty of current block
     Stack no.44
-    Last update: 04/03,05/03
+    Last update: 04/03,05/03,01/05
     49-4F are invalid
 */
 import src.interfaces.*;
