@@ -1,5 +1,6 @@
-//Author Gera Jahja, last update 15/05
+//Author Gera Jahja, last update 15/04
 package src.decompile;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,7 +116,7 @@ class EvmDecompile {
                 System.out.println("\n _____________________________________________");
                 System.out.println("|     Save to file                            |");
                 System.out.println("| Options:                                    |");
-                System.out.println("|        1. Save decompulayion to a .c file   |");
+                System.out.println("|        1. Save decompilation to a .c file   |");
                 System.out.println("|        2. Decompile a new contract          |");
                 System.out.println("|_____________________________________________|\n");
                 System.out.println("Please choose an option from above: ");
@@ -154,6 +155,30 @@ class EvmDecompile {
                 }
             }
     }
+    //read txt file
+    public static String readFile(String evmContract)throws IOException{
+        BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
+        boolean getfile = true;
+        while(getfile){
+            try {
+                System.out.println("Enter name of .txt file: \n");
+                String filename = bfn.readLine();//1023 chars only?
+                File myObj = new File(filename+".txt");
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    System.out.println(data);
+                    evmContract=data;
+                }
+                myReader.close();
+                getfile=false;
+            } catch (FileNotFoundException e) {
+                System.out.println("There is a problem with your file");
+            }                    
+        }
+        return evmContract;
+    }
+
     public static void main(String[] args) throws IOException, InterruptedException {
         // possible log hexadecimals:
         String[] LogVariations = { "AO", "A1", "A2", "A3", "A4" };
@@ -196,25 +221,8 @@ class EvmDecompile {
                 runProgram=false;
             }else{
                 try{
-                    boolean getfile = true;
-                    while(getfile){
                     if (evmContract.contains("FILE")&&evmContract.length()==4){
-                        try {
-                            System.out.println("Enter name of .txt file: \n");
-                            String filename = bfn.readLine();//1023 chars only?
-                            File myObj = new File(filename+".txt");
-                            Scanner myReader = new Scanner(myObj);
-                            while (myReader.hasNextLine()) {
-                              String data = myReader.nextLine();
-                              System.out.println(data);
-                              evmContract=data;
-                            }
-                            myReader.close();
-                            getfile=false;
-                        } catch (FileNotFoundException e) {
-                            System.out.println("There is a problem with your file");
-                        }
-                        }
+                        evmContract= readFile(evmContract);
                     }
                     // outputs for readibility
                     System.out.println("Processing...");

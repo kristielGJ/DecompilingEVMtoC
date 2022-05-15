@@ -3,8 +3,6 @@ package src.decompile;
 import src.interfaces.*;
 import src.opcodes.*;
 import src.opcodes.pc;
-
-import java.util.*;
 import src.cCodes.*;
 
 //Uses interfaces to visit the opcode java classes
