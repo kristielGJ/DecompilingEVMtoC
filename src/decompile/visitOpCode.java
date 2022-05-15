@@ -3,15 +3,61 @@ package src.decompile;
 import src.interfaces.*;
 import src.opcodes.*;
 import src.opcodes.pc;
+import src.sha3Hash.main.java.pl.thewalkingcode.sha3.Sha3;
+import src.sha3Hash.main.java.pl.thewalkingcode.sha3.Type;
 import src.cCodes.*;
+import java.math.BigInteger;
+import java.util.*;
+
 
 //Uses interfaces to visit the opcode java classes
 //last update 15/05
 class visitOpCode implements Dissasemble
 { 
-   // public Stack<String> java_stack = new Stack<>();  
+    public Stack< String> java_stack = new Stack<>();  
     public int variableNumber;
+
     //C code that is  used for more than one opcode
+    /*attempt to simulate stack, however it does not wok for very large numbers ... so only partially workinh*/
+    public void getMemoryAddForStack(String operator){
+        BigInteger arithmetic = new BigInteger("0");
+        try{
+            if ((java_stack.isEmpty()==false)&& (((java_stack.peek()).length())<16)){
+                BigInteger xi = new BigInteger(java_stack.pop());
+                if ((java_stack.isEmpty()==false)&& (((java_stack.peek()).length())<16)){
+                    BigInteger yi = new BigInteger(java_stack.pop());
+                    int inty =yi.intValue();
+                    long longy= yi.longValue();
+                    
+                    if (operator.contains("+")){ arithmetic= xi.add(yi);
+                    }else if (operator.contains("-")){arithmetic= xi.subtract(yi);
+                    }else if (operator.contains("*")){arithmetic=xi.multiply(yi);
+                    }else if (operator.contains("/")){arithmetic= xi.divide(yi);
+                    }else if (operator.contains("%")){arithmetic= xi.mod(yi);
+                    }else if (operator.contains("**")){arithmetic= xi.pow(inty);
+                    }else if (operator.contains("<")){arithmetic=  xi.min(yi);
+                    }else if (operator.contains(">")){arithmetic= xi.max(yi);
+                    }else if (operator.contains("==")){arithmetic= BigInteger.valueOf(longy);
+                    }else if (operator.contains("!")||operator.contains("~")){
+                        arithmetic= xi.not();
+                        java_stack.push(yi.toString());  
+                    }else if (operator.contains("&&")){arithmetic= xi.and(yi);
+                    }else if (operator.contains("||")){arithmetic= xi.or(yi);
+                    }else if (operator.contains("^")){arithmetic= xi.xor(yi);
+                    }else if (operator.contains("<<")){arithmetic= xi.shiftLeft(inty);
+                    }else if (operator.contains(">>")&&operator.length()==2){arithmetic= xi.shiftRight(inty);
+                    }else if (operator.contains(">>>")&&operator.length()==3){arithmetic= xi.shiftRight(inty);
+                    }
+                    java_stack.push(arithmetic.toString());
+                }else{
+                java_stack.push(xi.toString());
+                }
+            }
+        }catch(Exception e) {
+            //  Block of code to handle errors
+            System.out.println("Large number used, sha3 hashes may be affected"); // error!
+        }
+    }
 
     public String getCheck(stack st,String assertFor,int gasno){
         assertVal stackCheck =new assertVal("");
@@ -75,7 +121,7 @@ class visitOpCode implements Dissasemble
         String PushValues= label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd();
         
         //add to internal stack for memory acess
-        //java_stack.push(orderNo);
+        java_stack.push(Push.getMemoryAdd());
        // System.out.println("\nElements in Stack: " + java_stack +"\n");  
 
         Push.setC(PushValues);
@@ -160,6 +206,7 @@ class visitOpCode implements Dissasemble
         //dissasembly
         System.out.println("0"+Integer.toHexString(Add.getOpcode()).toUpperCase() + "  "+ Add.getName());//output the instruction(Disassembly), used for decompilation
         Add.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," + ",3,true));//C Code 
+        getMemoryAddForStack("+");
         return Add.getC();
     }
     
@@ -169,6 +216,7 @@ class visitOpCode implements Dissasemble
     {
         System.out.println("0"+Integer.toHexString(Mul.getOpcode()).toUpperCase() + "  "+ Mul.getName());//output the instruction(Disassembly), used for decompilation
         Mul.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," * ",5,true));//C Code 
+        getMemoryAddForStack("*");
         return Mul.getC();
     }
 
@@ -178,6 +226,7 @@ class visitOpCode implements Dissasemble
     {
         System.out.println("0"+Integer.toHexString(Sub.getOpcode()).toUpperCase() + "  "+ Sub.getName());//output the instruction(Disassembly), used for decompilation
         Sub.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," - ",3,true));//C Code  
+        getMemoryAddForStack("-");
         return Sub.getC();
     }
 
@@ -186,6 +235,7 @@ class visitOpCode implements Dissasemble
     public String visit(div Div,int orderNo){
         System.out.println("0"+Integer.toHexString(Div.getOpcode()).toUpperCase() + "  "+ Div.getName());//output the instruction(Disassembly), used for decompilation
         Div.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," / ",5,true));//C Code  
+        getMemoryAddForStack("/");
         return Div.getC();
     }
 
@@ -194,6 +244,7 @@ class visitOpCode implements Dissasemble
     public String visit(sdiv Sdiv,int orderNo){
         System.out.println("0"+Integer.toHexString(Sdiv.getOpcode()).toUpperCase() + "  "+ Sdiv.getName());//output the instruction(Disassembly), used for decompilation
         Sdiv.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," / ",5,false));//C Code 
+        getMemoryAddForStack("/");
         return Sdiv.getC();
     }
 
@@ -202,6 +253,7 @@ class visitOpCode implements Dissasemble
     public String visit(mod Mod,int orderNo){
         System.out.println("0"+Integer.toHexString(Mod.getOpcode()).toUpperCase() + "  "+ Mod.getName());//output the instruction(Disassembly), used for decompilation
         Mod.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," % ",5,true));//C Code 
+        getMemoryAddForStack("%");
         return Mod.getC();
     }
 
@@ -210,6 +262,7 @@ class visitOpCode implements Dissasemble
     public String visit(smod Smod,int orderNo){
         System.out.println("0"+Integer.toHexString(Smod.getOpcode()).toUpperCase() + "  "+ Smod.getName());//output the instruction(Disassembly), used for decompilation
         Smod.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," % ",5,false));//C Code 
+        getMemoryAddForStack("%");
         return Smod.getC();
     }
 
@@ -249,7 +302,7 @@ class visitOpCode implements Dissasemble
          
         String asserts= getCheck(stackval,"stack height",10);
         Exp.setC(label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd());
-    
+        getMemoryAddForStack("**");
         return Exp.getC();
     }
 
@@ -257,7 +310,8 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(signextend Signextend,int orderNo){
         System.out.println("0"+Integer.toHexString(Signextend.getOpcode()).toUpperCase() + "  "+ Signextend.getName());//output the instruction(Disassembly), used for decompilation
-       // Signextend.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," ~ ",5,false));//C Code 
+        Signextend.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," ~ ",5,false));//C Code 
+        getMemoryAddForStack("~");
         return Signextend.getName();
     }
 
@@ -266,6 +320,7 @@ class visitOpCode implements Dissasemble
     public String visit(lt Lt,int orderNo){
         System.out.println(Integer.toHexString(Lt.getOpcode()).toUpperCase() + "  "+ Lt.getName());//output the instruction(Disassembly), used for decompilation
         Lt.setC(arithmeticCodeGenerator(1,0," < ",3,true));//C Code 
+        getMemoryAddForStack("<");
         return Lt.getC();
     }
 
@@ -274,6 +329,7 @@ class visitOpCode implements Dissasemble
     public String visit(gt GT,int orderNo){
         System.out.println(Integer.toHexString(GT.getOpcode()).toUpperCase() + "  "+ GT.getName());//output the instruction(Disassembly), used for decompilation
         GT.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," > ",3,true));//C Code 
+        getMemoryAddForStack(">");
         return GT.getC();
     }
 
@@ -282,6 +338,7 @@ class visitOpCode implements Dissasemble
     public String visit(slt Slt,int orderNo){
         System.out.println(Integer.toHexString(Slt.getOpcode()).toUpperCase() + "  "+ Slt.getName());//output the instruction(Disassembly), used for decompilation
         Slt.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," < ",3,false));//C Code 
+        getMemoryAddForStack("<");
         return Slt.getC();
     }
 
@@ -290,6 +347,7 @@ class visitOpCode implements Dissasemble
     public String visit(sgt Sgt,int orderNo){
         System.out.println(Integer.toHexString(Sgt.getOpcode()).toUpperCase() + "  "+ Sgt.getName());//output the instruction(Disassembly), used for decompilation
         Sgt.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," > ",3,false));//C Code 
+        getMemoryAddForStack(">");
         return Sgt.getC();   
     }
 
@@ -298,6 +356,7 @@ class visitOpCode implements Dissasemble
     public String visit(eq Eq,int orderNo){
         System.out.println(Integer.toHexString(Eq.getOpcode()).toUpperCase()+ "  "+ Eq.getName());//output the instruction(Disassembly), used for decompilation
         Eq.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," == ",3,true));//C Code 
+        getMemoryAddForStack("==");
         return Eq.getC();
     }
 
@@ -317,9 +376,10 @@ class visitOpCode implements Dissasemble
         String variables =var1.getVariable()+var3.getVariable();
 
         String stackvals ="\t"+stackval.getStackPopTop()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n";
-         
+        
         String asserts= getCheck(stackval,"stack height",3);
         Iszero.setC(label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd());
+        getMemoryAddForStack("!");
         return Iszero.getC();
     }
 
@@ -328,6 +388,7 @@ class visitOpCode implements Dissasemble
     public String visit(and And,int orderNo){
         System.out.println(Integer.toHexString(And.getOpcode()).toUpperCase() + "  "+ And.getName());//output the instruction(Disassembly), used for decompilation
         And.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," & ",3,false));//C Code 
+        getMemoryAddForStack("&&");
         return And.getC();
     }
 
@@ -336,6 +397,7 @@ class visitOpCode implements Dissasemble
     public String visit(or Or,int orderNo){
         System.out.println(Integer.toHexString(Or.getOpcode()).toUpperCase() + "  "+ Or.getName());//output the instruction(Disassembly), used for decompilation
         Or.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," | ",3,false));//C Code 
+        getMemoryAddForStack("||");
         return Or.getC();
     }
 
@@ -344,6 +406,7 @@ class visitOpCode implements Dissasemble
     public String visit(xor Xor,int orderNo){
         System.out.println(Integer.toHexString(Xor.getOpcode()).toUpperCase() + "  "+ Xor.getName());//output the instruction(Disassembly), used for decompilation
         Xor.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," ^ ",3,false));//C Code 
+        getMemoryAddForStack("^");
         return Xor.getC();    
     }
 
@@ -363,16 +426,16 @@ class visitOpCode implements Dissasemble
         String variables =var1.getVariable()+var3.getVariable();
 
         String stackvals ="\t"+stackval.getStackPopTop()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n";
-         
         String asserts= getCheck(stackval,"stack height",3);
         Not.setC(label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd());
+        getMemoryAddForStack("~");
         return Not.getC();
     }
 
     @Override
     public String visit(bytee Bytee,int orderNo){
         System.out.println(Integer.toHexString(Bytee.getOpcode()).toUpperCase() + "  "+ Bytee.getName());//output the instruction(Disassembly), used for decompilation
-        return Bytee.getName();//gas 3
+        return "//"+Bytee.getName();//gas 3
     }
 
     //shift left
@@ -380,6 +443,7 @@ class visitOpCode implements Dissasemble
     public String visit(shl Shl,int orderNo){
         System.out.println(Integer.toHexString(Shl.getOpcode()).toUpperCase() + "  "+ Shl.getName());//output the instruction(Disassembly), used for decompilation
         Shl.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," << ",3,false));//C Code 
+        getMemoryAddForStack("<<");
         return Shl.getC();
     }
 
@@ -388,6 +452,7 @@ class visitOpCode implements Dissasemble
     public String visit(shr Shr,int orderNo){
         System.out.println(Integer.toHexString(Shr.getOpcode()).toUpperCase() + "  "+ Shr.getName());//output the instruction(Disassembly), used for decompilation
         Shr.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," >> ",3,false));//C Code 
+        getMemoryAddForStack(">>");
         return Shr.getC();
     }
 
@@ -396,6 +461,7 @@ class visitOpCode implements Dissasemble
     public String visit(sar Sar,int orderNo){
         System.out.println(Integer.toHexString(Sar.getOpcode()).toUpperCase() + "  "+ Sar.getName());//output the instruction(Disassembly), used for decompilation
         Sar.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," >> ",3,false));//C Code 
+        getMemoryAddForStack(">>>");
         return Sar.getC();
     }
 
@@ -740,12 +806,27 @@ class visitOpCode implements Dissasemble
         return Selfdestruct.getName();
     }
 
-    //
+    // hash the last two items of stack,  sha3 algorithm is from https://github.com/mchrapek/sha3-java
     @Override
     public String visit(sh3 Sh3,int orderNo) 
     {
         System.out.println(Integer.toHexString(Sh3.getOpcode()).toUpperCase() + "  "+ Sh3.getName());//output the instruction(Disassembly), used for decompilation
-        return Sh3.getName();
+
+        String x = java_stack.pop();  
+        String y = java_stack.pop();  
+        // string to byte[]
+        byte[] input = (x+y).getBytes();
+        Type type = Type.SHA3_256;
+        Sha3 sha3 = new Sha3(type);
+        byte[] encode = sha3.encode(input);
+        String s = Base64.getEncoder().encodeToString(encode);
+        java_stack.push(s);
+
+        String gasCheck= getGasNoCheck(30);//C Code;//gas is aproximtely 30, but can vary so not 100% accurate
+
+        Sh3.setC("\n\t"+gasCheck+"\n\t"+"stack[top]='"+s+"';\n");
+
+        return Sh3.getC();
     }
 
     //halts execution,exits program
