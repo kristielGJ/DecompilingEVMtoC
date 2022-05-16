@@ -293,7 +293,7 @@ class visitOpCode implements Dissasemble
         String unsignedstr ="u";
         variable var1 = new variable(getVariableNumber()+1,"",stackval1.getStackOp(),unsignedstr);//no need for varName as these are tmp variables
         variable var2 = new variable(getVariableNumber()+2,"",stackval2.getStackOp(),unsignedstr);
-        variable var3 = new variable(getVariableNumber()+3,"","pow("+var1.getVariableName()+","+var2.getVariableName()+");",unsignedstr);
+        variable var3 = new variable(getVariableNumber()+3,"","pow("+var1.getVariableName()+","+var2.getVariableName()+")",unsignedstr);
         setVariableNumber(variableNumber+3);
         stack stackval = new stack(var3.getVariableName(),2,"-");
 
@@ -438,7 +438,7 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(bytee Bytee,int orderNo){
         System.out.println(Integer.toHexString(Bytee.getOpcode()).toUpperCase() + "  "+ Bytee.getName());//output the instruction(Disassembly), used for decompilation
-        return getGasNoCheck(3);//gas 3
+        return "\n\t"+getGasNoCheck(3);//gas 3
     }
 
     //shift left
@@ -605,8 +605,7 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(selfdestruct Selfdestruct,int orderNo){
         System.out.println(Integer.toHexString(Selfdestruct.getOpcode()).toUpperCase() + "  "+ Selfdestruct.getName());//output the instruction(Disassembly), used for decompilation
-        returnVal exit = new returnVal(0);
-        return exit.getExitStatement();
+        return"exit(0);" ;
     }
 
     // hash the last two items of stack,  sha3 algorithm is from https://github.com/mchrapek/sha3-java
@@ -765,13 +764,13 @@ class visitOpCode implements Dissasemble
    @Override
    public String visit(jumpdest Jumpdest,int orderNo){
        System.out.println(Integer.toHexString(Jumpdest.getOpcode()).toUpperCase() + "  "+ Jumpdest.getName());//output the instruction(Disassembly), used for decompilation
-       return Jumpdest.getName();
+       return "";
    }
    //
    @Override
    public String visit(jumpi Jumpi,int orderNo){
          System.out.println(Integer.toHexString(Jumpi.getOpcode()).toUpperCase() + "  "+ Jumpi.getName());//output the instruction(Disassembly), used for decompilation
-         return Jumpi.getName();
+         return "";
    }
    //Alter the program counter, and jump to address ontop of stack
    @Override
@@ -790,7 +789,7 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(staticcall Staticcall,int orderNo){
         System.out.println(Integer.toHexString(Staticcall.getOpcode()).toUpperCase() + "  "+ Staticcall.getName());//output the instruction(Disassembly), used for decompilation
-        return getGasNoCheck(40);
+        return "\n\t"+getGasNoCheck(40);
     }
     @Override
     public String visit(call Call,int orderNo){
@@ -810,122 +809,122 @@ class visitOpCode implements Dissasemble
     @Override
     public String visit(origin Origin,int orderNo){
         System.out.println(Integer.toHexString(Origin.getOpcode()).toUpperCase() + "  "+ Origin.getName());//output the instruction(Disassembly), used for decompilation
-        return getGasNoCheck(2);
+        return "\n\t"+getGasNoCheck(2);
     }
 
     @Override
     public String visit(caller Caller,int orderNo){
         System.out.println(Integer.toHexString(Caller.getOpcode()).toUpperCase() + "  "+ Caller.getName());//output the instruction(Disassembly), used for decompilation
-        return getGasNoCheck(2);
+        return "\n\t"+getGasNoCheck(2);
     }
 
     //
     @Override
     public String visit(callvalue Callvalue,int orderNo){
         System.out.println(Integer.toHexString(Callvalue.getOpcode()).toUpperCase() + "  "+ Callvalue.getName());//output the instruction(Disassembly), used for decompilation
-        return getGasNoCheck(2);
+        return "\n\t"+getGasNoCheck(2);
     }
 
     //
     @Override
     public String visit(calldataload Calldataload,int orderNo){
         System.out.println(Integer.toHexString(Calldataload.getOpcode()).toUpperCase() + "  "+ Calldataload.getName());//output the instruction(Disassembly), used for decompilation
-        return getGasNoCheck(3);
+        return "\n\t"+getGasNoCheck(3);
     }
 
     //
     @Override
     public String visit(calldatasize Calldatasize,int orderNo){
         System.out.println(Integer.toHexString(Calldatasize.getOpcode()).toUpperCase() + "  "+ Calldatasize.getName());//output the instruction(Disassembly), used for decompilation
-        return getGasNoCheck(2);
+        return "\n\t"+getGasNoCheck(2);
     }
    @Override
    public String visit(calldatacopy Calldatacopy,int orderNo){
        System.out.println(Integer.toHexString(Calldatacopy.getOpcode()).toUpperCase() + "  "+ Calldatacopy.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(3);
+       return "\n\t"+getGasNoCheck(3);
    }
 
    @Override
    public  String visit(codesize Codesize,int orderNo){
        System.out.println(Integer.toHexString(Codesize.getOpcode()).toUpperCase() + "  "+ Codesize.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
    }
 
    @Override
    public String visit(codecopy Codecopy,int orderNo){
        System.out.println(Integer.toHexString(Codecopy.getOpcode()).toUpperCase() + "  "+ Codecopy.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(3);
+       return "\n\t"+getGasNoCheck(3);
    }
 
    @Override
    public String visit(extcodesize Extcodesize,int orderNo){
        System.out.println(Integer.toHexString(Extcodesize.getOpcode()).toUpperCase() + "  "+ Extcodesize.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(700);
+       return "\n\t"+getGasNoCheck(700);
    }
 
    @Override
    public String visit(extcodecopy Extcodecopy,int orderNo){
        System.out.println(Integer.toHexString(Extcodecopy.getOpcode()).toUpperCase() + "  "+ Extcodecopy.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(700);
+       return "\n\t"+getGasNoCheck(700);
    }
 
    @Override
    public String visit(returndatasize Returndatasize,int orderNo){
        System.out.println(Integer.toHexString(Returndatasize.getOpcode()).toUpperCase() + "  "+ Returndatasize.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
    }
 
    @Override
    public String visit(returndatacopy Returndatacopy,int orderNo){
        System.out.println(Integer.toHexString(Returndatacopy.getOpcode()).toUpperCase() + "  "+ Returndatacopy.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(3);
+       return "\n\t"+getGasNoCheck(3);
    }
 
    @Override
    public String visit(extcodehash Extcodehash,int orderNo){
        System.out.println(Integer.toHexString(Extcodehash.getOpcode()).toUpperCase() + "  "+ Extcodehash.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(700);
+       return "\n\t"+getGasNoCheck(700);
    }
 
    @Override
    public String visit(blockhash Blockhash,int orderNo){
        System.out.println(Integer.toHexString(Blockhash.getOpcode()).toUpperCase() + "  "+ Blockhash.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(20);
+       return "\n\t"+getGasNoCheck(20);
    }
 
    @Override
    public String visit(coinbase Coinbase,int orderNo){
        System.out.println(Integer.toHexString(Coinbase.getOpcode()).toUpperCase() + "  "+ Coinbase.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
    }
 
    @Override
    public String visit(timestamp Timestamp,int orderNo){
        System.out.println(Integer.toHexString(Timestamp.getOpcode()).toUpperCase() + "  "+ Timestamp.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
    }
 
    @Override
    public String visit(number Number,int orderNo){
        System.out.println(Integer.toHexString(Number.getOpcode()).toUpperCase() + "  "+ Number.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
    }
 
    @Override
    public String visit(difficulty Difficulty,int orderNo){
        System.out.println(Integer.toHexString(Difficulty.getOpcode()).toUpperCase() + "  "+ Difficulty.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
    }
 
    @Override
    public String visit(gaslimit Gaslimit,int orderNo){
        System.out.println(Integer.toHexString(Gaslimit.getOpcode()).toUpperCase() + "  "+ Gaslimit.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
    }
    @Override
    public String visit(chainid Chainid,int orderNo){
        System.out.println(Integer.toHexString(Chainid.getOpcode()).toUpperCase() + "  "+ Chainid.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
    }
    @Override
    public String visit(selfbalance Selfbalance,int orderNo){
@@ -936,7 +935,7 @@ class visitOpCode implements Dissasemble
    @Override
    public String visit(basefee Basefee,int orderNo){
        System.out.println(Integer.toHexString(Basefee.getOpcode()).toUpperCase() + "  "+ Basefee.getName());//output the instruction(Disassembly), used for decompilation
-       return getGasNoCheck(2);
+       return "\n\t"+getGasNoCheck(2);
     }
 
     //-----------------------------------------------------------------------------------------------------------------//

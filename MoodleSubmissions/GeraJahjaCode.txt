@@ -1,0 +1,5441 @@
+package src.cCodes;
+
+public class account {
+    String createAccount;
+    String structPairs;
+    String defAccounts;
+
+    public account(){
+        this.createAccount="\taccounts[accountNo] = (struct numpair){accountNo, 0.0};\n\taccountNo++;";
+    }
+
+    public String getCreateAccount() {
+        return createAccount;
+    }
+
+
+    public String getStructPairs() {
+        return structPairs;
+    }
+
+  
+    public String getDefAccounts() {
+        return defAccounts;
+    }
+
+}
+//Author Gera Jahja, last update 15/05
+
+package src.cCodes;
+
+public class assertVal {
+    String assertCall;
+    
+    public assertVal(String assertThis){
+        this.assertCall="assert("+assertThis+");";
+    }
+
+    public String getAssertCall() {
+        return assertCall;
+    }
+
+    
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class define {
+    String defineStackHeight;
+    String defineGasLimit;
+    String defineMemLimit;
+    
+    public define(int StackHeight, int GasLimit,int memLim) {
+        this.defineStackHeight = "#define STACKHEIGHT "+StackHeight+"\n";//stack height is 1024
+        this.defineGasLimit = "#define GASLIMIT "+GasLimit+"\n";
+        this.defineMemLimit = "#define MEMORYSIZE "+memLim+"\n";
+    }
+
+    public String getDefineStackHeight() {
+        return defineStackHeight;
+    }
+
+    public String getDefineGasLimit() {
+        return defineGasLimit;
+    }
+    public String getdefineMemLimit() {
+        return defineMemLimit;
+    }
+
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class function {
+    String main;
+    String end;
+    String functioncall;
+    public function() {
+        this.main="int main (int argc, char **argv) {\n";
+        this.end="\n}";
+    }
+    public function(String goto_) {
+        this.functioncall="goto "+goto_+";";
+    }
+    public String getMain() {
+        return main;
+    } 
+    
+    public String getFunctionCall() {
+        return functioncall;
+    }
+ 
+    public String getEnd() {
+        return end;
+    }
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class include {
+    String includeAssert;
+    String includeExit;
+
+    public include() {
+        this.includeExit ="#include <stdlib.h>\n#include <stdio.h>\n#include <math.h>\n#include <stdint.h>\n";
+        this.includeAssert = "#include <assert.h>\n"+includeExit;
+    }
+
+    public String getIncludeAssert() {
+        return includeAssert;
+    }
+    
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class label {
+    String labelName;
+    String labelEnd;
+
+    public label(int order) {
+        this.labelName="\n label_"+order+" :\n {\n";
+        this.labelEnd="\n }";
+        //add gass model,etc
+
+    }
+    public String getLabelName() {
+        return labelName;
+
+    }public String getLabelEnd() {
+        return labelEnd;
+    }
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class memory {
+    String mLoad;
+    String mStore;
+    public memory(){
+        this.mLoad="\tint i;\n\tfor (i = 0; i <= memPoint; i++)\n\t{\n\t\tif (memory[i].location == stack[top-1])\n\t\t{\n\t\t\tstack[top]= memory[i].value;\n\t\t\ttop++;\n\t\t}\n\t}\n";
+        this.mStore="\tmemory[memPoint] = (struct pair){stack[top-1],stack[top-2] };\n\ttop-=2;\n\tmemPoint++;\n";
+    }
+    public String getmLoad() {
+        return mLoad;
+    }
+    
+    public String getmStore() {
+        return mStore;
+    }
+    
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class returnVal {
+    String returnStatement;
+    String exitStatement;
+    
+    //return string
+    public returnVal(String val){
+        this.returnStatement= "return"+val+";\n";
+
+    }
+    //return integer
+    public returnVal(int val){
+        this.returnStatement= "return "+val+";\n";
+        this.exitStatement = "exit(0);\n";
+
+    }
+    public String getReturnStatement() {
+        return returnStatement;
+    }
+    public String getExitStatement() {
+        return exitStatement;
+    }
+    
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class stack {
+    String height;
+    String stackPopTop;
+    String stackElement;
+    String stackPushTop;
+    String initialiseTop;
+    String stackVariable;
+    String assertStackHeight;
+    String assertStackNotEmpty;
+    String stackOp;
+    String incVal;
+    String operationPop;
+
+    public stack(String valstr,int val, String operator) {
+        //before int main
+        this.height="var stack[STACKHEIGHT];";//see define.java for STACKHEIGHT
+        this.initialiseTop="int top;";
+
+        //stack manipulation in main c function
+        this.stackPopTop="--top;\n";
+        this.stackElement="stack[top]";
+        this.stackPushTop="++top;\n";
+        this.assertStackHeight="top != STACKHEIGHT";
+        this.assertStackNotEmpty="top >=0";
+        this.stackOp="stack[top "+operator+" "+val+"]";
+        this.stackVariable="stack[top] = "+valstr+";";
+        this.incVal=valstr+"++;";
+        this.operationPop="top-=2;\n";
+    }
+    public String getOperationPop() {
+        return operationPop;
+    }
+    public String getHeight() {
+        return height;
+    }
+    
+    public String getStackPopTop() {
+        return stackPopTop;
+    }
+    
+    public String getStackElement() {
+        return stackElement;
+    }
+    
+    public String getStackPushTop() {
+        return stackPushTop;
+    }
+    
+    public String getInitialiseTop() {
+        return initialiseTop;
+    }
+    
+    public String getStackVariable() {
+        return stackVariable;
+    }
+    
+    public String getAssertStackHeight() {
+        return assertStackHeight;
+    }
+    
+    public String getAssertStackNotEmpty() {
+        return assertStackNotEmpty;
+    }
+    
+    public String getStackOp() {
+        return stackOp;
+    }
+    
+    
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class storage {
+    String sLoad;
+    String sStore;
+    public storage(){
+        this.sLoad="\tint i;\n\tfor (i = 0; i <= storePoint; i++)\n\t{\n\t\tif (storage[i].location == stack[top-1])\n\t\t{\n\t\t\tstack[top]= storage[i].value;\n\t\t\ttop++;\n\t\t}\n\t}\n";
+        this.sStore="\tstorage[storePoint] = (struct pair){stack[top-1],stack[top-2] };\n\ttop-=2;\n\tstorePoint++;\n";
+    }
+    public String getsLoad() {
+        return sLoad;
+    }
+    
+    public String getsStore() {
+        return sStore;
+    }
+}
+package src.cCodes;
+
+public class structs {
+/*
+\nstruct pair {\n\tvar location;\n\tvar value;\n};
+\nstruct numpair {\n\tint address;\n\tdouble balance;\n};
+
+struct pair memory[MEMORYSIZE] = {};
+\nstruct pair storage[MEMORYSIZE] = {};
+\nstruct numpair accounts[MEMORYSIZE] = {};
+
+*/
+    String pair;
+    String numpair;
+    String memory;
+    String storage;
+    String accounts;
+
+    public structs() {
+        this.pair = "\nstruct pair {\n\tvar location;\n\tvar value;\n};";
+        this.numpair = "\nstruct numpair {\n\tint address;\n\tdouble balance;\n};\n";
+        this.memory = "\nstruct pair memory[MEMORYSIZE] = {};";
+        this.storage = "\nstruct pair storage[MEMORYSIZE] = {};";
+        this.accounts = "\nstruct numpair accounts[MEMORYSIZE] = {};";
+    }
+    
+    public String getPair() {
+        return pair;
+    }
+    public String getNumpair() {
+        return numpair;
+    }
+    public String getMemory() {
+        return memory;
+    }
+    public String getStorage() {
+        return storage;
+    }
+    public String getAccounts() {
+        return accounts;
+    }
+  
+}
+//Author Gera Jahja, last update 15/05
+package src.cCodes;
+
+public class variable {
+   
+    String variableName;
+    String variableNameDef;
+    String variableValue;
+    String variableDefValue;
+    String variable;
+    String variableDef;
+    String intvariable;
+    String variableType;
+    String variableType2;
+    String noTypeVariable;
+
+    //create a tmp (or customised name "variableDef") variable definition
+    public variable(int tmpNo,String varName,String value,String unsigned) {
+        this.variableName="tmp"+tmpNo;
+        this.variableNameDef=varName;
+        this.variableValue=" = "+value;
+        this.variable="\t"+unsigned+"var "+variableName+variableValue+";\n";
+        this.variableDef="var "+variableNameDef+";\n";
+        this.variableDefValue="var "+variableNameDef+variableValue+";\n";
+        this.intvariable="\tint "+variableName+variableValue+";\n";
+        this.noTypeVariable="\t"+varName+variableValue+";\n";
+    }
+
+    //create a var type definition
+    public variable(String type, String varextention) {
+        this.variableType="typedef "+ type +" "+varextention+";\n";
+        this.variableType2=type +" "+varextention+";\n";
+    }
+    
+
+    public String getVariableName() {
+        return variableName;
+    } 
+    public String getNoTypeVariable() {
+        return noTypeVariable;
+    }
+
+    public String getVariableValue() {
+        return variableValue;
+    }
+
+    public String getVariable() {
+        return variable;
+        
+    } 
+    public String getVariableDef() {
+        return variableDef;
+        
+    }
+    public String getVariableDefValue() {
+        return variableDefValue;
+        
+    }
+
+    public String getVariableType() {
+        return variableType;
+
+    }
+    
+    public String getVariableType2() {
+        return variableType2;
+    }
+    
+}
+
+//Author Gera Jahja, last update 15/04
+package src.decompile;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+import src.interfaces.*;
+import src.opcodes.*;
+import src.cCodes.*;
+
+//To run the program, please run the main program found in this class.
+
+class EvmDecompile {
+
+    private static void Decompile(List<String> decompiledC, String s_or_e) throws InterruptedException, IOException {
+        //initialise C codes  preparing for decompilation
+        include includeAssert = new include();
+        function mainFunction = new function();
+        boolean runProgram=true;
+        BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
+        variable defineVar = new variable("int64_t", "var");//there are no 256 bit numbers in c 
+        variable defineUVar = new variable("uint64_t", "uvar");//unsigned 64bit integer ... for compilation
+       
+       returnVal return_0 = new returnVal(0);
+        
+        // Model ethereum stack
+        variable stack = new variable(0,"stack[STACKHEIGHT]", "",""); 
+        variable topOfStack= new variable(0,"top","","");
+
+        // Model gas
+        variable gasUsed= new variable(0,"gasUsed","","");
+        variable gasLimit= new variable(0,"gasLimit","GASLIMIT","");
+
+        if (s_or_e =="start"){
+            while (runProgram) {
+                // Asking for input from user
+                System.out.println("\n __________________________");
+                System.out.println("|     C Code Decompiler    |");
+                System.out.println("| Options:                 |");
+                System.out.println("|        1. Executable C   |");
+                System.out.println("|        2. Analysable C   |");
+                System.out.println("|__________________________|\n");
+
+                System.out.println("Choose an option from the menu above: ");
+                String evmContract = bfn.readLine();//1023 chars only?
+                
+                if (evmContract.contains("1")&&evmContract.length()==1){
+                    defineVar = new variable("int64_t", "var");//there are no 256 bit numbers in c 
+                    defineUVar = new variable("uint64_t", "uvar");//unsigned 64bit integer ... for compilation
+                    runProgram=false;
+                }else if (evmContract.contains("2")&&evmContract.length()==1){
+                    runProgram=false;
+                    defineVar = new variable("int128_t", "var");//analysable in cprover
+                    defineUVar = new variable("int128_t", "uvar");//cannot be run without c prover        
+                }else{
+                    System.out.println("Please enter 1 or 2");
+                }
+            }
+            
+            define gas_stack_definitions = new define(1024, 10000,10000);
+            //model memory, storage and accounts
+            structs mod =  new structs();
+
+            String structs= mod.getPair()+mod.getNumpair()+mod.getMemory()+mod.getStorage()+mod.getAccounts()+"\n\n";
+
+            TimeUnit.SECONDS.sleep(1);
+            System.out.println("\n __________________");
+            System.out.println("|     Dissasebly:  |");
+            System.out.println("|__________________|\n");
+            decompiledC.add(includeAssert.getIncludeAssert()+"\n"+defineVar.getVariableType()+"\n"+defineUVar.getVariableType()+"\n"+gas_stack_definitions.getDefineGasLimit()+gas_stack_definitions.getDefineStackHeight()+gas_stack_definitions.getdefineMemLimit()+"\n"+structs+stack.getVariableDef()+topOfStack.getVariableDef()+"\nvar memPoint;\nvar storePoint;\nvar accountNo;\nvar pcCounter;\n"+gasUsed.getVariableDef()+gasLimit.getVariableDefValue()+"\n"+mainFunction.getMain()+"\n /*** Start of decompiled code ***/ \n");
+        }
+        else if (s_or_e =="end"){
+            TimeUnit.SECONDS.sleep(1);
+
+            decompiledC.add(" /*** End of decompiled code ***/\n"+return_0.getReturnStatement()+mainFunction.getEnd()+"\n");
+
+        }else if (s_or_e=="display"){
+            //Print to Generated C code:
+            System.out.println("\n _______________________________");
+            System.out.println("|     Decompilation to C code:  |");
+            System.out.println("|_______________________________|\n");
+            TimeUnit.SECONDS.sleep(1);
+  
+            for (String label : decompiledC) {
+                System.out.println(label);
+            }
+        }
+    }
+
+    /* saves from a list to a c file
+    code based from https://www.w3schools.com/java/java_files_create.asp
+    */
+    public static void saveFile(List<String> DecompiledC)throws IOException{
+        String saveFile="";
+        boolean exit = false;
+        BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
+            while (exit==false){
+                System.out.println("\n _____________________________________________");
+                System.out.println("|     Save to file                            |");
+                System.out.println("| Options:                                    |");
+                System.out.println("|        1. Save decompilation to a .c file   |");
+                System.out.println("|        2. Decompile a new contract          |");
+                System.out.println("|_____________________________________________|\n");
+                System.out.println("Please choose an option from above: ");
+             
+                saveFile = (bfn.readLine()).toUpperCase();
+
+                if ((saveFile.contains("1"))&&(saveFile.length()==1)){
+                    System.out.println("Enter file name: ");
+                    String fileName = bfn.readLine();
+                    try {  
+                        File cCodeFile = new File(fileName+".c");  
+                        if (cCodeFile.createNewFile()) {  
+                          System.out.println("File created: " + cCodeFile.getName());  
+                        } else {  
+                          System.out.println("File already exists");  
+                        }  
+                        FileWriter myWriter = new FileWriter(fileName+".c");
+                        for (String label : DecompiledC) {
+                            myWriter.write(label);
+                        }
+                        myWriter.close();
+                        System.out.println("Successfully updated file");
+                        System.out.println("File path: " + cCodeFile.getAbsolutePath());
+                    
+                      } catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();  
+                      }  
+                    exit = true;
+                }else if ((saveFile.contains("2"))&&(saveFile.length()==1)){
+
+                    exit = true;
+                }
+                else{
+                    System.out.println("Please Type a number from the menu");
+                }
+            }
+    }
+    //read txt file
+    public static String readFile(String evmContract)throws IOException{
+        BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
+        boolean getfile = true;
+        while(getfile){
+            try {
+                System.out.println("Enter name of .txt file: \n");
+                String filename = bfn.readLine();//1023 chars only?
+                File myObj = new File(filename+".txt");
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    System.out.println(data);
+                    evmContract=data;
+                }
+                myReader.close();
+                getfile=false;
+            } catch (FileNotFoundException e) {
+                System.out.println("There is a problem with your file");
+            }                    
+        }
+        return evmContract;
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        // possible log hexadecimals:
+        String[] LogVariations = { "AO", "A1", "A2", "A3", "A4" };
+        List<String> LogVariationsList = Arrays.asList(LogVariations);
+        boolean runProgram = true;
+        // Creating BufferedReader Object
+        BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
+        // all invalid hexadecimals as a string (for convinience)
+        String invalidHex = "0C0D0E0F1E1F2122232425262728292A2B2C2D2E2F494A4B4C4D4E4F5C5D5E5FA5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBFC0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDFE0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF6F7F8F9FBFC";
+        // then split into an array of charecters (2 charecters per element)
+        String[] invalidHexL = invalidHex.split("(?<=\\G.{2})");
+        // then converted into a list
+        List<String> invalidHexList = Arrays.asList(invalidHexL);
+        //push hex values
+        // numerical evm for easy calling of visitor functions 
+        GetInstructionsFromOpcode[] instructions_no = new GetInstructionsFromOpcode[] {
+                new stop(), new add(), new mul(), new sub(), new div(), new sdiv(), new mod(),
+                new smod(), new addmod(), new mulmod(), new lt(), new gt(), new slt(), new sgt(),
+                new eq(), new iszero(), new and(), new or(), new xor(), new not(), new sh3(),
+                new address(), new balance(), new origin(), new caller(), new callvalue(),
+                new calldataload(), new calldatasize(), new calldatacopy(), new codesize(),
+                new codecopy(), new blockhash(), new coinbase(), new timestamp(), new number(),
+                new difficulty(), new gaslimit(), new chainid(), new selfbalance(), new basefee(),
+                new pop(), new mload(), new mstore(), new mstore8(), new sload(), new sstore(),
+                new jump(), new jumpi(), new pc(), new msize() };
+
+        while (runProgram) {
+            // Asking for input from user
+            System.out.println("\n ___________________________________________________________________");
+            System.out.println("|     EVM BYTE CODE -> C DECOMILER                                  |");
+            System.out.println("|                                                                   |");                System.out.println("|        Type 'EXIT' to quit  the program                           |");
+            System.out.println("|        Type 'FILE' to read a txt file containing your byte code   |");
+            System.out.println("|        or enter your Ethereum contract bytecode (e.g 60806040...) |");
+            System.out.println("|___________________________________________________________________|\n");
+                
+            String evmContract = bfn.readLine();//1023 chars only?
+            evmContract = evmContract.toUpperCase();
+            
+            if (evmContract.contains("EXIT")&&evmContract.length()==4){
+                runProgram=false;
+            }else{
+                try{
+                    if (evmContract.contains("FILE")&&evmContract.length()==4){
+                        evmContract= readFile(evmContract);
+                    }
+                    // outputs for readibility
+                    System.out.println("Processing...");
+                    TimeUnit.SECONDS.sleep(1);
+
+                    // outputs the input from the user
+                    System.out.println("EVM BYTECODE: " + evmContract + "\n");
+                    TimeUnit.SECONDS.sleep(1);
+                    
+                    // split into an array of two character op codes (for PUSH make sure to send
+                    // over the next element also)
+                    String[] evmByteCode = evmContract.split("(?<=\\G.{2})");
+                    List<String> evmByteCodeList = Arrays.asList(evmByteCode);
+                    ArrayList<String> evmByteCodeArrayList = new ArrayList<String>(evmByteCodeList);
+
+                    //list that is used for correctly split bytecode  (i.e valid push comands)
+                    List<String> evmByteCodeCorrect = new ArrayList<>();
+                    //list for Code that is returned by the visitor functions 
+                    List<String> DecompiledC = new ArrayList<>();
+
+                    // ensure the elements of the array are split to the right size and stored in evmByteCodeCorrect
+                    //( push requires more than 2 chars)
+
+                    for (int j = 0; j < evmByteCodeArrayList.size(); j++) {
+
+                        String opcode = evmByteCodeArrayList.get(j);
+                        // push starts with 6 and 
+                        //evmByteCodeArrayList.remove(j);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
+                                
+                        try{
+                            if (opcode.startsWith("6") || opcode.startsWith("7")) {
+                                int memsize=EvmDisassemble.getNumber(opcode);
+                                String memoryadd = "";
+                                //evmByteCodeArrayList.remove(j + 1);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
+                                for (int i = 1; i < memsize+1; i++) {
+                                        memoryadd = memoryadd+evmByteCodeArrayList.get(j + 1);
+                                        evmByteCodeArrayList.remove(j + 1);// remove memory adress to prevent it being read as an additional opcode (as list was split into pairs (see variable "String[] evmByteCode"))
+                                }
+                                // (push commands are not two chars, e.g 6008, 60 being PUSH1 and 0x08 being thememory adress)
+                                evmByteCodeCorrect.add(opcode + memoryadd);
+                            } else {
+                                evmByteCodeCorrect.add(opcode);
+                            }
+                        }catch (Exception e){
+                            System.out.println("----Not enough code for Push opcode , Invalid Contract---- "); // if user types 60 this is invalid, must be 6000, or 610000, etc
+                        }
+                    }
+                    
+                    HashMap<String,Integer> cCodeLabelOrder = new HashMap<String, Integer>();
+                    int order =0;
+                    //create c main function and initialise gas model, stack , etc...
+                    Decompile(DecompiledC,"start");
+
+                    //displays dissasembly and also computes future c code , ready for display
+                    Dissasemble visitor = new visitOpCode();
+                    
+                    // Whole contract dissasembled:
+                    for (String opcode : evmByteCodeCorrect) {
+                        int number = EvmDisassemble.getNumber(opcode);
+                        String[] arr = opcode.split("");
+                        String opcodeStr = arr[0] + arr[1];
+                        cCodeLabelOrder.put(opcode, order);
+                        order++;
+                        if (opcode.startsWith("6")) { DecompiledC.add(new push(opcode.substring(2), opcodeStr, number).accept(visitor,cCodeLabelOrder.get(opcode)));}// push starts with 6 and 7
+                        else if (opcode.startsWith("7")) { DecompiledC.add(new push(opcode.substring(2), opcodeStr, number).accept(visitor,cCodeLabelOrder.get(opcode)));}// push starts with 7
+                        else if (opcode.startsWith("8")) {DecompiledC.add(new dup(number).accept(visitor,cCodeLabelOrder.get(opcode)));}// dup starts 8
+                        else if (opcode.startsWith("9")) {DecompiledC.add(new swap(number).accept(visitor,cCodeLabelOrder.get(opcode)));}// swap starts with 9
+                        else if ((opcode.startsWith("A") && LogVariationsList.contains(opcode))|| (opcode.startsWith("A") && opcode.endsWith("0"))) {
+                            DecompiledC.add(new log(number).accept(visitor,cCodeLabelOrder.get(opcode)));
+                        }
+                        else{
+                            DecompiledC.add(EvmDisassemble.callVisitorFunctions(opcode, invalidHexList, instructions_no,number,visitor,cCodeLabelOrder.get(opcode))); // displays opcodes 
+                        }
+                    }
+                    //finalise c code
+                    Decompile(DecompiledC,"end");
+                    //display C 
+                    Decompile(DecompiledC,"display");
+                    //choice to save generated C code to a file to run through CPROVER tools
+                    saveFile(DecompiledC);
+
+                    // Function detection: Basic Blocks from contract: (i.e split on occurunces of jump, jumpi etc), prep for decompilation
+
+                }catch (Exception e){
+                    System.out.println("----Invalid Contract, Enter valid EVM byte code please---- "); //e.g if there is an irregular number of opcodes
+                }
+            }
+        }
+
+    }
+
+
+}
+//Author Gera Jahja, last update 15/05
+
+package src.decompile;
+import java.util.Arrays;
+import java.util.List;
+import src.interfaces.*;
+import src.opcodes.*;
+
+public class EvmDisassemble {
+    // possible log hexadecimals:
+    public static String[] LogVariations = { "AO", "A1", "A2", "A3", "A4" };
+    public static List<String> LogVariationsList = Arrays.asList(LogVariations);
+
+    /*check is a string is a number , from :https://www.baeldung.com/java-check-string-number */
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    /* Prints out readable opcodes from EVM bytecode */
+    public static String callVisitorFunctions(String opcode, List<String> invalidHexList,GetInstructionsFromOpcode[] instructions_no,int number,Dissasemble visitor,int orderNo) {
+        boolean checkNumber = isNumeric(opcode);
+        boolean checkLetter = opcode.contains("A")||opcode.contains("B")||opcode.contains("C")||opcode.contains("D")||opcode.contains("E")||opcode.contains("F");
+        
+        // Display opcode, from EVMBytecode
+        try {
+            if (invalidHexList.contains(opcode)) {
+                System.out.println("---- INVALID BYTE CODE! ---- ");
+            } 
+            else {
+                if (checkNumber == true) {
+                    int opcodeNumber = Integer.parseInt(opcode);
+                    if (opcodeNumber < 21) {
+                        return instructions_no[opcodeNumber].accept(visitor,orderNo);
+
+                    } else if ((opcodeNumber > 20) && (opcodeNumber < 60)) {
+                        if (opcodeNumber > 49) {
+                            return instructions_no[opcodeNumber - 10].accept(visitor,orderNo);
+                        } else {
+                            return instructions_no[opcodeNumber - 9].accept(visitor,orderNo);
+                        }
+                    }
+                }
+                else if (checkLetter==true){
+                    // evm with letters
+                    if (opcode.contains("FF")) { new selfdestruct().accept(visitor,orderNo);} // SELFDESTRUCT passed test
+                    else if (opcode.contains("0A")) { return new exp().accept(visitor,orderNo);} // EXP passed test
+                    else if (opcode.contains("0B")) { return new signextend().accept(visitor,orderNo);} // SIGNEXTEND passed test
+                    else if (opcode.contains("1A")) { return new bytee().accept(visitor,orderNo);} // BYTE passed test
+                    else if (opcode.contains("1B")) { return new shl().accept(visitor,orderNo);} // SHL passed test
+                    else if (opcode.contains("1C")) { return new shr().accept(visitor,orderNo);} // SHR passed test
+                    else if (opcode.contains("3A")) { return new gasprice().accept(visitor,orderNo);} // GASPRICE passed test
+                    else if (opcode.contains("3B")) { return new extcodesize().accept(visitor,orderNo);} // EXTCODESIZE passed test
+                    else if (opcode.contains("3C")) { return new extcodecopy().accept(visitor,orderNo);} // EXTCODECOPY passed test
+                    else if (opcode.contains("3E")) { return new returndatacopy().accept(visitor,orderNo);} // RETURNDATACOPY passed test
+                    else if (opcode.contains("5A")) { return new gas().accept(visitor,orderNo);} // GAS passed test
+                    else if (opcode.contains("5B")) { return new jumpdest().accept(visitor,orderNo);} // JUMPDEST passed test
+                    else if (opcode.contains("F0")) { return new create().accept(visitor,orderNo);} // CREATE passed test
+                    else if (opcode.contains("F1")) { return new call().accept(visitor,orderNo);} // CALL passed test                        
+                    else if (opcode.contains("F2")) { return new callcode().accept(visitor,orderNo);} // CALLCODE passed test
+                    else if (opcode.contains("F3")) { return new return_().accept(visitor,orderNo);} // RETURN passed test
+                    else if (opcode.contains("F4")) { return new delegatecall().accept(visitor,orderNo);} // DELEGATECALL passed test
+                    else if (opcode.contains("F5")) { return new create2().accept(visitor,orderNo);} // CREATE2 passed test
+                    else if (opcode.contains("FA")) { return new staticcall().accept(visitor,orderNo);} // STATICCALL passed test
+                    else if (opcode.contains("FD")) { return new revert().accept(visitor,orderNo);} // REVERT passed test
+                    else if (opcode.contains("FE")) { return new invalid().accept(visitor,orderNo);} // INVALID passed test
+                    else if ((opcode.startsWith("A") && LogVariationsList.contains(opcode))|| (opcode.startsWith("A") && opcode.endsWith("0"))) {
+                        new log(number).accept(visitor,orderNo);
+                    }
+                }
+            } 
+        }catch (Exception e) {
+            if (opcode.contains("1D")) {return new sar().accept(visitor,orderNo);} // SAR passed test
+            else if (opcode.contains("3F")) { return new extcodehash().accept(visitor,orderNo);} // EXTCODEHASH passed test
+            else if (opcode.contains("3D")) { return new returndatasize().accept(visitor,orderNo);} // RETURNDATASIZE passed test
+            else{
+                System.out.println("---- Valid Opcode has not been Implemented Yet---- ");
+                // if a valid opcode isnt handeled in the try section it will show this message
+            }
+        }
+        return "";
+    }
+
+    /*
+    Looks at second number and calulates number for log, dup,swap and push
+    , i.e for 63 (push4), it returns 3+1 = 4 (to display the number for push "4")
+    also gets Lable00_ number for decompiled C code
+    */
+    public static int getNumber(String opcode) { 
+        
+        String[] arr = opcode.split("");
+        if (isNumeric(arr[1]) == true) {// integer conversion 0-9
+            if (opcode.startsWith("7")) {
+                return Integer.parseInt(arr[1]) + 17;// returns push 17-26
+
+            } else if (opcode.startsWith("A")) {
+                return Integer.parseInt(arr[1]);// returns log 1-4
+            } else {
+                return Integer.parseInt(arr[1]) + 1;// returns dup/push/swap 1-10
+            }
+        } else {// hexadecimal conversion for a-f
+            if (opcode.startsWith("7")) {
+                return Integer.parseInt(arr[1], 16) + 17;// returns push 26-32
+            } else {
+                return Integer.parseInt(arr[1], 16) + 1;// returns dup/push/swap 11-16
+            }
+        }
+    }
+    
+}
+//Author Gera Jahja
+package src.decompile;
+import src.interfaces.*;
+import src.opcodes.*;
+import src.opcodes.pc;
+import src.sha3Hash.main.java.pl.thewalkingcode.sha3.Sha3;
+import src.sha3Hash.main.java.pl.thewalkingcode.sha3.Type;
+import src.cCodes.*;
+import java.math.BigInteger;
+import java.util.*;
+
+
+//Uses interfaces to visit the opcode java classes
+//last update 15/05
+class visitOpCode implements Dissasemble
+{ 
+    public Stack< String> java_stack = new Stack<>();  
+    public int variableNumber;
+
+    //C code that is  used for more than one opcode
+    //-----------------------------------------------------------------------------------------------------------------//
+
+    /*attempt to simulate stack, however it does not work for extremely large numbers ... so only partially workinh*/
+    public void getMemoryAddForStack(String operator){
+        BigInteger arithmetic = new BigInteger("0");
+        try{
+            if ((java_stack.isEmpty()==false)&& (((java_stack.peek()).length())<16)){
+                BigInteger xi = new BigInteger(java_stack.pop());
+                if ((java_stack.isEmpty()==false)&& (((java_stack.peek()).length())<16)){
+                    BigInteger yi = new BigInteger(java_stack.pop());
+                    int inty =yi.intValue();
+                    long longy= yi.longValue();
+                    
+                    if (operator.contains("+")){ arithmetic= xi.add(yi);
+                    }else if (operator.contains("-")){arithmetic= xi.subtract(yi);
+                    }else if (operator.contains("*")){arithmetic=xi.multiply(yi);
+                    }else if (operator.contains("/")){arithmetic= xi.divide(yi);
+                    }else if (operator.contains("%")){arithmetic= xi.mod(yi);
+                    }else if (operator.contains("**")){arithmetic= xi.pow(inty);
+                    }else if (operator.contains("<")){arithmetic=  xi.min(yi);
+                    }else if (operator.contains(">")){arithmetic= xi.max(yi);
+                    }else if (operator.contains("==")){arithmetic= BigInteger.valueOf(longy);
+                    }else if (operator.contains("!")||operator.contains("~")){
+                        arithmetic= xi.not();
+                        java_stack.push(yi.toString());  
+                    }else if (operator.contains("&&")){arithmetic= xi.and(yi);
+                    }else if (operator.contains("||")){arithmetic= xi.or(yi);
+                    }else if (operator.contains("^")){arithmetic= xi.xor(yi);
+                    }else if (operator.contains("<<")){arithmetic= xi.shiftLeft(inty);
+                    }else if (operator.contains(">>")&&operator.length()==2){arithmetic= xi.shiftRight(inty);
+                    }else if (operator.contains(">>>")&&operator.length()==3){arithmetic= xi.shiftRight(inty);
+                    }
+                    java_stack.push(arithmetic.toString());
+                }else{
+                    java_stack.push(xi.toString());
+                }
+            }
+        }catch(Exception e) {
+            //  Block of code to handle errors
+            System.out.println("Large number used, sha3 hashes may be affected"); // error!
+        }
+    }
+
+    public String getCheck(stack st,String assertFor,int gasno){
+        assertVal stackCheck =new assertVal("");
+        if (assertFor=="not empty"){
+            stackCheck = new assertVal(st.getAssertStackNotEmpty());
+        }else if (assertFor=="stack height"){
+            stackCheck = new assertVal(st.getAssertStackHeight());
+        }
+        String gasCheck = getGasNoCheck(gasno);
+        return "\t"+stackCheck.getAssertCall()+"\n\t"+gasCheck;
+    }
+
+    //ensure the gas used is never  more than the gas used
+    public String getGasNoCheck(int gasno){
+        assertVal gasCheck = new assertVal("gasUsed < gasLimit");
+        return "gasUsed +="+gasno+";\n\t"+gasCheck.getAssertCall();
+    }
+
+    public String arithmeticCodeGenerator(int lableno,int no,String operator,int gasno,boolean unsigned){
+        //decompilation
+        stack stackval1 = new stack("",2,"-");
+        stack stackval2 = new stack("",1,"-");
+        String unsignedstr ="u";
+
+        if (unsigned==true){
+            unsignedstr ="u";
+        }else{
+            unsignedstr ="";
+        }
+        variable var1 = new variable(no+1,"",stackval1.getStackOp(),unsignedstr);//no need for varName as these are tmp variables
+        variable var2 = new variable(no+2,"",stackval2.getStackOp(),unsignedstr);
+        variable var3 = new variable(no+3,"",var1.getVariableName()+operator+var2.getVariableName(),unsignedstr);
+        setVariableNumber(variableNumber+3);
+        stack stackval = new stack(var3.getVariableName(),2,"-");
+
+        label label_ =new label(lableno);
+
+        String variables =var1.getVariable()+var2.getVariable()+var3.getVariable();
+
+        String stackvals ="\t"+stackval.getOperationPop()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n";
+        
+        String asserts= getCheck(stackval,"stack height",gasno);
+        return label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd();
+    }
+   
+    //-----------------------------------------------------------------------------------------------------------------//
+
+    //Visitors
+
+    //Place n byte item on stack. 0 < n <= 32
+    @Override
+    public String  visit(push Push,int orderNo)
+    {
+        System.out.println(Integer.toHexString(Push.getOpcode()).toUpperCase() + "  "+ Push.getName());//output the instruction(Disassembly), used for decompilation
+        label label_ =new label(orderNo);
+        variable var =new variable(0, "stack[top]" , Push.getMemoryAdd(),"");
+        stack stackval = new stack("",0,"");
+
+        String variables =var.getNoTypeVariable();
+        String stackvals ="\t"+stackval.getStackPushTop();
+        String asserts= getCheck(stackval,"stack height",3);
+        String PushValues= label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd();
+        
+        //add to internal stack for memory acess
+        java_stack.push(Push.getMemoryAdd());
+       // System.out.println("\nElements in Stack: " + java_stack +"\n");  
+
+        Push.setC(PushValues);
+        return Push.getC();
+    }
+  
+    //Append log record with 0-4 topics.
+    @Override
+    public String visit(log Log,int orderNo)
+    {
+        System.out.println(Integer.toHexString(Log.getOpcode()).toUpperCase() + "  "+ Log.getName());//output the instruction(Disassembly), used for decompilation
+        
+        assertVal logCheck =new assertVal("0");
+        label label_ =new label(orderNo);
+        String gasNoCheck ="";
+
+           
+        if (Log.getOpcodeNo()==0){
+            gasNoCheck = getGasNoCheck(375);//log0 , gas= 375
+        }else if (Log.getOpcodeNo()==1){
+            gasNoCheck = getGasNoCheck(750);// log1 gas= 750
+        }else if (Log.getOpcodeNo()==2){
+            gasNoCheck = getGasNoCheck(1125);//log2 gas =1125
+        }else if (Log.getOpcodeNo()==3){
+            gasNoCheck = getGasNoCheck(1500);//log 3 gas =1500
+        }else if (Log.getOpcodeNo()==4){
+            gasNoCheck = getGasNoCheck(1875);//log 4 gas= 1875
+        }else {
+            gasNoCheck = getGasNoCheck(0);
+        }
+        Log.setC(label_.getLabelName()+"\n\t"+logCheck.getAssertCall()+"\n\t"+gasNoCheck+"\n\t"+label_.getLabelEnd());
+        return Log.getC(); }
+
+    //Duplicate nth stack item. 0 < n <= 16
+    @Override
+    public String visit(dup Dup,int orderNo)
+    {
+        System.out.println(Integer.toHexString(Dup.getOpcode()).toUpperCase() + "  "+ Dup.getName());//output the instruction(Disassembly), used for decompilation
+        
+        stack stackval2 = new stack("",Dup.getOpcodeNo(),"-");
+        variable var1 = new variable(getVariableNumber()+1,"",stackval2.getStackOp(),"");//no need for varName as these are tmp variables
+        setVariableNumber(variableNumber+1);
+        stack stackval = new stack(var1.getVariableName(),2,"-");
+        label label_ =new label(orderNo);
+        String variables =var1.getVariable();
+        String stackvals ="\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n";
+        String asserts= getCheck(stackval,"stack height",3);
+        Dup.setC(label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd());
+        return Dup.getC();
+    }
+
+    //Exchange 1st and (* + 1)th stack items.
+    @Override
+    public String visit(swap Swap,int orderNo)
+    {
+        System.out.println(Integer.toHexString(Swap.getOpcode()).toUpperCase() + "  "+ Swap.getName());//output the instruction(Disassembly), used for decompilation
+        int swapPosition = Swap.getOpcodeNo()+1;
+        int varno1=getVariableNumber()+1;
+        int varno2=getVariableNumber()+2;
+        setVariableNumber(variableNumber+2);
+
+        stack stackval1 = new stack("",1,"-");
+        stack stackval2 = new stack("",swapPosition,"-");
+        variable var1 = new variable(varno1,"",stackval1.getStackOp(),"");
+        variable var2 = new variable(varno2,"",stackval2.getStackOp(),"");
+        variable var3 = new variable(0,stackval1.getStackOp(),"tmp"+varno2,"");// no need for tmp number as a variable name has been provided
+        variable var4 = new variable(0,stackval2.getStackOp(),"tmp"+varno1,"");
+        label label_ =new label(orderNo);
+        
+        String variables =var1.getVariable()+var2.getVariable()+var3.getNoTypeVariable()+var4.getNoTypeVariable();
+        String stackvals ="\n";
+        String asserts= "\tassert("+swapPosition+"<= top);\n"+getCheck(stackval1,"stack height",3);//ensure the swap position exists in the stack (top is an integer representng the stack pointer )
+        
+        Swap.setC( label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd());
+        return Swap.getC();
+    }
+
+    //addition
+    @Override
+    public String visit(add Add,int orderNo) 
+    {
+        //dissasembly
+        System.out.println("0"+Integer.toHexString(Add.getOpcode()).toUpperCase() + "  "+ Add.getName());//output the instruction(Disassembly), used for decompilation
+        Add.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," + ",3,true));//C Code 
+        getMemoryAddForStack("+");
+        return Add.getC();
+    }
+    
+    //multiplication
+    @Override
+    public String visit(mul Mul,int orderNo) 
+    {
+        System.out.println("0"+Integer.toHexString(Mul.getOpcode()).toUpperCase() + "  "+ Mul.getName());//output the instruction(Disassembly), used for decompilation
+        Mul.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," * ",5,true));//C Code 
+        getMemoryAddForStack("*");
+        return Mul.getC();
+    }
+
+    //subtraction
+    @Override
+    public String visit(sub Sub,int orderNo) 
+    {
+        System.out.println("0"+Integer.toHexString(Sub.getOpcode()).toUpperCase() + "  "+ Sub.getName());//output the instruction(Disassembly), used for decompilation
+        Sub.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," - ",3,true));//C Code  
+        getMemoryAddForStack("-");
+        return Sub.getC();
+    }
+
+    //unsigned division
+    @Override
+    public String visit(div Div,int orderNo){
+        System.out.println("0"+Integer.toHexString(Div.getOpcode()).toUpperCase() + "  "+ Div.getName());//output the instruction(Disassembly), used for decompilation
+        Div.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," / ",5,true));//C Code  
+        getMemoryAddForStack("/");
+        return Div.getC();
+    }
+
+    //signed division
+    @Override
+    public String visit(sdiv Sdiv,int orderNo){
+        System.out.println("0"+Integer.toHexString(Sdiv.getOpcode()).toUpperCase() + "  "+ Sdiv.getName());//output the instruction(Disassembly), used for decompilation
+        Sdiv.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," / ",5,false));//C Code 
+        getMemoryAddForStack("/");
+        return Sdiv.getC();
+    }
+
+    @Override
+    //modulo
+    public String visit(mod Mod,int orderNo){
+        System.out.println("0"+Integer.toHexString(Mod.getOpcode()).toUpperCase() + "  "+ Mod.getName());//output the instruction(Disassembly), used for decompilation
+        Mod.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," % ",5,true));//C Code 
+        getMemoryAddForStack("%");
+        return Mod.getC();
+    }
+
+    //signed Modulo
+    @Override
+    public String visit(smod Smod,int orderNo){
+        System.out.println("0"+Integer.toHexString(Smod.getOpcode()).toUpperCase() + "  "+ Smod.getName());//output the instruction(Disassembly), used for decompilation
+        Smod.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," % ",5,false));//C Code 
+        getMemoryAddForStack("%");
+        return Smod.getC();
+    }
+
+    //no code generation?
+    @Override
+    public String visit(addmod Addmod,int orderNo){
+        System.out.println("0"+Integer.toHexString(Addmod.getOpcode()).toUpperCase() + "  "+ Addmod.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n//"+Addmod.getName()+"\n";//gas =8
+    }
+
+    //no code generation?
+    @Override
+    public String visit(mulmod Mulmod,int orderNo){
+        System.out.println("0"+Integer.toHexString(Mulmod.getOpcode()).toUpperCase() + "  "+ Mulmod.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n//"+Mulmod.getName()+"\n";//gas=8
+    }
+
+    //#include <math.h> and pow(x, y)
+    @Override
+    public String visit(exp Exp,int orderNo){
+        System.out.println("0"+Integer.toHexString(Exp.getOpcode()).toUpperCase() + "  "+ Exp.getName());//output the instruction(Disassembly), used for decompilation
+        
+        stack stackval1 = new stack("",2,"-");
+        stack stackval2 = new stack("",1,"-");
+        String unsignedstr ="u";
+        variable var1 = new variable(getVariableNumber()+1,"",stackval1.getStackOp(),unsignedstr);//no need for varName as these are tmp variables
+        variable var2 = new variable(getVariableNumber()+2,"",stackval2.getStackOp(),unsignedstr);
+        variable var3 = new variable(getVariableNumber()+3,"","pow("+var1.getVariableName()+","+var2.getVariableName()+")",unsignedstr);
+        setVariableNumber(variableNumber+3);
+        stack stackval = new stack(var3.getVariableName(),2,"-");
+
+        label label_ =new label(orderNo);
+
+        String variables =var1.getVariable()+var2.getVariable()+var3.getVariable();
+
+        String stackvals ="\t"+stackval.getOperationPop()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n";
+         
+        String asserts= getCheck(stackval,"stack height",10);
+        Exp.setC(label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd());
+        getMemoryAddForStack("**");
+        return Exp.getC();
+    }
+
+    //sign extend x from (b+1) bytes to 32 bytes (in solidity this is a function call to SIGNEXTEND(x, b) , x and b being the last two values on the stack)
+    @Override
+    public String visit(signextend Signextend,int orderNo){
+        System.out.println("0"+Integer.toHexString(Signextend.getOpcode()).toUpperCase() + "  "+ Signextend.getName());//output the instruction(Disassembly), used for decompilation
+        Signextend.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," ~ ",5,false));//C Code 
+        getMemoryAddForStack("~");
+        return Signextend.getC();
+    }
+
+    //lower than
+    @Override
+    public String visit(lt Lt,int orderNo){
+        System.out.println(Integer.toHexString(Lt.getOpcode()).toUpperCase() + "  "+ Lt.getName());//output the instruction(Disassembly), used for decompilation
+        Lt.setC(arithmeticCodeGenerator(1,0," < ",3,true));//C Code 
+        getMemoryAddForStack("<");
+        return Lt.getC();
+    }
+
+    //greater than
+    @Override
+    public String visit(gt GT,int orderNo){
+        System.out.println(Integer.toHexString(GT.getOpcode()).toUpperCase() + "  "+ GT.getName());//output the instruction(Disassembly), used for decompilation
+        GT.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," > ",3,true));//C Code 
+        getMemoryAddForStack(">");
+        return GT.getC();
+    }
+
+    //signed lower than
+    @Override
+    public String visit(slt Slt,int orderNo){
+        System.out.println(Integer.toHexString(Slt.getOpcode()).toUpperCase() + "  "+ Slt.getName());//output the instruction(Disassembly), used for decompilation
+        Slt.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," < ",3,false));//C Code 
+        getMemoryAddForStack("<");
+        return Slt.getC();
+    }
+
+    //signed greater than
+    @Override
+    public String visit(sgt Sgt,int orderNo){
+        System.out.println(Integer.toHexString(Sgt.getOpcode()).toUpperCase() + "  "+ Sgt.getName());//output the instruction(Disassembly), used for decompilation
+        Sgt.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," > ",3,false));//C Code 
+        getMemoryAddForStack(">");
+        return Sgt.getC();   
+    }
+
+    //equal to operator
+    @Override
+    public String visit(eq Eq,int orderNo){
+        System.out.println(Integer.toHexString(Eq.getOpcode()).toUpperCase()+ "  "+ Eq.getName());//output the instruction(Disassembly), used for decompilation
+        Eq.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," == ",3,true));//C Code 
+        getMemoryAddForStack("==");
+        return Eq.getC();
+    }
+
+    //simple not operator
+    @Override
+    public String visit(iszero Iszero,int orderNo){
+        System.out.println(Integer.toHexString(Iszero.getOpcode()).toUpperCase() + "  "+ Iszero.getName());//output the instruction(Disassembly), used for decompilation
+        stack stackval1 = new stack("",1,"-");
+        String unsignedstr ="u";
+        variable var1 = new variable(getVariableNumber()+1,"",stackval1.getStackOp(),unsignedstr);//no need for varName as these are tmp variables
+        variable var3 = new variable(getVariableNumber()+2,"","!("+var1.getVariableName()+")",unsignedstr);
+        setVariableNumber(variableNumber+1);
+        stack stackval = new stack(var3.getVariableName(),1,"-");
+
+        label label_ =new label(orderNo);
+
+        String variables =var1.getVariable()+var3.getVariable();
+
+        String stackvals ="\t"+stackval.getStackPopTop()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n";
+        
+        String asserts= getCheck(stackval,"stack height",3);
+        Iszero.setC(label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd());
+        getMemoryAddForStack("!");
+        return Iszero.getC();
+    }
+
+    //bitwise AND
+    @Override
+    public String visit(and And,int orderNo){
+        System.out.println(Integer.toHexString(And.getOpcode()).toUpperCase() + "  "+ And.getName());//output the instruction(Disassembly), used for decompilation
+        And.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," & ",3,false));//C Code 
+        getMemoryAddForStack("&&");
+        return And.getC();
+    }
+
+    //bitwise OR
+    @Override
+    public String visit(or Or,int orderNo){
+        System.out.println(Integer.toHexString(Or.getOpcode()).toUpperCase() + "  "+ Or.getName());//output the instruction(Disassembly), used for decompilation
+        Or.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," | ",3,false));//C Code 
+        getMemoryAddForStack("||");
+        return Or.getC();
+    }
+
+    //bitwise XOR
+    @Override
+    public String visit(xor Xor,int orderNo){
+        System.out.println(Integer.toHexString(Xor.getOpcode()).toUpperCase() + "  "+ Xor.getName());//output the instruction(Disassembly), used for decompilation
+        Xor.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," ^ ",3,false));//C Code 
+        getMemoryAddForStack("^");
+        return Xor.getC();    
+    }
+
+    //bitwise NOT, i.e ~(last value of stack) in c
+    @Override
+    public String visit(not Not,int orderNo){
+        System.out.println(Integer.toHexString(Not.getOpcode()).toUpperCase() + "  "+ Not.getName());//output the instruction(Disassembly), used for decompilation
+        stack stackval1 = new stack("",1,"-");
+        String unsignedstr ="u";
+        variable var1 = new variable(getVariableNumber()+1,"",stackval1.getStackOp(),unsignedstr);//no need for varName as these are tmp variables
+        variable var3 = new variable(getVariableNumber()+2,"","~("+var1.getVariableName()+")",unsignedstr);
+        setVariableNumber(variableNumber+1);
+        stack stackval = new stack(var3.getVariableName(),1,"-");
+
+        label label_ =new label(orderNo);
+
+        String variables =var1.getVariable()+var3.getVariable();
+
+        String stackvals ="\t"+stackval.getStackPopTop()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n";
+        String asserts= getCheck(stackval,"stack height",3);
+        Not.setC(label_.getLabelName()+variables+stackvals+asserts+label_.getLabelEnd());
+        getMemoryAddForStack("~");
+        return Not.getC();
+    }
+    
+    @Override
+    public String visit(bytee Bytee,int orderNo){
+        System.out.println(Integer.toHexString(Bytee.getOpcode()).toUpperCase() + "  "+ Bytee.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n\t"+getGasNoCheck(3);//gas 3
+    }
+
+    //shift left
+    @Override
+    public String visit(shl Shl,int orderNo){
+        System.out.println(Integer.toHexString(Shl.getOpcode()).toUpperCase() + "  "+ Shl.getName());//output the instruction(Disassembly), used for decompilation
+        Shl.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," << ",3,false));//C Code 
+        getMemoryAddForStack("<<");
+        return Shl.getC();
+    }
+
+    //logical shift right
+    @Override
+    public String visit(shr Shr,int orderNo){
+        System.out.println(Integer.toHexString(Shr.getOpcode()).toUpperCase() + "  "+ Shr.getName());//output the instruction(Disassembly), used for decompilation
+        Shr.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," >> ",3,false));//C Code 
+        getMemoryAddForStack(">>");
+        return Shr.getC();
+    }
+
+    //arithmetic shift right, C and C++ have only arithmetic shifting
+    @Override
+    public String visit(sar Sar,int orderNo){
+        System.out.println(Integer.toHexString(Sar.getOpcode()).toUpperCase() + "  "+ Sar.getName());//output the instruction(Disassembly), used for decompilation
+        Sar.setC(arithmeticCodeGenerator(orderNo,getVariableNumber()," >> ",3,false));//C Code 
+        getMemoryAddForStack(">>>");
+        return Sar.getC();
+    }
+
+    //accounts model
+
+    //ADDRESS: Get the address of the currently executing account
+    /*
+        stack[top]=accounts[accountNo-1].address;
+        top++;
+        gas+=2;
+    */
+    @Override
+    public String visit(address Address,int orderNo){
+        System.out.println(Integer.toHexString(Address.getOpcode()).toUpperCase() + "  "+ Address.getName());//output the instruction(Disassembly), used for decompilation
+        stack stackval =new stack("accounts[accountNo-1].address",0,"");
+        label label_ =new label(orderNo);
+        String strVals = label_.getLabelName()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n\t"+getGasNoCheck(2)+label_.getLabelEnd();
+        Address.setC(strVals);
+        return Address.getC();
+    }
+
+    //BALANCE: Get the account balance of any given account
+    /*
+    stack[top]=accounts[accountNo-1].balance;
+    top++;
+    gas+=400
+    */
+    @Override
+    public String visit(balance Balance,int orderNo){
+        System.out.println(Integer.toHexString(Balance.getOpcode()).toUpperCase() + "  "+ Balance.getName());//output the instruction(Disassembly), used for decompilation
+        stack stackval =new stack("accounts[accountNo-1].balance",0,"");
+        label label_ =new label(orderNo);
+        String strVals = label_.getLabelName()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n\t"+getGasNoCheck(400)+label_.getLabelEnd();
+        Balance.setC(strVals);
+        return Balance.getC();   
+    }
+
+    //GASPRICE: Get the gas price specified by the originating transaction
+    /*
+    stack[top]=gasUsed;
+    top++;
+    gas+=2;
+    */
+    @Override
+    public String visit(gasprice Gasprice,int orderNo){
+        System.out.println(Integer.toHexString(Gasprice.getOpcode()).toUpperCase() + "  "+ Gasprice.getName());//output the instruction(Disassembly), used for decompilation
+        stack stackval =new stack("gasUsed",0,"");
+        label label_ =new label(orderNo);
+        String strVals = label_.getLabelName()+"\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+"\n\t"+getGasNoCheck(2)+label_.getLabelEnd();
+        Gasprice.setC(strVals);
+        return Gasprice.getC();
+    }
+
+    //pop value off the top of the stack
+    @Override
+    public String visit(pop Pop,int orderNo){
+        System.out.println(Integer.toHexString(Pop.getOpcode()).toUpperCase() + "  "+ Pop.getName());//output the instruction(Disassembly), used for decompilation
+        label label_ =new label(orderNo);
+        stack stackval = new stack("",0,"");
+        String asserts= getCheck(stackval,"not empty",2);
+        String stackvals ="\t"+stackval.getStackPopTop();
+        String PopValues= label_.getLabelName()+stackvals+asserts+label_.getLabelEnd();
+        Pop.setC(PopValues);
+        return Pop.getC();
+    }
+    
+    //GAS: Get the amount of available gas (after the reduction for this instruction)
+    /*
+    gasUsed+=2;
+    stack[top]=GASLIMIT- gasUsed;
+    top++;
+    */
+    @Override
+    public String visit(gas Gas,int orderNo){
+        System.out.println(Integer.toHexString(Gas.getOpcode()).toUpperCase() + "  "+ Gas.getName());//output the instruction(Disassembly), used for decompilation
+        stack stackval =new stack("GASLIMIT- gasUsed",0,"");
+        label label_ =new label(orderNo);
+        String strVals = label_.getLabelName()+"\tgasUsed+=2;\n\t"+stackval.getStackVariable()+"\n\t"+stackval.getStackPushTop()+label_.getLabelEnd();
+        Gas.setC(strVals);
+        return Gas.getC();
+    }
+    //Create an account with a balance and address
+    /*
+    accounts[accountNo] = (struct numpair){accountNo, 2.0};
+    accountNo++;
+    gas+=32000;
+    
+    WHERE:
+    struct numpair {
+        int accNum;
+        double balance;
+    };
+    struct numpair accounts[MEMORYSIZE] = {};   */
+    @Override
+    public String visit(create Create,int orderNo){
+        System.out.println(Integer.toHexString(Create.getOpcode()).toUpperCase() + "  "+ Create.getName());//output the instruction(Disassembly), used for decompilation
+        account accountStr = new account();
+        label label_ = new label(orderNo);
+        String strVals= label_.getLabelName()+accountStr.getCreateAccount()+"\n\t"+getGasNoCheck(32000)+label_.getLabelEnd();
+        Create.setC(strVals);
+        return Create.getC();
+    }
+    //unknown gas cost for create 2... so used the same as create 
+    @Override
+    public String visit(create2 Create2,int orderNo){
+        System.out.println(Integer.toHexString(Create2.getOpcode()).toUpperCase() + "  "+ Create2.getName());//output the instruction(Disassembly), used for decompilation
+        account accountStr = new account();
+        label label_ = new label(orderNo);
+        String strVals= label_.getLabelName()+accountStr.getCreateAccount()+"\n\t"+getGasNoCheck(32000)+label_.getLabelEnd();
+        Create2.setC(strVals);
+        return Create2.getC();
+    }
+
+    //RETURN: Halt execution and return output data
+    @Override
+    public String visit(return_ Return_,int orderNo){
+        System.out.println(Integer.toHexString(Return_.getOpcode()).toUpperCase() + "  "+ Return_.getName());//output the instruction(Disassembly), used for decompilation
+        returnVal exit = new returnVal(0);
+        return exit.getExitStatement();
+    }
+
+    //REVERT: Halt execution, reverting state changes but returning data and remaining gas
+    @Override
+    public String visit(revert Revert,int orderNo){
+        System.out.println(Integer.toHexString(Revert.getOpcode()).toUpperCase() + "  "+ Revert.getName());//output the instruction(Disassembly), used for decompilation
+        returnVal exit = new returnVal(0);
+        return exit.getExitStatement();
+    }
+
+    //INVALID: The designated invalid instruction
+    @Override
+    public String visit(invalid Invalid,int orderNo){
+        System.out.println(Integer.toHexString(Invalid.getOpcode()).toUpperCase() + "  "+ Invalid.getName());//output the instruction(Disassembly), used for decompilation
+        return "";
+    }
+
+    // SELFDESTRUCT: Halt execution and register account for deletion
+    @Override
+    public String visit(selfdestruct Selfdestruct,int orderNo){
+        System.out.println(Integer.toHexString(Selfdestruct.getOpcode()).toUpperCase() + "  "+ Selfdestruct.getName());//output the instruction(Disassembly), used for decompilation
+        return"exit(0);" ;
+    }
+
+    // hash the last two items of stack,  sha3 algorithm is from https://github.com/mchrapek/sha3-java
+    @Override
+    public String visit(sh3 Sh3,int orderNo) 
+    {
+        System.out.println(Integer.toHexString(Sh3.getOpcode()).toUpperCase() + "  "+ Sh3.getName());//output the instruction(Disassembly), used for decompilation
+
+        String x = java_stack.pop();  
+        String y = java_stack.pop();  
+        // string to byte[]
+        byte[] input = (x+y).getBytes();
+        Type type = Type.SHA3_256;
+        Sha3 sha3 = new Sha3(type);
+        byte[] encode = sha3.encode(input);
+        String s = Base64.getEncoder().encodeToString(encode);
+        java_stack.push(s);
+
+        String gasCheck= getGasNoCheck(30);//C Code;//gas is aproximtely 30, but can vary so not 100% accurate
+        label label_ = new label(orderNo);
+        Sh3.setC(label_.getLabelName()+"\t"+gasCheck+"\n\t"+"stack[top]='"+s+"';\n"+label_.getLabelEnd());
+        return Sh3.getC();
+    }
+
+    //halts execution,exits program
+    @Override
+    public String visit(stop Stop,int orderNo) 
+    {
+        System.out.println("0"+Integer.toHexString(Stop.getOpcode()).toUpperCase() + "  "+ Stop.getName());//output the instruction(Disassembly), used for decompilation
+        returnVal exit = new returnVal(0);
+        return exit.getExitStatement();
+    }
+
+    //memory model
+
+    //Look through the memory, if the memory location is equal to the top of the stack, store the value in that memory location on the stack
+    /*
+    int i;
+    for (i = 0; i <= memPoint; i++)
+    {
+        if (memory[i].location == stack[top-1]) 
+        {                    
+        stack[top]= memory[i].value;
+        top++;
+        }
+    }
+    */
+    @Override
+    public String visit(mload Mload,int orderNo){
+      System.out.println(Integer.toHexString(Mload.getOpcode()).toUpperCase() + "  "+ Mload.getName());//output the instruction(Disassembly), used for decompilation
+      label label_ =new label(orderNo);
+      memory mem = new memory();
+      Mload.setC(label_.getLabelName()+mem.getmLoad()+"\t"+getGasNoCheck(3)+label_.getLabelEnd());
+      return Mload.getC();
+    }
+  
+    //Top of stack= memory location, top of stack-1 = value
+    /*
+        memory[memPoint] = (struct pair){stack[top],stack[top-1] };
+        top-=2;
+        memPoint++;
+     */
+    @Override
+    public String visit(mstore Mstore,int orderNo){
+        System.out.println(Integer.toHexString(Mstore.getOpcode()).toUpperCase() + "  "+ Mstore.getName());//output the instruction(Disassembly), used for decompilation
+        label label_ =new label(orderNo);
+        memory mem = new memory();
+        Mstore.setC(label_.getLabelName()+mem.getmStore()+"\t"+getGasNoCheck(3)+label_.getLabelEnd());
+        return Mstore.getC();
+    }
+  
+    //Top of stack= memory location, top of stack-1 = value
+     /*C code
+        memory[memPoint] = (struct pair){stack[top],stack[top-1] };
+        top-=2;
+        memPoint++;
+     */
+    @Override
+    public String visit(mstore8 Mstore8,int orderNo){
+        System.out.println(Integer.toHexString(Mstore8.getOpcode()).toUpperCase() + "  "+ Mstore8.getName());//output the instruction(Disassembly), used for decompilation
+        label label_ =new label(orderNo);
+        memory mem = new memory();
+        Mstore8.setC(label_.getLabelName()+mem.getmStore()+"\t"+getGasNoCheck(3)+label_.getLabelEnd());
+        return Mstore8.getC();
+    }
+  
+    // Load the value of a storage location
+    /*  C code:
+    for (i = 0; i <= storePoint; i++)
+    {
+        if (storage[i].location == stack[top-1]) 
+        {                    
+        stack[top]= storage[i].value;
+        top++;
+        }
+    }
+    WHERE
+    struct pair {
+        var location;
+        var value;
+    };
+
+    struct pair storage[MEMORYSIZE] = {};
+    var storePoint;
+    */
+    @Override
+    public String visit(sload Sload,int orderNo){
+        System.out.println(Integer.toHexString(Sload.getOpcode()).toUpperCase() + "  "+ Sload.getName());//output the instruction(Disassembly), used for decompilation
+        label label_ =new label(orderNo);
+        storage store = new storage();
+        Sload.setC(label_.getLabelName()+store.getsLoad()+"\t"+getGasNoCheck(800)+label_.getLabelEnd());
+        return Sload.getC();
+    }
+  
+    //Top of stack= storage location, top of stack-1 = value, storage[0x80] = 0x40;
+     /*
+        storage[storePoint] = (struct pair){stack[top],stack[top-1] };
+        top-=2;
+        storePoint++;
+     */
+    @Override
+    public String visit(sstore Sstore,int orderNo){
+        System.out.println(Integer.toHexString(Sstore.getOpcode()).toUpperCase() + "  "+ Sstore.getName());//output the instruction(Disassembly), used for decompilation
+        label label_ =new label(orderNo);
+        storage store = new storage();
+        Sstore.setC(label_.getLabelName()+store.getsStore()+"\t"+getGasNoCheck(20000)+label_.getLabelEnd());
+        return Sstore.getC();
+    }
+    //stack[top]=memPoint;
+    //top++;
+    //gasUsed+=2;    
+    @Override
+    public String visit(msize Msize,int orderNo){
+        System.out.println(Integer.toHexString(Msize.getOpcode()).toUpperCase() + "  "+ Msize.getName());//output the instruction(Disassembly), used for decompilation
+        label label_=new label(orderNo);
+        stack stackk = new stack("memPoint",2,"");
+        Msize.setC(label_.getLabelName()+"\t"+stackk.getStackVariable()+"\n\t"+stackk.getStackPushTop()+"\t"+getGasNoCheck(2)+label_.getLabelEnd());
+        return Msize.getC();
+    }
+    //Get the value of the program counter prior to the increment corresponding to this instruction.
+    //stack[top]=pcCounter;
+    //top++;
+    //pcCounter++;
+    //gasUsed+=2;
+
+    @Override
+    public String visit(pc Pc,int orderNo){
+        System.out.println(Integer.toHexString(Pc.getOpcode()).toUpperCase() + "  "+ Pc.getName());//output the instruction(Disassembly), used for decompilation
+        label label_=new label(orderNo);
+        stack stackk = new stack("pcCounter",2,"");
+        Pc.setC(label_.getLabelName()+"\t"+stackk.getStackVariable()+"\n\t"+stackk.getStackPushTop()+"\n\tpcCounter++;"+"\t"+getGasNoCheck(2)+label_.getLabelEnd());
+        return Pc.getC();
+    }
+
+   //
+   @Override
+   public String visit(jumpdest Jumpdest,int orderNo){
+       System.out.println(Integer.toHexString(Jumpdest.getOpcode()).toUpperCase() + "  "+ Jumpdest.getName());//output the instruction(Disassembly), used for decompilation
+       return "";
+   }
+   //
+   @Override
+   public String visit(jumpi Jumpi,int orderNo){
+         System.out.println(Integer.toHexString(Jumpi.getOpcode()).toUpperCase() + "  "+ Jumpi.getName());//output the instruction(Disassembly), used for decompilation
+         return "";
+   }
+   //Alter the program counter, and jump to address ontop of stack
+   @Override
+   public String visit(jump Jump,int orderNo){
+       System.out.println(Integer.toHexString(Jump.getOpcode()).toUpperCase() + "  "+ Jump.getName());//output the instruction(Disassembly), used for decompilation
+       function f = new function("label_"+ (orderNo-1)); 
+       label label_ = new label(orderNo);
+       String getGas = getGasNoCheck(8);
+       Jump.setC(label_.getLabelName()+"\t"+getGas+"\n\t"+f.getFunctionCall()+"\n\tpcCounter++;"+label_.getLabelEnd());
+       return Jump.getC();
+   }
+ 
+    //-----------------------------------------------------------------------------------------------------------------//
+
+    //Dissasembly, and gass calculation
+    @Override
+    public String visit(staticcall Staticcall,int orderNo){
+        System.out.println(Integer.toHexString(Staticcall.getOpcode()).toUpperCase() + "  "+ Staticcall.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n\t"+getGasNoCheck(40);
+    }
+    @Override
+    public String visit(call Call,int orderNo){
+        System.out.println(Integer.toHexString(Call.getOpcode()).toUpperCase() + "  "+ Call.getName());//output the instruction(Disassembly), used for decompilation
+        return "";
+    }
+    @Override
+    public String visit(callcode Callcode,int orderNo){
+        System.out.println(Integer.toHexString(Callcode.getOpcode()).toUpperCase() + "  "+ Callcode.getName());//output the instruction(Disassembly), used for decompilation
+        return "";
+    }
+    @Override
+    public String visit(delegatecall Delegatecall,int orderNo){
+        System.out.println(Integer.toHexString(Delegatecall.getOpcode()).toUpperCase() + "  "+ Delegatecall.getName());//output the instruction(Disassembly), used for decompilation
+        return "";
+    }
+    @Override
+    public String visit(origin Origin,int orderNo){
+        System.out.println(Integer.toHexString(Origin.getOpcode()).toUpperCase() + "  "+ Origin.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n\t"+getGasNoCheck(2);
+    }
+
+    @Override
+    public String visit(caller Caller,int orderNo){
+        System.out.println(Integer.toHexString(Caller.getOpcode()).toUpperCase() + "  "+ Caller.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n\t"+getGasNoCheck(2);
+    }
+
+    //
+    @Override
+    public String visit(callvalue Callvalue,int orderNo){
+        System.out.println(Integer.toHexString(Callvalue.getOpcode()).toUpperCase() + "  "+ Callvalue.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n\t"+getGasNoCheck(2);
+    }
+
+    //
+    @Override
+    public String visit(calldataload Calldataload,int orderNo){
+        System.out.println(Integer.toHexString(Calldataload.getOpcode()).toUpperCase() + "  "+ Calldataload.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n\t"+getGasNoCheck(3);
+    }
+
+    //
+    @Override
+    public String visit(calldatasize Calldatasize,int orderNo){
+        System.out.println(Integer.toHexString(Calldatasize.getOpcode()).toUpperCase() + "  "+ Calldatasize.getName());//output the instruction(Disassembly), used for decompilation
+        return "\n\t"+getGasNoCheck(2);
+    }
+   @Override
+   public String visit(calldatacopy Calldatacopy,int orderNo){
+       System.out.println(Integer.toHexString(Calldatacopy.getOpcode()).toUpperCase() + "  "+ Calldatacopy.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(3);
+   }
+
+   @Override
+   public  String visit(codesize Codesize,int orderNo){
+       System.out.println(Integer.toHexString(Codesize.getOpcode()).toUpperCase() + "  "+ Codesize.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+   }
+
+   @Override
+   public String visit(codecopy Codecopy,int orderNo){
+       System.out.println(Integer.toHexString(Codecopy.getOpcode()).toUpperCase() + "  "+ Codecopy.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(3);
+   }
+
+   @Override
+   public String visit(extcodesize Extcodesize,int orderNo){
+       System.out.println(Integer.toHexString(Extcodesize.getOpcode()).toUpperCase() + "  "+ Extcodesize.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(700);
+   }
+
+   @Override
+   public String visit(extcodecopy Extcodecopy,int orderNo){
+       System.out.println(Integer.toHexString(Extcodecopy.getOpcode()).toUpperCase() + "  "+ Extcodecopy.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(700);
+   }
+
+   @Override
+   public String visit(returndatasize Returndatasize,int orderNo){
+       System.out.println(Integer.toHexString(Returndatasize.getOpcode()).toUpperCase() + "  "+ Returndatasize.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+   }
+
+   @Override
+   public String visit(returndatacopy Returndatacopy,int orderNo){
+       System.out.println(Integer.toHexString(Returndatacopy.getOpcode()).toUpperCase() + "  "+ Returndatacopy.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(3);
+   }
+
+   @Override
+   public String visit(extcodehash Extcodehash,int orderNo){
+       System.out.println(Integer.toHexString(Extcodehash.getOpcode()).toUpperCase() + "  "+ Extcodehash.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(700);
+   }
+
+   @Override
+   public String visit(blockhash Blockhash,int orderNo){
+       System.out.println(Integer.toHexString(Blockhash.getOpcode()).toUpperCase() + "  "+ Blockhash.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(20);
+   }
+
+   @Override
+   public String visit(coinbase Coinbase,int orderNo){
+       System.out.println(Integer.toHexString(Coinbase.getOpcode()).toUpperCase() + "  "+ Coinbase.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+   }
+
+   @Override
+   public String visit(timestamp Timestamp,int orderNo){
+       System.out.println(Integer.toHexString(Timestamp.getOpcode()).toUpperCase() + "  "+ Timestamp.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+   }
+
+   @Override
+   public String visit(number Number,int orderNo){
+       System.out.println(Integer.toHexString(Number.getOpcode()).toUpperCase() + "  "+ Number.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+   }
+
+   @Override
+   public String visit(difficulty Difficulty,int orderNo){
+       System.out.println(Integer.toHexString(Difficulty.getOpcode()).toUpperCase() + "  "+ Difficulty.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+   }
+
+   @Override
+   public String visit(gaslimit Gaslimit,int orderNo){
+       System.out.println(Integer.toHexString(Gaslimit.getOpcode()).toUpperCase() + "  "+ Gaslimit.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+   }
+   @Override
+   public String visit(chainid Chainid,int orderNo){
+       System.out.println(Integer.toHexString(Chainid.getOpcode()).toUpperCase() + "  "+ Chainid.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+   }
+   @Override
+   public String visit(selfbalance Selfbalance,int orderNo){
+       System.out.println(Integer.toHexString(Selfbalance.getOpcode()).toUpperCase() + "  "+ Selfbalance.getName());//output the instruction(Disassembly), used for decompilation
+       return "";
+   }
+
+   @Override
+   public String visit(basefee Basefee,int orderNo){
+       System.out.println(Integer.toHexString(Basefee.getOpcode()).toUpperCase() + "  "+ Basefee.getName());//output the instruction(Disassembly), used for decompilation
+       return "\n\t"+getGasNoCheck(2);
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------//
+    //ensures there are never two of the same variable names in thr c generated code, goes in order from first call 
+    public int getVariableNumber() {
+        return variableNumber;
+    }
+
+    public void setVariableNumber(int variableNumber) {
+        this.variableNumber = variableNumber;
+    }
+    //-----------------------------------------------------------------------------------------------------------------//
+
+}
+
+//Author Gera Jahja
+package src.interfaces;
+import src.opcodes.*;
+
+
+public interface Dissasemble 
+{
+    String visit(sh3 Sh3,int orderNo);
+    String visit(add Add,int orderNo);
+    String visit(stop Stop,int orderNo);
+    String visit(mul Mul,int orderNo);
+    String visit(sub Sub,int orderNo);
+    String visit(div Div,int orderNo);
+    String visit(sdiv Sdiv,int orderNo);
+    String visit(mod Mod,int orderNo);
+    String visit(smod Smod,int orderNo);
+    String visit(addmod Addmod,int orderNo);
+    String visit(mulmod Mulmod,int orderNo);
+    String visit(exp Exp,int orderNo);
+    String visit(signextend Signextend,int orderNo);
+    String visit(lt Lt,int orderNo);
+    String visit(gt GT,int orderNo);
+    String visit(slt Slt,int orderNo);
+    String visit(sgt Sgt,int orderNo);
+    String visit(eq Eq,int orderNo);
+    String visit(iszero Iszero,int orderNo);
+    String visit(and And,int orderNo);
+    String visit(or Or,int orderNo);
+    String visit(xor Xor,int orderNo);
+    String visit(not Not,int orderNo);
+    String visit(bytee Bytee,int orderNo);
+    String visit(shl Shl,int orderNo);
+    String visit(shr Shr,int orderNo);
+    String visit(sar Sar,int orderNo);
+    String visit(address Address,int orderNo);
+    String visit(balance Balance,int orderNo);
+    String visit(origin Origin,int orderNo);
+    String visit(caller Caller,int orderNo);
+    String visit(callvalue Callvalue,int orderNo);
+    String visit(calldataload Calldataload,int orderNo);
+    String visit(calldatasize Calldatasize,int orderNo);
+    String visit(calldatacopy Calldatacopy,int orderNo);
+    String visit(codesize Codesize,int orderNo);
+    String visit(codecopy Codecopy,int orderNo);
+    String visit(gasprice Gasprice,int orderNo);
+    String visit(extcodesize Extcodesize,int orderNo);
+    String visit(extcodecopy Extcodecopy,int orderNo);
+    String visit(returndatasize Returndatasize,int orderNo);
+    String visit(returndatacopy Returndatacopy,int orderNo);
+    String visit(extcodehash Extcodehash,int orderNo);
+    String visit(blockhash Blockhash,int orderNo);
+    String visit(coinbase Coinbase,int orderNo);
+    String visit(timestamp Timestamp,int orderNo);
+    String visit(number Number,int orderNo);
+    String visit(difficulty Difficulty,int orderNo);
+    String visit(gaslimit Gaslimit,int orderNo);
+    String visit(chainid Chainid,int orderNo);
+    String visit(selfbalance Selfbalance,int orderNo);
+    String visit(basefee Basefee,int orderNo);
+    String visit(pop Pop,int orderNo);
+    String visit(mload Mload,int orderNo);
+    String visit(mstore Mstore,int orderNo);
+    String visit(mstore8 Mstore8,int orderNo);
+    String visit(sload Sload,int orderNo);
+    String visit(sstore Sstore,int orderNo);
+    String visit(jump Jump,int orderNo);
+    String visit(jumpi Jumpi,int orderNo);
+    String visit(pc Pc,int orderNo);
+    String visit(msize Msize,int orderNo);
+    String visit(gas Gas,int orderNo);
+    String visit(jumpdest Jumpdest,int orderNo);
+    String visit(push Push,int orderNo);
+    String visit(dup Dup,int orderNo);
+    String visit(swap Swap,int orderNo);
+    String visit(log Log,int orderNo);
+    String visit(create Create,int orderNo);
+    String visit(call Call,int orderNo);
+    String visit(callcode Callcode,int orderNo);
+    String visit(return_ Return_,int orderNo);
+    String visit(delegatecall Delegatecall,int orderNo);
+    String visit(create2 Create2,int orderNo);
+    String visit(staticcall Staticcall,int orderNo);
+    String visit(revert Revert,int orderNo);
+    String visit(invalid invalid,int orderNo);
+    String visit(selfdestruct Selfdestruct,int orderNo);
+
+}
+//Author Gera Jahja
+package src.interfaces;
+
+public interface GetInstructionsFromOpcode
+{
+    public String accept(Dissasemble visitor,int orderNo);
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+
+/*  (u)int256 addition modulo 2**256
+    Stack no. 01 (op code is 01)
+    Last update: 28/02, 05/03,01/05
+    Test: Passed Dissasembly test! 05/03
+*/
+public class add implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+    private String cCode;
+   
+    public add()
+    {
+        this.opcode=0x01;
+        this.name = "ADD";
+//        this.cCode = "{\n\tvar tmp1 = stack[top - 2];\n\tvar tmp2 = stack[top - 1];\n\t var tmp3 = tmp1 + tmp2;\n\tstack[top] = tmp3;\n\t++top;\n\tassert(top != STACKHEIGHT);\n\tgasUsed++;\n\tassert(gasUsed < gasLimit);\n}";
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+
+    
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  (u)int256 addition modulo N
+    Stack no.08
+    Last update: 28/02,05/03,01/05
+*/
+import src.interfaces.*;
+
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class addmod implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+    private String cCode;
+
+    public addmod()
+    {
+        this.opcode=0x08;
+        this.name = "ADDMOD";
+    }
+   
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  address of executing contract
+    Stack no. 30
+    Last update: 03/03 ,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class address implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+    private String cCode;
+
+    public address()
+    {
+        this.opcode=0x30;
+        this.name = "ADDRESS";
+    }
+   
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+
+//Author Gera Jahja
+package src.opcodes;
+/*  bitwise AND
+    Stack no. 16
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class and implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;   
+    private String cCode;
+
+    public and()
+    {
+        this.opcode=0x16;
+        this.name = "AND";
+    }
+   
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  balance, in wei
+    Stack no. 31
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class balance implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+    private String cCode;
+    
+    public balance( )
+    {
+        this.opcode=0x31;
+        this.name = "BALANCE";
+    }
+   
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+
+//Author Gera Jahja
+package src.opcodes;
+/*  base fee of current block
+    Stack no.48
+    Last update: 04/03,05/03,01/05
+    49-4F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class basefee implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public basefee()
+    {
+        this.opcode=0x48;
+        this.name = "BASEFEE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  blockHash(blockNum)
+    Stack no.40
+    Last update: 04/03,05/03,01/05
+    49-4F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class blockhash implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public blockhash()
+    {
+        this.opcode=0x40;
+        this.name = "BLOCKHASH";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  ith byte of (u)int256 x, from the left
+    Stack no. 1A
+    Last update: 03/03,05/03,01/05
+    Stack no 1E-1F are invalid!
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class bytee implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public bytee()
+    {
+        this.opcode=0x1A;
+        this.name = "BYTE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  mem[retOst:retOst+retLen] := returndata
+    Stack no.F1
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class call implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public call()
+    {
+        this.opcode=0xF1;
+        this.name = "CALL";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  same as DELEGATECALL (delegatecall.java), but does not propagate original msg.sender and msg.value
+    mem[retOst:retOst+retLen] = returndata
+    Stack no.F2
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class callcode implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public callcode()
+    {
+        this.opcode=0xF2;
+        this.name = "CALLCODE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  copy msg data
+    Stack no.37
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class calldatacopy implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public calldatacopy()
+    {
+        this.opcode=0x37;
+        this.name = "CALLDATACOPY";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  read word from msg data at index idx
+    Stack no.35
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class calldataload implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public calldataload()
+    {
+        this.opcode=0x35;
+        this.name = "CALLDATALOAD";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  length of msg data, in bytes
+    Stack no.36
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class calldatasize implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public calldatasize()
+    {
+        this.opcode=0x36;
+        this.name = "CALLDATASIZE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  address of msg sender
+    Stack no.33
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class caller implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public caller()
+    {
+        this.opcode=0x33;
+        this.name = "CALLER";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+    
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  msg value, in wei
+    Stack no.34
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class callvalue implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public callvalue()
+    {
+        this.opcode=0x34;
+        this.name = "CALLVALUE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  push current chain id onto stack
+    Stack no.46
+    Last update: 04/03,05/03,01/05
+    49-4F are invalid
+*/ 
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class chainid implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public chainid()
+    {
+        this.opcode=0x46;
+        this.name = "CHAINID";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  copy executing contract's bytecode
+    mem[dstOst:dstOst+len] := this.code[ost:ost+len]
+    Stack no. 39
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class codecopy implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public codecopy()
+    {
+        this.opcode=0x39;
+        this.name = "CODECOPY";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  length of executing contract's code, in bytes
+    Stack no. 38
+    Last update: 03/03,05/03,01/05
+*/    
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class codesize implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public codesize()
+    {
+        this.opcode=0x38;
+        this.name = "CODESIZE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  address of miner of current block
+    Stack no.41
+    Last update: 04/03,05/03,01/05
+    49-4F are invalid
+*/ 
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class coinbase implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public coinbase()
+    {
+        this.opcode=0x41;
+        this.name = "COINBASE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  addr = keccak256(rlp([address(this), this.nonce]))
+    Stack no.F0
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class create implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public create()
+    {
+        this.opcode=0xF0;
+        this.name = "CREATE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  addr = keccak256(0xff ++ address(this) ++ salt ++ keccak256(mem[ost:ost+len]))[12:]
+    Stack no.F5
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class create2 implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public create2()
+    {
+        this.opcode=0xF5;
+        this.name = "CREATE2";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  mem[retOst:retOst+retLen] := returndata
+    Stack no.F4
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class delegatecall implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public delegatecall()
+    {
+        this.opcode=0xF4;
+        this.name = "DELEGATECALL";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  difficulty of current block
+    Stack no.44
+    Last update: 04/03,05/03,01/05
+    49-4F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class difficulty implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public difficulty()
+    {
+        this.opcode=0x44;
+        this.name = "DIFFICULTY";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  uint256 division
+    Stack no. 04
+    Last update: 28/02,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class div implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public div()
+    {
+        this.opcode=0x04;
+        this.name = "DIV";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  Last update: 24/04,01/05
+    80 =  DUP1 clone 1st value on stack
+    81 =  DUP2 clone 1nd value on stack
+    ...etc
+    80	DUP1
+    81	DUP2
+    82	DUP3
+    83	DUP4
+    84	DUP5
+    85	DUP6
+    86	DUP7
+    87	DUP8
+    88	DUP9
+    89	DUP10
+    8A	DUP11
+    8B	DUP12
+    8C	DUP13
+    8D	DUP14
+    8E	DUP15
+    8F	DUP16
+*/
+public class dup implements GetInstructionsFromOpcode {
+ 
+    private int opcode;
+    private String opcodeHex;
+    private String name;
+    private int opcodeno;
+ 
+
+    public dup(int opcodenumber)
+    {
+        this.opcodeno=opcodenumber;
+        this.opcodeHex="8"+Integer.toHexString(opcodenumber-1);
+        this.opcode=Integer.parseInt(opcodeHex,16);
+        this.name = "DUP"+String.valueOf(opcodenumber);
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+    public int getOpcodeNo() 
+    {
+        return opcodeno;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  (u)int256 equality
+    Stack no.14
+    Last update: 03/03,05/03,01/05
+*/
+    
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class eq implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public eq()
+    {
+        this.opcode=0x14;
+        this.name = "EQ";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  uint256 exponentiation modulo 2**256
+    Stack no.0A
+    Last update: 28/02,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class exp implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public exp ()
+    {
+        this.opcode=0x0A;
+        this.name = "EXP";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  copy code from addr
+    Stack no.3C
+    Last update: 03/03,05/03,01/05
+*/  
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class extcodecopy implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public extcodecopy()
+    {
+        this.opcode=0x3C;
+        this.name = "EXTCODECOPY";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  hash = addr.exists ? keccak256(addr.code) : 0
+    Stack no.3F
+    Last update: 04/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class extcodehash implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public extcodehash()
+    {
+        this.opcode=0x3F;
+        this.name = "EXTCODEHASH";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+
+//Author Gera Jahja
+package src.opcodes;
+/*  size of code at addr, in bytes
+    Stack no.3B
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class extcodesize implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public extcodesize()
+    {
+        this.opcode=0x3B;
+        this.name = "EXTCODESIZE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  gasRemaining
+    Stack no.5A
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class gas implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public gas()
+    {
+        this.opcode=0x5A;
+        this.name = "GAS";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  gas limit of current block
+    Stack no.45
+    Last update: 04/03,05/03,01/05
+    49-4F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class gaslimit implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public gaslimit()
+    {
+        this.opcode=0x45;
+        this.name = "GASLIMIT";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  gas price of tx, in wei per unit gas **
+    Stack no.3A
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class gasprice implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public gasprice()
+    {
+        this.opcode=0x3A;
+        this.name = "GASPRICE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  uint256 greater-than
+    Stack no.11
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class gt implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public gt()
+    {
+        this.opcode=0x11;
+        this.name = "GT";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  designated invalid opcode - EIP-141
+    Stack no.FE
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class invalid implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public invalid()
+    {
+        this.opcode=0xFE;
+        this.name = "INVALID";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  (u)int256 iszero
+    Stack no.15
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class iszero implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public iszero()
+    {
+        this.opcode=0x15;
+        this.name = "ISZERO";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  $pc := dst mark that pc is only assigned if dst is a valid jumpdest
+    Stack no.56
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class jump implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public jump()
+    {
+        this.opcode=0x56;
+        this.name = "JUMP";
+    }
+    private String cCode;
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  a valid jump destination for example a jump destination not inside the push data
+    Stack no.5B
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class jumpdest implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public jumpdest()
+    {
+        this.opcode=0x5B;
+        this.name = "JUMPDEST";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  $pc := condition ? dst : $pc + 1
+    Stack no.57
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class jumpi implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public jumpi()
+    {
+        this.opcode=0x57;
+        this.name = "JUMPI";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  Last update: 24/04,01/05
+    A0 =  LOG0 (LOG0(memory[ost:ost+len]))
+    A1 =  LOG1 (LOG1(memory[ost:ost+len], topic0))
+    ...etc
+    
+    A0	LOG0 (LOG0(memory[ost:ost+len]))
+    A1	LOG1 (LOG1(memory[ost:ost+len], topic0))
+    A2	LOG2 (LOG1(memory[ost:ost+len], topic0, topic1))
+    A3	LOG3 (LOG1(memory[ost:ost+len], topic0, topic1, topic2))
+    A4	LOG4 (LOG1(memory[ost:ost+len], topic0, topic1, topic2, topic3))
+    A5-EF are invalid
+*/
+public class log implements GetInstructionsFromOpcode {
+
+    private int opcode;
+    private String opcodeHex;
+    private String name;
+    private int opnumber;
+    public log(int opcodenumber)
+    {
+        this.opnumber=opcodenumber;
+        this.opcodeHex="a"+Integer.toHexString(opcodenumber);
+        this.opcode=Integer.parseInt(opcodeHex,16);
+        this.name = "LOG"+String.valueOf(opcodenumber);
+    }
+    private String cCode;
+
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    } 
+    public int getOpcodeNo() 
+    {
+        return opnumber;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  uint256 greater-than
+    Stack no.10
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class lt implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public lt()
+    {
+        this.opcode=0x10;
+        this.name = "LT";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  read word from memory at offset ost
+    Stack no.51
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class mload implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public mload()
+    {
+        this.opcode=0x51;
+        this.name = "MLOAD";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  uint256 modulus
+    Stack no.06
+    Last update: 28/02,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class mod implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public mod()
+    {
+        this.opcode=0x06;
+        this.name = "MOD";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  size of memory in current execution context, in bytes
+    Stack no.59
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class msize implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public msize()
+    {
+        this.opcode=0x59;
+        this.name = "MSIZE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+  
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  write a word to memory
+    Stack no.52
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class mstore implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public mstore()
+    {
+        this.opcode=0x52;
+        this.name = "MSTORE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  write a single byte to memory
+    Stack no.53
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class mstore8 implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public mstore8()
+    {
+        this.opcode=0x53;
+        this.name = "MSTORE8";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+
+/*  (u)int256 multiplication modulo 2**256
+    Stack no. 02
+    Last update: 28/02, 05/03,01/05
+    Test: Passed Dissasembly test! 05/03
+*/
+public class mul implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public mul()
+    {
+        this.opcode=0x02;
+        this.name = "MUL";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  ((u)int256 multiplication modulo N
+    Stack no.09
+    Last update: 28/02,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class mulmod implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public mulmod()
+    {
+        this.opcode=0x09;
+        this.name = "MULMOD";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  bitwise NOT
+    Stack no. 19
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class not implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public not()
+    {
+        this.opcode=0x19;
+        this.name = "NOT";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  number of current block
+    Stack no.43
+    Last update: 04/03,05/03,01/05
+    49-4F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class number implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public number()
+    {
+        this.opcode=0x43;
+        this.name = "NUMBER";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  bitwise OR
+    Stack no. 17
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class or implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public or()
+    {
+        this.opcode=0x17;
+        this.name = "OR";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  address that originated the tx
+    Stack no. 32
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class origin implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public origin()
+    {
+        this.opcode=0x32;
+        this.name = "ORIGIN";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  program counter
+    Stack no.58
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class pc implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public pc()
+    {
+        this.opcode=0x58;
+        this.name = "PC";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  remove item from top of stack and discard it
+    Stack no.50
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class pop implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public pop()
+    {
+        this.opcode=0x50;
+        this.name = "POP";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  hexadecimal conversion code https://stackoverflow.com/questions/12005424/java-converting-int-to-hex-and-back-again
+    Last update: 24/04,01/05
+    60 = PUSH1 (push 1-byte value onto stack)
+    61 = PUSH2 (push 2-byte value onto stack)
+    ...etc
+    60  PUSH1     61	PUSH2     62	PUSH3     63	PUSH4     64	PUSH5     65	PUSH6    
+    66	PUSH7     67	PUSH8     68	PUSH9     69	PUSH10    6A	PUSH11    6B	PUSH12    
+    6C	PUSH13    6D	PUSH14    6E	PUSH15    6F	PUSH16    70	PUSH17    71	PUSH18    
+    72	PUSH19    73	PUSH20    74	PUSH21    75	PUSH22    76	PUSH23    77	PUSH24    
+    78	PUSH25    79	PUSH26    7A	PUSH27    7B	PUSH28    7C	PUSH29    7D	PUSH30    
+    7E	PUSH31    7F	PUSH32
+*/
+public class push implements GetInstructionsFromOpcode {
+
+    private int opcode;
+    private String opcodeHex;
+    private String name;
+    private String memoryadd;
+   
+    public push(String memoryadd,String opcodenumber,int byteNo)
+    {
+        this.opcodeHex=opcodenumber;
+        this.opcode=Integer.parseInt(opcodeHex,16);
+        this.name = "PUSH"+String.valueOf(byteNo)+" 0x"+memoryadd;
+        this.memoryadd = " 0x"+memoryadd;
+    }
+   
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public String getName()
+    {
+        return this.name;
+    }
+    public String getMemoryAdd()
+    {
+        return this.memoryadd;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+
+//Author Gera Jahja
+package src.opcodes;
+/*  return mem[ost:ost+len]
+    Stack no.F3
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class return_ implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public return_()
+    {
+        this.opcode=0xF3;
+        this.name = "RETURN";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  copy returned data from last external call
+    Stack no.3E
+    Last update: 04/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class returndatacopy implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public returndatacopy()
+    {
+        this.opcode=0x3E;
+        this.name = "RETURNDATACCOPY";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  size of returned data from last external call, in bytes
+    Stack no.3D
+    Last update: 04/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class returndatasize implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public returndatasize()
+    {
+        this.opcode=0x3D;
+        this.name = "RETURNDATASIZE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  revert(mem[ost:ost+len])
+    Stack no.FD
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+ /* 
+     Test: Passed Dissasembly test! 05/03
+ */
+public class revert implements GetInstructionsFromOpcode 
+ {
+     private int opcode;
+     private String name;
+    
+     public revert()
+     {
+         this.opcode=0xFD;
+         this.name = "REVERT";
+     }
+     private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+     public int getOpcode() 
+     {
+         return opcode;
+     }
+    
+     public String getName()
+     {
+         return this.name;
+     }
+    
+     @Override
+     public String accept(Dissasemble visitor,int orderNo) 
+     {
+         return visitor.visit(this,orderNo);
+     }
+    
+ }
+//Author Gera Jahja
+package src.opcodes;
+/*  arithmetic shift right
+    Stack no.1D
+    Last update: 03/03,05/03,01/05
+    Stack no 1E-1F are invalid!
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class sar implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public sar()
+    {
+        this.opcode=0x1D;
+        this.name = "SAR";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  int256 division
+    Stack no.05
+    Last update: 28/02,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class sdiv implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public sdiv()
+    {
+        this.opcode=0x05;
+        this.name = "SDIV";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  balance of executing contract, in wei
+    Stack no.47
+    Last update: 04/03,05/03,01/05
+    49-4F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class selfbalance implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public selfbalance()
+    {
+        this.opcode=0x47;
+        this.name = "SELFBALANCE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  destroy contract and sends all funds to addr
+    Stack no.FF
+    Last update: 04/03,05/03,01/05
+    F6-F9 and FB-FC are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class selfdestruct implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public selfdestruct()
+    {
+        this.opcode=0xFF;
+        this.name = "SELFDESTRUCT";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  int256 greater-than
+    Stack no.13 
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class sgt implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public sgt()
+    {
+        this.opcode=0x13;
+        this.name = "SGT";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  keccak256(mem[ost:ost+len])
+    Stack no.20
+    Last update: 03/03,05/03,01/05
+    21-2F are invalid!
+*/
+import src.interfaces.*;
+
+// Test: Passed Dissasembly test! 05/03
+
+public class sh3 implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public sh3()
+    {
+        this.opcode=0x20;
+        this.name = "SHA3";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+     public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  shift left
+    Stack no.1B
+    Last update: 03/03,05/03,01/05
+    Stack no 1E-1F are invalid!
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class shl implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public shl()
+    {
+        this.opcode=0x1B;
+        this.name = "SHL";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  logical shift right
+    Stack no.1C
+    Last update: 03/03,05/03,01/05
+    Stack no 1E-1F are invalid!
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class shr implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public shr()
+    {
+        this.opcode=0x1C;
+        this.name = "SHR";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+
+//Author Gera Jahja
+package src.opcodes;
+/*  sign extend x from (b+1) bytes to 32 bytes
+    Stack no.0B
+    0C-0F are invalid
+    Last update: 28/02,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class signextend implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public signextend()
+    {
+        this.opcode=0x0B;
+        this.name = "SIGNEXTEND";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  read word from storage
+    Stack no.54
+    Last update: 04/03,05/03,01/05
+    5C-5F are invalid
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class sload implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public sload()
+    {
+        this.opcode=0x54;
+        this.name = "SLOAD";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  int256 less-than
+    Stack no.12
+    Last update: 03/03,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class slt implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public slt()
+    {
+        this.opcode=0x12;
+        this.name = "SLT";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+/*  int256 modulus
+    Stack no.07
+    Last update: 28/02,05/03,01/05
+*/
+import src.interfaces.*;
+/* 
+    Test: Passed Dissasembly test! 05/03
+*/
+public class smod implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public smod()
+    {
+        this.opcode=0x07;
+        this.name = "SMOD";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  write word from storage
+    Stack no.55
+    Last update: 04/03, 05/03,01/05
+    Test: Passed Dissasembly test! 05/03
+    5C-5F are invalid
+*/
+public class sstore implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public sstore()
+    {
+        this.opcode=0x55;
+        this.name = "SSTORE";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  mem[retOst:retOst+retLen] := returndata
+    Stack no.FA
+    Last update: 04/03, 05/03,01/05
+    Test: Passed Dissasembly test! 05/03
+    F6-F9 and FB-FC are invalid
+*/
+public class staticcall implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public staticcall()
+    {
+        this.opcode=0xFA;
+        this.name = "STATICCALL";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  This command halts the execution
+    Stack no.00 
+    Last update: 28/02, 05/03,01/05
+    Test: Passed Dissasembly test! 05/03
+*/
+public class stop implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public stop()
+    {
+        this.opcode=0x00;
+        this.name = "STOP";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  (u)int256 addition modulo 2**256
+    Stack no.03
+    Last update: 28/02, 05/03,01/05
+    Test: Passed Dissasembly test! 05/03
+*/
+public class sub implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public sub()
+    {
+        this.opcode=0x03;
+        this.name = "SUB";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  Last update: 24/04,01/05
+    90 =  SWAP1 ( a, b -> becomes -> b, a )
+    91 =  SWAP2 ( a, _, b -> becomes -> b, _, a )
+    ...etc
+    
+    90	SWAP1 
+    91	SWAP2
+    92	SWAP3
+    93	SWAP4
+    94	SWAP5
+    95	SWAP6
+    96	SWAP7
+    97	SWAP8
+    98	SWAP9
+    99	SWAP10
+    9A	SWAP11
+    9B	SWAP12
+    9C	SWAP13
+    9D	SWAP14
+    9E	SWAP15
+    9F	SWAP16
+*/
+public class swap implements GetInstructionsFromOpcode {
+
+    private int opcode;
+    private String opcodeHex;
+    private String name;
+    int opcodeNo;
+    public swap(int opcodenumber)
+    {
+        this.opcodeNo=opcodenumber;
+        this.opcodeHex="9"+Integer.toHexString(opcodenumber-1);
+        this.opcode=Integer.parseInt(opcodeHex,16);
+        this.name = "SWAP"+String.valueOf(opcodenumber);
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    
+    }public int getOpcodeNo() 
+    {
+        return opcodeNo;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+}
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  timestamp of current block
+    Stack no.42
+    Last update: 04/03,05/03,01/05
+    Test: Passed Dissasembly test! 05/03
+    49-4F are invalid
+*/
+
+public class timestamp implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public timestamp()
+    {
+        this.opcode=0x42;
+        this.name = "TIMESTAMP";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+
+//Author Gera Jahja
+package src.opcodes;
+import src.interfaces.*;
+/*  bitwise XOR
+    Stack no. 18
+    Last update: 03/03, 05/03,01/05
+    Test: Passed Dissasembly test! 05/03
+*/
+ 
+public class xor implements GetInstructionsFromOpcode 
+{
+    private int opcode;
+    private String name;
+   
+    public xor( )
+    {
+        this.opcode=0x18;
+        this.name = "XOR";
+    }
+    private String cCode;
+    public String getC()
+    {
+        return this.cCode;
+    }
+    public void setC(String cCode) {
+        this.cCode = cCode;
+    }
+    public int getOpcode() 
+    {
+        return opcode;
+    }
+   
+    public String getName()
+    {
+        return this.name;
+    }
+   
+    @Override
+    public String accept(Dissasemble visitor,int orderNo) 
+    {
+        return visitor.visit(this,orderNo);
+    }
+   
+}
+
