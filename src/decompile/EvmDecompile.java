@@ -1,6 +1,5 @@
 //Author Gera Jahja, last update 15/04
 package src.decompile;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +9,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import src.interfaces.*;
 import src.opcodes.*;
-import src.opcodes.pc;
 import src.cCodes.*;
 
 //To run the program, please run the main program found in this class.
@@ -22,8 +20,6 @@ class EvmDecompile {
         include includeAssert = new include();
         function mainFunction = new function();
         boolean runProgram=true;
-        boolean gasLim=true;
-        int GasLimVal =0;
         BufferedReader bfn = new BufferedReader(new InputStreamReader(System.in));
         variable defineVar = new variable("int64_t", "var");//there are no 256 bit numbers in c 
         variable defineUVar = new variable("uint64_t", "uvar");//unsigned 64bit integer ... for compilation
@@ -63,29 +59,18 @@ class EvmDecompile {
                     System.out.println("Please enter 1 or 2");
                 }
             }
-            while (gasLim) {
-                // Asking for input from user
-                System.out.println("\n _____________________________________________");
-                System.out.println("|    Please enter your preffered gas limit :  |");
-                System.out.println("|_____________________________________________|\n");
-    
-                String gass = bfn.readLine();//1023 chars only?
-                
-                if (EvmDisassemble.isNumeric(gass)){
-                    GasLimVal = Integer. parseInt(gass);
-                    gasLim=false;
-                }
-               else{
-                System.out.println("Please enter a whole number");
-                }
-            }
-            define gas_stack_definitions = new define(1024, GasLimVal);//get gas limit as user input?
+            
+            define gas_stack_definitions = new define(1024, 10000,10000);
+            //model memory, storage and accounts
+            structs mod =  new structs();
+
+            String structs= mod.getPair()+mod.getNumpair()+mod.getMemory()+mod.getStorage()+mod.getAccounts()+"\n\n";
 
             TimeUnit.SECONDS.sleep(1);
             System.out.println("\n __________________");
             System.out.println("|     Dissasebly:  |");
             System.out.println("|__________________|\n");
-            decompiledC.add(includeAssert.getIncludeAssert()+"\n"+defineVar.getVariableType()+"\n"+defineUVar.getVariableType()+"\n"+gas_stack_definitions.getDefineGasLimit()+gas_stack_definitions.getDefineStackHeight()+"\n"+stack.getVariableDef()+topOfStack.getVariableDef()+"\n"+gasUsed.getVariableDef()+gasLimit.getVariableDefValue()+"\n"+mainFunction.getMain()+"\n /*** Start of decompiled code ***/ \n");
+            decompiledC.add(includeAssert.getIncludeAssert()+"\n"+defineVar.getVariableType()+"\n"+defineUVar.getVariableType()+"\n"+gas_stack_definitions.getDefineGasLimit()+gas_stack_definitions.getDefineStackHeight()+gas_stack_definitions.getdefineMemLimit()+"\n"+structs+stack.getVariableDef()+topOfStack.getVariableDef()+"\nvar memPoint;\nvar storePoint;\nvar accountNo;\nvar pcCounter;\n"+gasUsed.getVariableDef()+gasLimit.getVariableDefValue()+"\n"+mainFunction.getMain()+"\n /*** Start of decompiled code ***/ \n");
         }
         else if (s_or_e =="end"){
             TimeUnit.SECONDS.sleep(1);

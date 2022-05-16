@@ -66,5 +66,4 @@ public class variable {
         return variableType2;
     }
     
-    
 }
