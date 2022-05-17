@@ -41,5 +41,4 @@ public class div implements GetInstructionsFromOpcode
     {
         return visitor.visit(this,orderNo);
     }
-   
 }

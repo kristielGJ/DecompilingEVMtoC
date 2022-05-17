@@ -1,11 +1,9 @@
 //Author Gera Jahja, last update 15/05
-
 package src.decompile;
 import java.util.Arrays;
 import java.util.List;
 import src.interfaces.*;
 import src.opcodes.*;
-
 public class EvmDisassemble {
     // possible log hexadecimals:
     public static String[] LogVariations = { "AO", "A1", "A2", "A3", "A4" };
@@ -23,7 +21,6 @@ public class EvmDisassemble {
         }
         return true;
     }
-
     /* Prints out readable opcodes from EVM bytecode */
     public static String callVisitorFunctions(String opcode, List<String> invalidHexList,GetInstructionsFromOpcode[] instructions_no,int number,Dissasemble visitor,int orderNo) {
         boolean checkNumber = isNumeric(opcode);
@@ -87,7 +84,6 @@ public class EvmDisassemble {
         }
         return "";
     }
-
     /*
     Looks at second number and calulates number for log, dup,swap and push
     , i.e for 63 (push4), it returns 3+1 = 4 (to display the number for push "4")

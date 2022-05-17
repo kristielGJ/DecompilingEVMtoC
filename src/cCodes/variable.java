@@ -65,5 +65,4 @@ public class variable {
     public String getVariableType2() {
         return variableType2;
     }
-    
 }

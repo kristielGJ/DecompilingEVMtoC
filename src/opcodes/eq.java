@@ -42,6 +42,5 @@ public class eq implements GetInstructionsFromOpcode
     {
         return visitor.visit(this,orderNo);
     }
-   
 }
 

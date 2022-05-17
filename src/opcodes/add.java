@@ -39,8 +39,6 @@ public class add implements GetInstructionsFromOpcode
     public String accept(Dissasemble visitor,int orderNo) 
     {
         return visitor.visit(this,orderNo);
-    }
-
-    
+    } 
    
 }

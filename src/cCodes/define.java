@@ -22,5 +22,4 @@ public class define {
     public String getdefineMemLimit() {
         return defineMemLimit;
     }
-
 }
