@@ -14,7 +14,7 @@ see [https://www.java.com/en/](https://www.java.com/en/)
 
 Visual Code:
 
-Simply open the src folder in Visual Studio Code, go to the decompile package and run the main function in the java file : EvmDecompile.java. make sure you open the whole folder with visual studio, not just src.![image](https://user-images.githubusercontent.com/38893338/168723994-586de86c-3ad5-4e24-b382-18a0242d84bf.png)
+.![image](https://user-images.githubusercontent.com/38893338/168723994-586de86c-3ad5-4e24-b382-18a0242d84bf.png)
 EvmDecompile.java
 <img width="454" alt="image" src="https://user-images.githubusercontent.com/38893338/168723933-9d9e18e8-ac67-4081-9012-8a4e6989995f.png">
 
