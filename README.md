@@ -1,7 +1,7 @@
 # DecompilingEVMtoC
 
 This  project  is  an  academic  proposal  supervised  by  Martin  Nyx  Brain  and  Michał  Król.  The
-project is  a  decompiler  that  converts  EVM  byte  code  into  C  that  can  be
+project is  a  decompiler  that  converts  EVM  byte  code (Ethereum byte code)  into  C  that  can  be
 handled by the CPROVER tools
 
 
